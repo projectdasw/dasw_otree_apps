@@ -33,9 +33,9 @@ Each app can be used independently or integrated into a multi-round experimental
 
 ## 🚀 Version History
 
-| Version | Release Date | Status | Notes |
-|----------|---------------|--------|-------|
-| **v1.0.0 – Initial Release** | Planned | 🛠️ In Development | First public release of DASW oTree Snippets. Includes 6 experiment categories, complete backend logic, and final payment system. |
+| Version | Release Date | Status | Notes                                                                                                                        |
+|----------|---------------|--------|------------------------------------------------------------------------------------------------------------------------------|
+| **v1.0.0 – Initial Release** | Planned | 🛠️ In Development | First public release of DASW oTree Apps. Includes 6 experiment categories, complete backend logic, and final payment system. |
 
 > **Current Version:** `v1.0.0`  
 > Uses **Semantic Versioning** conventions:
