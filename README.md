@@ -1,6 +1,6 @@
 # DASW oTree Apps
 ---
-[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg?style=flat-square)](https://github.com/username/oTree-Self-Template)
+[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg?style=flat-square)](https://github.com/projectdasw/dasw_otree_apps)
 [![oTree](https://img.shields.io/badge/built%20with-oTree%205.x-green.svg?style=flat-square)](https://www.otree.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-yellow.svg?style=flat-square)](https://www.python.org/)
