@@ -2,7 +2,18 @@
 {% load otree static %}
 
 {% block global_styles  %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'global/node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Fontawesome Icon -->
+    <link rel="stylesheet" href="{% static 'global/node_modules/@fortawesome/fontawesome-free/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'global/node_modules/@fortawesome/fontawesome-free/css/v4-shims.css' %}">
 {% endblock %}
 
 {% block global_scripts  %}
+    <!-- Bootstrap Popper -->
+    <script src="{% static 'global/node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
+    <!-- Bootstrap Bundle -->
+    <script src="{% static 'global/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- SweetAlert2 Message Alert -->
+    <script src="{% static 'global/node_modules/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
 {% endblock %}
