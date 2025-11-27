@@ -1,0 +1,83 @@
+{% extends 'global/Page.html' %}
+{% load otree static %}
+
+{% block title %}
+    <title>RET Decoding Task</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">RET Decoding Task</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {{ player.round_number }}</span>
+            </h4>
+        </div>
+        <div class="card-body justify-content-center align-items-center">
+            <div class="alert p-0 mb-4">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="alert-heading">
+                        <h4 class="m-0">Let's Decode & Solve the Puzzle</h4>
+                        <p class="m-0 fs-5">Decode the puzzle using the rule, enter the correct letter, and proceed.</p>
+                    </div>
+                    <span class="fs-4 badge text-bg-dark">
+                        Countdown: 00:00
+                    </span>
+                </div>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered m-0">
+                        <tbody class="text-center fs-3 fw-bold">
+                            <!-- Baris huruf -->
+                            <tr>
+                                {% for l in letters %}
+                                    <td>{{ l }}</td>
+                                {% endfor %}
+                            </tr>
+                            <!-- Baris angka -->
+                            <tr>
+                                {% for n in numbers %}
+                                    <td>{{ n }}</td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="alert p-0">
+                    <p class="fw-semibold fs-5 m-0">
+                        Decode the number shown below into its corresponding letter:
+                    </p>
+                    <hr class="m-0 my-2">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="text-center fs-2 fw-bold">
+                                    {% for t in target_numbers %}
+                                        <td>{{ t }}</td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="fs-3 d-flex flex-row justify-content-center align-items-center">
+                        <span class="badge text-bg-success me-1">
+                            Solved: 0
+                        </span>
+                        <span class="badge text-bg-danger">
+                            Failed: 0
+                        </span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter the correct letter">
+                    <button class="btn btn-outline-success" type="button">
+                        <i class="fa-solid fa-paper-plane me-1"></i>
+                        <span>Solve</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'global/Page.html' %}
+{% load otree static %}
+
+{% block title %}
+    <title>Results - RET Decoding Task</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">Results - RET Decoding Task</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {{ player.round_number }}</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="alert p-0">
+                <h4 class="alert-heading">Summary of Your Performance</h4>
+                <p>Below is a summary of your performance in this round:</p>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <th>Items Attempted</th>
+                            <th>Correct Answers</th>
+                            <th>Incorrect Answers</th>
+                            <th>Final Score</th>
+                            {#<th>Accuracy Rate (%)</th>#}
+                            {#<th>Average Response</th>#}
+                            {#<th>Fastest Response</th>#}
+                            {#<th>Slowest Response</th>#}
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <p>
+                Thank you for completing Round {{ player.round_number }} Decoding Task. Your performance has been
+                recorded for analysis. You may proceed to the next section when you are ready.
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-sm btn-primary">
+                <i class="fa-solid fa-forward"></i>
+                <span>Next</span>
+            </button>
+        </div>
+    </div>
+{% endblock %}
