@@ -52,7 +52,7 @@ Each app can be used independently or integrated into a multi-round experimental
 ## ⚙️ Key Features
 
 - 🧱 **Modular Structure** – each app is standalone and reusable  
-- 🔄 **Cross-App Integration** – experiment results automatically sent to the final payment module  
+- 🔄 **Cross-decoding_game Integration** – experiment results automatically sent to the final payment module  
 - 💰 **Automated Final Payment Calculation**  
   Handles endowment, investment, and consumption logic seamlessly  
 - 📊 **Utility Recap per Round**  

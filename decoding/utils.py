@@ -1,99 +1,193 @@
 import random
 import string
-from .models import Constants
 
 
-def generate_decoding_pairs():
+def generate_decoding_pairs(total_items=9):
     """
-    Menghasilkan acakan Constants.total_items huruf dan angka.
-    Huruf berupa list of uppercase letters,
-    Angka berupa list of ints (1..9).
+    Menghasilkan pasangan huruf dan angka secara acak.
+
+    Contoh:
+        letters = ['A', 'Q', 'M', ...]
+        numbers = [7, 2, 9, ...]
+
+    Setiap huruf dan angka hanya muncul satu kali.
     """
-    letters = random.sample(string.ascii_uppercase, Constants.total_items)
-    numbers = random.sample(range(1, 10), Constants.total_items)
+
+    letters = random.sample(
+        string.ascii_uppercase,
+        total_items,
+    )
+
+    numbers = random.sample(
+        range(1, total_items + 1),
+        total_items,
+    )
+
     return letters, numbers
 
 
 def generate_target_numbers(numbers, count=5):
     """
-    Menghasilkan angka target acak dari daftar numbers.
-    Bisa duplikat (karena decoding biasanya boleh).
+    Menghasilkan angka target secara acak.
+
+    Angka dapat muncul lebih dari satu kali.
     """
-    return random.choices(numbers, k=count)
+
+    if not numbers:
+        raise ValueError(
+            "numbers cannot be empty"
+        )
+
+    if count <= 0:
+        raise ValueError(
+            "count must be greater than 0"
+        )
+
+    return random.choices(
+        numbers,
+        k=count,
+    )
 
 
 def build_mapping(letters, numbers):
     """
-    Buat mapping huruf -> angka.
+    Membuat mapping:
 
-    - letters: list of str (['A','B',...]) atau str "A B C ..."
-    - numbers: list of int ([7,2,...]) atau str "7 2 3 ..."
+        huruf -> angka
 
-    Return: dict, contoh {'A': 7, 'B': 2, ...}
+    Contoh:
+
+        A -> 7
+        B -> 2
+        C -> 9
     """
-    # normalize letters
+
     if isinstance(letters, str):
-        letters_list = letters.split()
-    else:
-        letters_list = list(letters)
+        letters = letters.split()
 
-    # normalize numbers
     if isinstance(numbers, str):
-        # handle possible commas or spaces
-        numbers_list = [int(x) for x in numbers.replace(',', ' ').split()]
-    else:
-        numbers_list = list(numbers)
+        numbers = numbers.replace(",", " ").split()
+        numbers = [
+            int(number)
+            for number in numbers
+        ]
 
-    if len(letters_list) != len(numbers_list):
-        raise ValueError("letters and numbers must have the same length")
+    letters = list(letters)
+    numbers = list(numbers)
 
-    return {letters_list[i]: numbers_list[i] for i in range(len(letters_list))}
+    if len(letters) != len(numbers):
+        raise ValueError(
+            "letters and numbers must have the same length"
+        )
+
+    return dict(
+        zip(
+            letters,
+            numbers,
+        )
+    )
 
 
 def decode_letters_to_numbers(answer_letters, mapping):
     """
-    Ubah jawaban peserta (huruf) menjadi angka berdasarkan mapping.
-    - answer_letters: str "A B C ..." atau list ['A','B','C']
-    - mapping: {'A':7, ...}
+    Mengubah jawaban huruf menjadi angka.
 
-    Return: list of ints or None (jika huruf tidak ada di mapping)
+    Contoh:
+
+        answer = "ABCDE"
+
+        mapping = {
+            "A": 7,
+            "B": 2,
+            "C": 9,
+            "D": 4,
+            "E": 1,
+        }
+
+        result = [7, 2, 9, 4, 1]
     """
-    if isinstance(answer_letters, str):
-        answer_list = answer_letters.split()
-    else:
-        answer_list = list(answer_letters)
 
-    decoded = [mapping.get(letter, None) for letter in answer_list]
-    return decoded
+    if not isinstance(answer_letters, str):
+        answer_letters = "".join(answer_letters)
+
+    answer_letters = (
+        answer_letters
+        .replace(" ", "")
+        .upper()
+    )
+
+    return [
+        mapping.get(letter)
+        for letter in answer_letters
+    ]
 
 
 def check_sequence(decoded_list, correct_numbers):
     """
-    Bandingkan decoded_list (list angka/None) dengan correct_numbers (list int).
-    Mengembalikan tuple (is_correct_bool, mismatches)
-    - mismatches = list of tuples (pos, expected, got) untuk posisi yang salah
+    Membandingkan hasil decoding dengan target.
+
+    Return:
+
+        (
+            is_correct,
+            mismatches
+        )
+
+    mismatches:
+
+        [
+            (position, expected, got)
+        ]
     """
-    # normalize correct_numbers if string
+
     if isinstance(correct_numbers, str):
-        correct = [int(x) for x in correct_numbers.replace(',', ' ').split()]
-    else:
-        correct = list(correct_numbers)
+        correct_numbers = (
+            correct_numbers
+            .replace(",", " ")
+            .split()
+        )
+
+        correct_numbers = [
+            int(number)
+            for number in correct_numbers
+        ]
+
+    decoded_list = list(decoded_list)
+    correct_numbers = list(correct_numbers)
 
     mismatches = []
-    # if lengths differ, it's considered incorrect but we still compare up to min len
-    min_len = min(len(decoded_list), len(correct))
-    for i in range(min_len):
-        if decoded_list[i] != correct[i]:
-            mismatches.append((i, correct[i], decoded_list[i]))
 
-    # extra length mismatches
-    if len(decoded_list) != len(correct):
-        # mark remaining as mismatches
-        longer = max(len(decoded_list), len(correct))
-        for i in range(min_len, longer):
-            exp = correct[i] if i < len(correct) else None
-            got = decoded_list[i] if i < len(decoded_list) else None
-            mismatches.append((i, exp, got))
+    max_length = max(
+        len(decoded_list),
+        len(correct_numbers),
+    )
 
-    is_correct = len(mismatches) == 0
-    return is_correct, mismatches
+    for index in range(max_length):
+
+        expected = (
+            correct_numbers[index]
+            if index < len(correct_numbers)
+            else None
+        )
+
+        got = (
+            decoded_list[index]
+            if index < len(decoded_list)
+            else None
+        )
+
+        if expected != got:
+            mismatches.append(
+                (
+                    index,
+                    expected,
+                    got,
+                )
+            )
+
+    is_correct = not mismatches
+
+    return (
+        is_correct,
+        mismatches,
+    )

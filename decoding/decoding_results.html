@@ -1,0 +1,198 @@
+{% extends 'global/Page.html' %}
+{% load otree static %}
+
+{% block title %}
+    <title>decoding_results - RET Decoding Task</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="card-header
+                d-flex
+                flex-row
+                justify-content-between
+                align-items-center">
+
+        <h5 class="m-0">
+            RET Decoding Task
+        </h5>
+
+        <span class="badge text-bg-success">
+            Completed
+        </span>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="text-center mb-4">
+
+            <h2 class="fw-bold">
+                Decoding Task Completed
+            </h2>
+
+            <p class="text-muted fs-5 m-0">
+                Here is your performance summary.
+            </p>
+
+        </div>
+
+
+        <!-- SCORE SUMMARY -->
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <div class="text-muted">
+                            Solved
+                        </div>
+
+                        <div class="display-6
+                                    fw-bold
+                                    text-success">
+
+                            {{ correct_answers }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <div class="text-muted">
+                            Failed
+                        </div>
+
+                        <div class="display-6
+                                    fw-bold
+                                    text-danger">
+
+                            {{ incorrect_answers }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <div class="text-muted">
+                            Total Attempts
+                        </div>
+
+                        <div class="display-6
+                                    fw-bold">
+
+                            {{ total_attempts }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <div class="text-muted">
+                            Accuracy
+                        </div>
+
+                        <div class="display-6
+                                    fw-bold">
+
+                            {{ accuracy_formatted }}%
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TIME INFORMATION -->
+
+        <div class="alert alert-light
+                    border">
+
+            <div class="row text-center">
+
+                <div class="col-md-6">
+
+                    <div class="text-muted">
+                        Time Used
+                    </div>
+
+                    <div class="fs-3 fw-bold">
+                        {{ time_used_formatted }}
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="text-muted">
+                        Time Limit
+                    </div>
+
+                    <div class="fs-3 fw-bold">
+                        {{ time_limit_formatted }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="text-center mt-4">
+
+            <p class="text-muted mb-0">
+                Thank you for completing the
+                Decoding Task.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

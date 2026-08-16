@@ -2,7 +2,7 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        display_name='RET - Decoding Task',
+        display_name='RET - Decoding',
         name='decoding',
         app_sequence=['decoding'],
         num_demo_participants=1,
