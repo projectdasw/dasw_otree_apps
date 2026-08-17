@@ -77,7 +77,7 @@ ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 DEMO_PAGE_INTRO_HTML = """
-    oTree Apps - DASW Project
+    oTree DASW Apps
 """
 
 SECRET_KEY = '6956438032015'

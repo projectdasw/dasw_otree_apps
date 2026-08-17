@@ -1,0 +1,95 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Real Effort Task - Word Search</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">RET - Word Search</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {% player.round_number %}</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="alert p-0 m-0">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="alert-heading">
+                        <h4 class="m-0">Let's Search, Count & Solve</h4>
+                        <p class="m-0 fs-5">
+                            Find the target in the puzzle, count how many times it appears, enter the correct number,
+                            and proceed.
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex flex-row">
+                    <div class="col-7 px-3">
+                        <table id="boardContainer"
+       class="table table-striped border border-2 text-center">
+
+    <tbody id="boardBody">
+
+        {% for row in board %}
+
+            <tr>
+
+                {% for cell in row %}
+
+                    <td class="board-cell border border-3 fs-4">
+                        <strong>{{ cell }}</strong>
+                    </td>
+
+                {% endfor %}
+
+            </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+                    </div>
+                    <div class="col-5 px-3">
+                        <table class="table fs-5">
+                            <thead>
+                                <th scope="col">Score</th>
+                                <th scope="col">Time remaining</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span id="playerScore" class="fw-bold text-success">{% player_score %}</span>
+                                    </td>
+                                    <td>
+                                        <span class="otree-timer__time-left fw-bold"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="fs-5 mb-3">
+                            How many times does the letter/number
+                            <span id="targetCharacter" class="badge bg-danger fs-5">{% target_character %}</span>
+                             appear in the table?
+                        </div>
+                        <div class="input-group">
+                            <input id="countGuess" name="count_guess" type="number" class="form-control"
+                                   required>
+                            <button class="btn btn-success" type="button" onclick="submitGuess()">
+                                <i class="fa-regular fa-paper-plane me-1"></i>
+                                <span>Solve</span>
+                            </button>
+                        </div>
+                        <div id="feedback" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'global/word_search_js/script.js'%}"></script>
+{% endblock %}

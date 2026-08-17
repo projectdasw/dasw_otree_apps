@@ -25,7 +25,6 @@ def generate_decoding_pairs(total_items=9):
 
     return letters, numbers
 
-
 def generate_target_numbers(numbers, count=5):
     """
     Menghasilkan angka target secara acak.
@@ -47,7 +46,6 @@ def generate_target_numbers(numbers, count=5):
         numbers,
         k=count,
     )
-
 
 def build_mapping(letters, numbers):
     """
@@ -87,7 +85,6 @@ def build_mapping(letters, numbers):
         )
     )
 
-
 def decode_letters_to_numbers(answer_letters, mapping):
     """
     Mengubah jawaban huruf menjadi angka.
@@ -120,7 +117,6 @@ def decode_letters_to_numbers(answer_letters, mapping):
         mapping.get(letter)
         for letter in answer_letters
     ]
-
 
 def check_sequence(decoded_list, correct_numbers):
     """
@@ -191,3 +187,49 @@ def check_sequence(decoded_list, correct_numbers):
         is_correct,
         mismatches,
     )
+
+def validate_answer(answer, expected_count):
+    """
+    Validasi jawaban peserta.
+
+    Return:
+        valid: bool
+        normalized_answer: str
+        error: str | None
+    """
+
+    if not isinstance(answer, str):
+        return False, "", "Invalid answer."
+
+    answer = answer.strip().upper()
+
+    # Kosong
+    if not answer:
+        return False, "", "Please enter your answer."
+
+    # Hilangkan whitespace
+    answer = "".join(answer.split())
+
+    # Harus berisi huruf A-Z saja
+    if not answer.isalpha():
+        return False, "", "Please enter letters only."
+
+    # Pastikan ASCII A-Z
+    if not all(
+        "A" <= char <= "Z"
+        for char in answer
+    ):
+        return False, "", "Please enter letters only."
+
+    # Jumlah huruf
+    if len(answer) != expected_count:
+        return (
+            False,
+            "",
+            f"Please enter exactly {expected_count} letters."
+        )
+
+    # Normalisasi menjadi format backend
+    normalized_answer = " ".join(answer)
+
+    return True, normalized_answer, None
