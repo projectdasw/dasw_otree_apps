@@ -1,0 +1,115 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Exact Transcription</title>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'global/transcription_css/exact_transcription.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">Exact Transciption</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {% player.round_number %}</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="alert p-0 m-0">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="alert-heading">
+                        <h4 class="m-0">Let's Transcribe the Text</h4>
+                        <p class="m-0 fs-5">
+                            Transcribe the text exactly as shown, enter your answer, and proceed.
+                        </p>
+                    </div>
+                    <span class="badge text-bg-warning fs-4">
+                        Time remaining: <span id="timer" class="timer-value"></span>
+                    </span>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <h3>Transcribe the following text:</h3>
+                    <div class="alert alert-light" role="alert">
+                        <p class="fs-4 m-0">{{ transcription_text }}</p>
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="col-7">
+                        <div class="card m-0">
+                            <div class="card-body">
+                                <label for="transcription-input" class="form-label fw-semibold">
+                                    Your Answer
+                                </label>
+                                <textarea id="transcription-input" class="form-control" rows="5" autocomplete="off"
+                                  spellcheck="false" placeholder="Type the text exactly as shown..."></textarea>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" id="submit-answer" class="btn btn-primary px-5">
+                                    Submit Answer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 card">
+                                    <div class="card-body">
+                                        Completed {{ completed_count }}
+                                    </div>
+                                </div>
+                                <div class="col-6 card">
+                                    <div class="card-body">
+                                        Score {{ score }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 card">
+                                    <div class="card-body">
+                                        Correct {{ correct_count }}
+                                    </div>
+                                </div>
+                                <div class="col-6 card">
+                                    <div class="card-body">
+                                        Incorrect {{ incorrect_count }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- ============================= -->
+<!-- GAME DATA -->
+<!-- ============================= -->
+    <script>
+
+    window.transcriptionGame = {
+
+        remainingTime: {{ remaining_time|json }},
+
+        initialScore: {{ score|json }},
+
+        initialCompleted: {{ completed_count|json }},
+
+        initialCorrect: {{ correct_count|json }},
+
+        initialIncorrect: {{ incorrect_count|json }}
+
+    };
+
+</script>
+    <script src="{% static 'global/transcription_js/exact_transcription.js' %}"></script>
+{% endblock %}

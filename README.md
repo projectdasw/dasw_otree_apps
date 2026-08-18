@@ -57,7 +57,7 @@ Each app can be used independently or integrated into a multi-round experimental
   Handles endowment, investment, and consumption logic seamlessly  
 - 📊 **Utility Recap per Round**  
   Includes randomized payoff (e.g., 90%–10%) and automatic final conversion  
-- 🎰 **Slot Machine Game**  
+- 🎰 **Slot Machine game**  
   Fully integrated with backend probability logic and JS-based animation  
 - ✍️ **Comprehensive Real Effort Tasks**
   - Decoding: translate characters or symbols  

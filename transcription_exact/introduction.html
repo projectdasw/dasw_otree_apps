@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>RET Transcription - Exact Transcription</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header text-center">
+            <h6 class="m-0">Real Effort Task - Transcription</h6>
+        </div>
+        <div class="card-body text-center">
+            <h1 class="fw-bold">Exact Transcription</h1>
+            <p class="text-muted">Welcome to the Real Effort Task - Transcription</p>
+            <p class="m-0">
+                <strong>Exact Transcription</strong> is an experimental task designed to measure
+                participants' <strong>real effort</strong> through an accurate text transcription activity. In this
+                task, participants are shown a text or sequence of characters and are required to <strong>type it
+                exactly as displayed</strong>. The performance can be evaluated based on the amount and accuracy of
+                the transcription they complete within a given time, also this task will have a <strong>limited amount
+                of time to complete as many transcription tasks as possible</strong>.
+            </p>
+        </div>
+        <div class="card-footer text-center">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <span>Next</span>
+                <i class="fa-solid fa-forward"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

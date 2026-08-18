@@ -1,0 +1,151 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    results
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="text-center mb-5">
+
+                <h1 class="fw-bold">
+                    Task Completed
+                </h1>
+
+                <p class="text-muted mt-2">
+                    Your Exact Transcription results are shown below.
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- SCORE -->
+            <!-- ========================= -->
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body text-center p-5">
+
+                    <div class="text-muted mb-2">
+                        Final Score
+                    </div>
+
+                    <div class="display-3 fw-bold">
+                        {{ score }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- STATISTICS -->
+            <!-- ========================= -->
+
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="card-body text-center">
+
+                            <div class="text-muted small">
+                                Completed
+                            </div>
+
+                            <div class="fs-3 fw-bold mt-2">
+                                {{ completed_count }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="card-body text-center">
+
+                            <div class="text-muted small">
+                                Correct
+                            </div>
+
+                            <div class="fs-3 fw-bold mt-2">
+                                {{ correct_count }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="card-body text-center">
+
+                            <div class="text-muted small">
+                                Accuracy
+                            </div>
+
+                            <div class="fs-3 fw-bold mt-2">
+                                {{ accuracy }}%
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- INCORRECT -->
+            <!-- ========================= -->
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <span>
+                            Incorrect
+                        </span>
+
+                        <strong>
+                            {{ incorrect_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

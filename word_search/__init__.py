@@ -16,6 +16,7 @@ class Constants(BaseConstants):
     board_columns = 7  # Jumlah kolom papan
     characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
     points_per_correct = 3
+    task_duration = 10 # Durasi permainan
 
 
 class Subsession(BaseSubsession):
@@ -32,6 +33,10 @@ class Player(BasePlayer):
     actual_count = models.IntegerField(initial=0)
     current_target = models.StringField()  # Target huruf/angka yang diacak setiap putaran
     puzzle_board = models.LongStringField(initial="")
+
+    # Timer
+    game_start_time = models.FloatField(initial=0)
+    game_end_time = models.FloatField(initial=0)
 
 def generate_puzzle():
     target = random.choice(Constants.characters)
@@ -100,13 +105,13 @@ def live_game(player: Player, data):
             "new_target_character": target,
             "new_score": player.total_score,
             "correct": is_correct,
-            "correct_answer": correct_answer,
         }
     }
 
 
 class word_search_game(Page):
     live_method = live_game
+    timeout_seconds = Constants.task_duration
 
     @staticmethod
     def vars_for_template(player: Player):
