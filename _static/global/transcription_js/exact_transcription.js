@@ -1,514 +1,147 @@
 let remainingTime;
 let timerInterval;
-
 let gameFinished = false;
 let submitting = false;
 
-
-// ============================================================
-// INITIALIZATION
-// ============================================================
-
 document.addEventListener('DOMContentLoaded', function () {
-
-    remainingTime =
-        Number(window.transcriptionGame.remainingTime || 0);
-
+    remainingTime = Number(window.transcriptionGame.remainingTime || 0);
     updateTimer();
-
     startTimer();
-
     setupSubmitButton();
-
     focusInput();
-
 });
 
-
-// ============================================================
-// TIMER
-// ============================================================
-
 function startTimer() {
-
     timerInterval = setInterval(function () {
-
-        if (gameFinished) {
-
-            clearInterval(timerInterval);
-
-            return;
-        }
-
-        remainingTime -= 1;
-
+        if (gameFinished) {clearInterval(timerInterval); return;}
+        remainingTime--;
+        if (remainingTime < 0) {remainingTime = 0;}
         updateTimer();
-
-        if (remainingTime <= 0) {
-
-            remainingTime = 0;
-
-            updateTimer();
-
-            handleTimeUp();
-
-        }
-
+        if (remainingTime <= 0) {handleTimeUp();}
     }, 1000);
-
 }
-
 
 function updateTimer() {
+    const timer = document.getElementById('timer');
+    const totalSeconds = Math.max(0, Math.floor(remainingTime));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
 
-    const timerElement =
-        document.getElementById('timer');
 
-    if (!timerElement) {
-        return;
-    }
-
-    const totalSeconds =
-        Math.max(
-            0,
-            Math.floor(remainingTime)
-        );
-
-    const minutes =
-        Math.floor(totalSeconds / 60);
-
-    const seconds =
-        totalSeconds % 60;
-
-    timerElement.textContent =
-        String(minutes).padStart(2, '0')
-        + ':'
-        + String(seconds).padStart(2, '0');
-
+    if (!timer) {return;}
+    timer.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
 }
-
-
-// ============================================================
-// SUBMIT BUTTON
-// ============================================================
 
 function setupSubmitButton() {
+    const button = document.getElementById('submit-answer');
 
-    const button =
-        document.getElementById('submit-answer');
-
-    if (!button) {
-        return;
-    }
-
-    button.addEventListener(
-        'click',
-        submitAnswer
-    );
-
+    if (!button) {return;}
+    button.addEventListener('click', submitAnswer);
 }
-
 
 function submitAnswer() {
+    const button = document.getElementById('submit-answer');
+    const input = document.getElementById('transcription-input');
+    const answer = input.value;
 
-    if (gameFinished) {
-        return;
-    }
-
-    if (submitting) {
-        return;
-    }
-
-    if (remainingTime <= 0) {
-
-        handleTimeUp();
-
-        return;
-    }
-
-    const input =
-        document.getElementById(
-            'transcription-input'
-        );
-
-    if (!input) {
-        return;
-    }
-
-    const answer =
-        input.value;
-
+    if (gameFinished) {return;}
+    if (submitting) {return;}
+    if (remainingTime <= 0) {handleTimeUp(); return;}
+    if (!input) {return;}
     submitting = true;
+    if (button) {button.disabled = true; button.textContent = 'Checking...';}
+    liveSend({type: 'submit', answer: answer});
 
-    setSubmitState(true);
-
-    liveSend({
-
-        type: 'submit',
-
-        answer: answer
-
-    });
-
+    // Debug
+    // console.log('Sending answer:', answer);
 }
-
-
-// ============================================================
-// SUBMIT BUTTON STATE
-// ============================================================
-
-function setSubmitState(disabled) {
-
-    const button =
-        document.getElementById(
-            'submit-answer'
-        );
-
-    if (!button) {
-        return;
-    }
-
-    button.disabled = disabled;
-
-    if (disabled) {
-
-        button.dataset.originalText =
-            button.textContent;
-
-        button.textContent =
-            'Checking...';
-
-    } else {
-
-        button.textContent =
-            button.dataset.originalText ||
-            'Submit Answer';
-
-    }
-
-}
-
-
-// ============================================================
-// RECEIVE SERVER RESPONSE
-// ============================================================
 
 function liveRecv(data) {
+    if (!data) {console.warn('liveRecv received empty data'); return;}
+    if (data.type === 'time_up') {handleTimeUp(data); return;}
+    if (data.type === 'next_task') {handleNextTask(data); return;}
+    console.warn('Unknown server response:', data);
 
-    if (!data) {
-        return;
-    }
-
-
-    // ========================================================
-    // TIME UP
-    // ========================================================
-
-    if (data.type === 'time_up') {
-
-        handleTimeUp(data);
-
-        return;
-    }
-
-
-    // ========================================================
-    // NEXT TASK
-    // ========================================================
-
-    if (data.type === 'next_task') {
-
-        handleNextTask(data);
-
-    }
-
+    // Debug
+    // console.log('Received from server:', data);
 }
-
-
-// ============================================================
-// HANDLE NEXT TASK
-// ============================================================
 
 function handleNextTask(data) {
+    const button = document.getElementById('submit-answer');
+    const input = document.getElementById('transcription-input');
+    const sourceText = document.getElementById('source-text');
 
     submitting = false;
+    updateElement('completed-count', data.completed_count);
+    updateElement('score', data.score);
+    updateElement('correct-count', data.correct_count);
+    updateElement('incorrect-count', data.incorrect_count);
 
-    setSubmitState(false);
-
-
-    // --------------------------------------------------------
-    // UPDATE SCORE
-    // --------------------------------------------------------
-
-    updateElement(
-        'score',
-        data.score
-    );
-
-
-    updateElement(
-        'completed-count',
-        data.completed_count
-    );
-
-
-    updateElement(
-        'correct-count',
-        data.correct_count
-    );
-
-
-    // --------------------------------------------------------
-    // UPDATE TIMER
-    // --------------------------------------------------------
-
-    if (
-        typeof data.remaining_time !==
-        'undefined'
-    ) {
-
-        remainingTime =
-            Number(
-                data.remaining_time
-            );
-
+    if (typeof data.remaining_time !== 'undefined') {
+        remainingTime = Number(data.remaining_time);
         updateTimer();
-
     }
 
+    if (sourceText) {sourceText.textContent = data.next_task;}
+    if (input) {input.value = ''; input.disabled = false; input.focus();}
+    if (button) {button.disabled = false; button.textContent = 'Submit Answer';}
+    showFeedback(data.correct);
 
-    // --------------------------------------------------------
-    // UPDATE SOURCE TEXT
-    // --------------------------------------------------------
-
-    updateElement(
-        'source-text',
-        data.next_task
-    );
-
-
-    // --------------------------------------------------------
-    // CLEAR INPUT
-    // --------------------------------------------------------
-
-    const input =
-        document.getElementById(
-            'transcription-input'
-        );
-
-    if (input) {
-
-        input.value = '';
-
-        input.focus();
-
-    }
-
-
-    // --------------------------------------------------------
-    // FEEDBACK
-    // --------------------------------------------------------
-
-    showFeedback(
-        data.correct
-    );
-
-
-    // --------------------------------------------------------
-    // CHECK TIMER
-    // --------------------------------------------------------
-
-    if (remainingTime <= 0) {
-
-        handleTimeUp();
-
-    }
-
+    // Debug
+    // console.log('Loading next task:', data.next_task);
 }
-
-
-// ============================================================
-// FEEDBACK
-// ============================================================
 
 function showFeedback(correct) {
+    const feedback = document.getElementById('feedback');
 
-    const feedback =
-        document.getElementById(
-            'feedback'
-        );
-
-    if (!feedback) {
-        return;
-    }
-
+    if (!feedback) {return;}
 
     if (correct) {
-
-        feedback.textContent =
-            'Correct!';
-
-        feedback.className =
-            'alert alert-success';
-
+        feedback.textContent = 'Correct! Keep it up';
+        feedback.className = 'fw-bold text-success';
     } else {
-
-        feedback.textContent =
-            'Incorrect.';
-
-        feedback.className =
-            'alert alert-danger';
-
+        feedback.textContent = 'Incorrect. Try the next puzzle!';
+        feedback.className = 'fw-bold text-danger';
     }
 
-
-    feedback.style.display =
-        'block';
-
+    feedback.style.display = 'block';
 
     setTimeout(function () {
-
         if (!gameFinished) {
-
-            feedback.style.display =
-                'none';
-
+            feedback.style.display = 'none';
         }
-
     }, 800);
-
 }
-
-
-// ============================================================
-// TIME UP
-// ============================================================
 
 function handleTimeUp(data) {
+    const button = document.getElementById('submit-answer');
+    const input = document.getElementById('transcription-input');
+    const form = document.getElementById('form');
 
-    if (gameFinished) {
-        return;
-    }
-
+    if (gameFinished) {return;}
     gameFinished = true;
-
     remainingTime = 0;
-
     clearInterval(timerInterval);
-
     updateTimer();
-
-    setSubmitState(true);
-
-
-    const input =
-        document.getElementById(
-            'transcription-input'
-        );
-
-    if (input) {
-
-        input.disabled = true;
-
-    }
-
-
-    if (data) {
-
-        if (
-            typeof data.score !==
-            'undefined'
-        ) {
-
-            updateElement(
-                'score',
-                data.score
-            );
-
-        }
-
-        if (
-            typeof data.completed_count !==
-            'undefined'
-        ) {
-
-            updateElement(
-                'completed-count',
-                data.completed_count
-            );
-
-        }
-
-        if (
-            typeof data.correct_count !==
-            'undefined'
-        ) {
-
-            updateElement(
-                'correct-count',
-                data.correct_count
-            );
-
-        }
-
-    }
-
-
-    // --------------------------------------------------------
-    // REDIRECT TO RESULTS
-    // --------------------------------------------------------
+    if (input) {input.disabled = true;}
+    if (button) {button.disabled = true;}
 
     setTimeout(function () {
-
-    const form =
-        document.getElementById('form');
-
-    if (form) {
-
-        form.submit();
-
-    }
-
-}, 500);
-
+        if (form) {
+            form.submit();
+        }
+    }, 500);
 }
 
+function updateElement(elementId, value) {
+    const element = document.getElementById(elementId);
 
-// ============================================================
-// HELPER
-// ============================================================
-
-function updateElement(
-    elementId,
-    value
-) {
-
-    const element =
-        document.getElementById(
-            elementId
-        );
-
-    if (!element) {
-        return;
-    }
-
-    element.textContent =
-        value;
-
+    if (!element) {return;}
+    element.textContent = value;
 }
-
 
 function focusInput() {
+    const input = document.getElementById('transcription-input');
 
-    const input =
-        document.getElementById(
-            'transcription-input'
-        );
-
-    if (input) {
-
-        input.focus();
-
-    }
-
+    if (input) {input.focus();}
 }

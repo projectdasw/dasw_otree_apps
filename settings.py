@@ -1,24 +1,24 @@
 from os import environ
 
 SESSION_CONFIGS = [
-    dict(
-        display_name='donation_with_rank - Donation with rank',
-        name='donation_with_rank',
-        app_sequence=['donation_with_rank'],
-        num_demo_participants=1,
-    ),
-    dict(
-        display_name='investment - Investment Apps',
-        name='investment',
-        app_sequence=['investment'],
-        num_demo_participants=1,
-    ),
-    dict(
-        display_name='real_effort_task_algebraic - RET Algebraic',
-        name='algebraic',
-        app_sequence=['algebraic'],
-        num_demo_participants=1,
-    ),
+    # dict(
+    #     display_name='donation_with_rank - Donation with rank',
+    #     name='donation_with_rank',
+    #     app_sequence=['donation_with_rank'],
+    #     num_demo_participants=1,
+    # ),
+    # dict(
+    #     display_name='investment - Investment Apps',
+    #     name='investment',
+    #     app_sequence=['investment'],
+    #     num_demo_participants=1,
+    # ),
+    # dict(
+    #     display_name='real_effort_task_algebraic - RET Algebraic',
+    #     name='algebraic',
+    #     app_sequence=['algebraic'],
+    #     num_demo_participants=1,
+    # ),
     dict(
         display_name='real_effort_task_decoding - RET Decoding',
         name='decoding',
@@ -31,24 +31,24 @@ SESSION_CONFIGS = [
         app_sequence=['transcription_exact'],
         num_demo_participants=1,
     ),
-    dict(
-        display_name='real_effort_task_slot_machine - RET Slot Machine',
-        name='slot_machine',
-        app_sequence=['slot_machine'],
-        num_demo_participants=1,
-    ),
+    # dict(
+    #     display_name='real_effort_task_slot_machine - RET Slot Machine',
+    #     name='slot_machine',
+    #     app_sequence=['slot_machine'],
+    #     num_demo_participants=1,
+    # ),
     dict(
         display_name='real_effort_task_count_word - RET Count Word',
-        name='word_search',
-        app_sequence=['word_search'],
+        name='count_word',
+        app_sequence=['count_word'],
         num_demo_participants=1,
     ),
-    dict(
-        display_name='shop_apps - Shopping Apps',
-        name='shop_apps',
-        app_sequence=['shop_apps'],
-        num_demo_participants=1,
-    ),
+    # dict(
+    #     display_name='shop_apps - Shopping Apps',
+    #     name='shop_apps',
+    #     app_sequence=['shop_apps'],
+    #     num_demo_participants=1,
+    # ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

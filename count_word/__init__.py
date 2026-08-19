@@ -7,7 +7,7 @@ RET - Word Search
 """
 
 class Constants(BaseConstants):
-    name_in_url = "word_search"
+    name_in_url = "count_word"
     players_per_group = None
     num_rounds = 1
 
