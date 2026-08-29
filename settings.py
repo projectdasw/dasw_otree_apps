@@ -19,12 +19,12 @@ SESSION_CONFIGS = [
     #     app_sequence=['algebraic'],
     #     num_demo_participants=1,
     # ),
-    dict(
-        display_name='real_effort_task_decoding - RET Decoding',
-        name='decoding',
-        app_sequence=['decoding'],
-        num_demo_participants=1,
-    ),
+    # dict(
+    #     display_name='real_effort_task_decoding - RET Decoding',
+    #     name='decoding',
+    #     app_sequence=['decoding'],
+    #     num_demo_participants=1,
+    # ),
     dict(
         display_name='real_effort_task_exact_transcription - RET Exact Transcription',
         name='transcription_exact',

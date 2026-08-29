@@ -32,13 +32,13 @@
                                 <!-- Baris huruf -->
                                 <tr>
                                     {% for l in letters %}
-                                        <td class="letter-cell">{% l %}</td>
+                                        <td class="letter-cell">{{ l }}</td>
                                     {% endfor %}
                                 </tr>
                                 <!-- Baris angka -->
                                 <tr>
                                     {% for n in numbers %}
-                                        <td class="number-cell">{% n %}</td>
+                                        <td class="number-cell">{{ n }}</td>
                                     {% endfor %}
                                 </tr>
                             </tbody>
@@ -56,7 +56,7 @@
                                 <tbody>
                                     <tr class="text-center fs-2 fw-bold">
                                         {% for t in target_numbers %}
-                                            <td class="target-cell">{% t %}</td>
+                                            <td class="target-cell">{{ t }}</td>
                                         {% endfor %}
                                     </tr>
                                 </tbody>
@@ -72,18 +72,40 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <input id="answer-input" type="text" class="form-control" placeholder="Enter the letters"
-                            autocomplete="off">
-                        <button id="solve-button" class="btn btn-outline-success" type="button">
-                            <i class="fa-solid fa-paper-plane me-1"></i>
-                            <span>Solve</span>
-                        </button>
-                    </div>
+
+    <input
+        id="answer-input"
+        type="text"
+        class="form-control"
+        placeholder="Enter the correct letters"
+        autocomplete="off"
+        autocapitalize="characters"
+        spellcheck="false"
+    >
+
+    <button
+        id="solve-button"
+        class="btn btn-outline-success"
+        type="button"
+    >
+        <i class="fa-solid fa-paper-plane me-1"></i>
+        <span>Solve</span>
+    </button>
+
+</div>
+
+<div
+    id="answer-alert"
+    class="alert alert-danger mt-2 d-none"
+    role="alert"
+></div>
                 </div>
             </div>
         </div>
     </form>
+{% endblock %}
 
+{% block scripts %}
     <script>window.decodingRemainingTime = {% remaining_time|json %};</script>
     <script src="{% static 'global/decoding_js/decoding_js.js' %}"></script>
 {% endblock %}

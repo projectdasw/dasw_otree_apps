@@ -3,11 +3,13 @@ let timerInterval;
 let gameFinished = false;
 let submitting = false;
 
+
 document.addEventListener('DOMContentLoaded', function () {
     remainingTime = Number(window.transcriptionGame.remainingTime || 0);
     updateTimer();
     startTimer();
     setupSubmitButton();
+    setupInputValidation();
     focusInput();
 });
 
@@ -40,26 +42,146 @@ function setupSubmitButton() {
 }
 
 function submitAnswer() {
-    const button = document.getElementById('submit-answer');
-    const input = document.getElementById('transcription-input');
-    const answer = input.value;
+    const button =
+        document.getElementById(
+            'submit-answer'
+        );
 
-    if (gameFinished) {return;}
-    if (submitting) {return;}
-    if (remainingTime <= 0) {handleTimeUp(); return;}
-    if (!input) {return;}
+    const input =
+        document.getElementById(
+            'transcription-input'
+        );
+
+
+    if (gameFinished) {
+        return;
+    }
+
+    if (submitting) {
+        return;
+    }
+
+    if (remainingTime <= 0) {
+        handleTimeUp();
+        return;
+    }
+
+    if (!input) {
+        return;
+    }
+
+
+    const answer =
+        input.value;
+
+
     submitting = true;
-    if (button) {button.disabled = true; button.textContent = 'Checking...';}
-    liveSend({type: 'submit', answer: answer});
+
+
+    if (button) {
+
+        button.disabled = true;
+
+        button.textContent =
+            'Checking...';
+
+    }
+
+
+    liveSend({
+        type: 'submit',
+        answer: answer
+    });
 
     // Debug
     // console.log('Sending answer:', answer);
+}
+
+function showValidationError(message) {
+
+    const input =
+        document.getElementById(
+            'transcription-input'
+        );
+
+    if (!input) {
+        return;
+    }
+
+
+    input.classList.add(
+        'is-invalid'
+    );
+
+    input.focus();
+
+
+    const feedback =
+        document.querySelector(
+            '#transcription-input ~ .invalid-feedback'
+        );
+
+
+    if (feedback) {
+
+        feedback.textContent =
+            message;
+
+    }
+}
+
+function setupInputValidation() {
+
+    const input =
+        document.getElementById(
+            'transcription-input'
+        );
+
+    if (!input) {
+        return;
+    }
+
+    input.addEventListener(
+        'input',
+        function () {
+
+            input.classList.remove(
+                'is-invalid'
+            );
+
+        }
+    );
 }
 
 function liveRecv(data) {
     if (!data) {console.warn('liveRecv received empty data'); return;}
     if (data.type === 'time_up') {handleTimeUp(data); return;}
     if (data.type === 'next_task') {handleNextTask(data); return;}
+    if (data.type === 'validation_error') {
+
+    submitting = false;
+
+    showValidationError(
+        data.message
+    );
+
+
+    const button =
+        document.getElementById(
+            'submit-answer'
+        );
+
+    if (button) {
+
+        button.disabled = false;
+
+        button.textContent =
+            'Submit Answer';
+
+    }
+
+    return;
+}
     console.warn('Unknown server response:', data);
 
     // Debug

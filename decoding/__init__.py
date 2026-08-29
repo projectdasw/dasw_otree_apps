@@ -21,7 +21,7 @@ class Constants(BaseConstants):
     num_rounds = 1
     total_items = 9 # Jumlah pasangan huruf dan angka
     target_count = 5 # Jumlah angka yang harus diterjemahkan
-    decoding_time = 1000 # Durasi Decoding Task dalam detik
+    decoding_time = 10000 # Durasi Decoding Task dalam detik
 
 
 class Subsession(BaseSubsession):

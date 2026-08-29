@@ -36,20 +36,25 @@
                 <div class="container p-0">
                     <div class="row align-items-center">
                         <div class="col-7 p-0">
-                            <div class="card m-0">
-                                <div class="card-body">
-                                    <label for="transcription-input"
-                                           class="form-label d-flex flex-row justify-content-between">
-                                        <span class="fw-semibold">Your Answer</span>
-                                        <span id="feedback" style="display: none;"></span>
-                                    </label>
-                                    <textarea id="transcription-input" class="form-control" rows="5" autocomplete="off"
-                                      spellcheck="false" placeholder="Type the text exactly as shown..."></textarea>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="button" id="submit-answer" class="btn btn-primary px-5">
-                                        Submit Answer
-                                    </button>
+                            <div class="container">
+                                <div class="card m-0">
+                                    <div class="card-body">
+                                        <label for="transcription-input"
+                                               class="form-label d-flex flex-row justify-content-between">
+                                            <span class="fw-semibold">Your Answer</span>
+                                            <span id="feedback" style="display: none;"></span>
+                                        </label>
+                                        <textarea id="transcription-input" class="form-control" rows="5" autocomplete="off"
+                                          spellcheck="false" placeholder="Type the text exactly as shown..."></textarea>
+                                        <div class="invalid-feedback">
+                                            Please enter your transcription.
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="button" id="submit-answer" class="btn btn-primary px-5">
+                                            Submit Answer
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -57,36 +62,36 @@
                             <div class="container">
                                 <div class="row row-cols-1 row-cols-md-2 g-2">
                                     <div class="col">
-                                        <div class="card h-100">
+                                        <div class="card h-100 bg-info border-0">
                                             <div class="card-body">
                                                 <h4 class="mb-4">Completed</h4>
-                                                <h4 id="completed-count" class="text-muted">
+                                                <h4 id="completed-count">
                                                     {{ completed_count }}
                                                 </h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card h-100">
+                                        <div class="card h-100 bg-primary text-light border-0">
                                             <div class="card-body">
                                                 <h4 class="mb-4">Score</h4>
-                                                <h4 id="score" class="text-muted">{{ score }}</h4>
+                                                <h4 id="score">{{ score }}</h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card h-100">
+                                        <div class="card h-100 bg-success text-light border-0">
                                             <div class="card-body">
                                                 <h4 class="mb-4">Correct</h4>
-                                                <h4 id="correct-count" class="text-muted">{{ correct_count }}</h4>
+                                                <h4 id="correct-count">{{ correct_count }}</h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card h-100">
+                                        <div class="card h-100 bg-danger text-light border-0">
                                             <div class="card-body">
                                                 <h4 class="mb-4">Incorrect</h4>
-                                                <h4 id="incorrect-count" class="text-muted">{{ incorrect_count }}</h4>
+                                                <h4 id="incorrect-count">{{ incorrect_count }}</h4>
                                             </div>
                                         </div>
                                     </div>

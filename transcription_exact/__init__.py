@@ -11,7 +11,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'transcription_exact'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    GAME_TIME = 10
+    GAME_TIME = 60
 
 
 class Subsession(BaseSubsession):
@@ -202,6 +202,14 @@ class game(Page):
         if not isinstance(participant_answer,str):
             participant_answer = str(participant_answer)
 
+        if not participant_answer.strip():
+            return {
+                player.id_in_group: dict(
+                    type='validation_error',
+                    message='Please enter your transcription.'
+                )
+            }
+
         # =====================================================
         # GET CURRENT TRANSCRIPTION
         # =====================================================
@@ -319,4 +327,4 @@ class results(Page):
         )
 
 
-page_sequence = [introduction, instructions, game, results]
+page_sequence = [game, results]
