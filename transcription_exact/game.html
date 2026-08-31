@@ -44,8 +44,9 @@
                                             <span class="fw-semibold">Your Answer</span>
                                             <span id="feedback" style="display: none;"></span>
                                         </label>
-                                        <textarea id="transcription-input" class="form-control" rows="5" autocomplete="off"
-                                          spellcheck="false" placeholder="Type the text exactly as shown..."></textarea>
+                                        <textarea id="transcription-input" class="form-control" rows="5"
+                                                  autocomplete="off" spellcheck="false"
+                                                  placeholder="Type the text exactly as shown..."></textarea>
                                         <div class="invalid-feedback">
                                             Please enter your transcription.
                                         </div>
@@ -115,5 +116,5 @@
             initialIncorrect: {{ incorrect_count|json }}
         };
     </script>
-    <script src="{% static 'global/transcription_js/exact_transcription.js' %}"></script>
+    <script src="{% static 'global/transcription/js/exact_transcription/main_script.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,388 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>RET - Count Word</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">RET - Count Word</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {% player.round_number %}</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="alert p-0 m-0">
+                <div class="alert-heading">
+                    <h4 class="m-0">Let's Count the letters</h4>
+                    <p class="m-0 fs-5">
+                        Count the target letters/numbers carefully, enter your answer, and proceed.
+                    </p>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-7">
+                        <table id="boardContainer" class="table table-stripe border border-2 text-center m-0">
+                            <tbody>
+                                {% for row in board %}
+                                    <tr>
+                                        {% for cell in row %}
+                                            <td class="board-cell border border-3 fs-4">
+                                                <strong>{{ cell }}</strong>
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <div class="fs-5 mb-3">
+                            How many letters/numbers
+                            <span id="targetCharacter" class="badge bg-danger fs-5">{{ target_character }}</span>
+                            appear in the table?
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <input id="countGuess" type="text" class="form-control" min="0" step="1"
+                                       inputmode="numeric" autocomplete="off" autofocus="on" required>
+                                <button type="button" class="btn btn-primary" onclick="submitGuess()">
+                                    Submit Answer
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table fs-5">
+                            <thead>
+                                <th scope="col">Score</th>
+                                <th scope="col">Time Remaining</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span id="playerScore" class="fw-bold text-success">{{ player_score }}</span>
+                                    </td>
+                                    <td>
+                                        <span id="gameTimer" class="fw-bold"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="feedbackMessage" class="alert d-none text-center fw-bold" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    const initialRemainingTime = Number("{{ remaining_time }}");
+    let remainingTime = initialRemainingTime;
+let timerInterval = null;
+let gameFinished = false;
+let submitting = false;
+
+function goToResults() {
+
+    const form = document.querySelector("form");
+
+    if (form) {
+        form.submit();
+    }
+}
+
+
+function updateTimer() {
+
+    if (remainingTime <= 0) {
+        remainingTime = 0;
+
+        document.getElementById("gameTimer").textContent = "00:00";
+
+        finishGame();
+
+        return;
+    }
+
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds = Math.floor(remainingTime % 60);
+
+    document.getElementById("gameTimer").textContent =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+
+    remainingTime--;
+}
+
+
+function startTimer() {
+
+    updateTimer();
+
+    timerInterval = setInterval(() => {
+        updateTimer();
+    }, 1000);
+}
+
+
+function finishGame() {
+
+    if (gameFinished) {
+        return;
+    }
+
+    gameFinished = true;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    document.getElementById("countGuess").disabled = true;
+
+    const button = document.querySelector(
+        'button[onclick="submitGuess()"]'
+    );
+
+    if (button) {
+        button.disabled = true;
+    }
+
+    liveSend({
+        timer_finished: true
+    });
+}
+
+function showFeedback(isCorrect) {
+
+    const feedback = document.getElementById("feedbackMessage");
+
+    // Reset class
+    feedback.classList.remove(
+        "d-none",
+        "alert-success",
+        "alert-danger"
+    );
+
+    if (isCorrect) {
+
+        feedback.classList.add("alert-success");
+
+        feedback.textContent =
+            `Correct! Keep it up`;
+
+    } else {
+
+        feedback.classList.add("alert-danger");
+
+        feedback.textContent =
+            "Incorrect. Try the next puzzle!";
+    }
+
+    // Hilangkan feedback setelah 1 detik
+    setTimeout(() => {
+
+        feedback.classList.add("d-none");
+
+    }, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    startTimer();
+});
+
+        function renderBoard(board) {
+    const boardContainer = document.getElementById("boardContainer");
+
+    boardContainer.innerHTML = "";
+
+    const tbody = document.createElement("tbody");
+
+    board.forEach(row => {
+
+        const tr = document.createElement("tr");
+
+        row.forEach(char => {
+
+            const td = document.createElement("td");
+
+            td.className = "board-cell border border-3 fs-4";
+
+            const strong = document.createElement("strong");
+            strong.textContent = char;
+
+            td.appendChild(strong);
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    boardContainer.appendChild(tbody);
+}
+
+function submitGuess() {
+
+    if (gameFinished) {
+        return;
+    }
+
+    if (submitting) {
+        return;
+    }
+
+    const input = document.getElementById("countGuess");
+
+    const value = input.value.trim();
+
+    // Kosong
+    if (value === "") {
+        input.focus();
+        return;
+    }
+
+    // Hanya integer positif atau 0
+    if (!/^\d+$/.test(value)) {
+        input.value = "";
+        input.focus();
+        return;
+    }
+
+    const guess = Number(value);
+
+    // Batas maksimum board
+    const maxCount =
+        {{ Constants.board_rows }} *
+        {{ Constants.board_columns }};
+
+    if (guess < 0 || guess > maxCount) {
+        input.value = "";
+        input.focus();
+        return;
+    }
+
+    submitting = true;
+
+    input.disabled = true;
+
+    const button = document.querySelector(
+        'button[onclick="submitGuess()"]'
+    );
+
+    if (button) {
+        button.disabled = true;
+    }
+
+    liveSend({
+        count_guess: value
+    });
+}
+
+liveRecv = function(data) {
+
+    // Game selesai
+    if (data.game_finished) {
+
+    gameFinished = true;
+    submitting = false;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    document.getElementById("countGuess").disabled = true;
+
+    const button = document.querySelector(
+        'button[onclick="submitGuess()"]'
+    );
+
+    if (button) {
+        button.disabled = true;
+    }
+
+    goToResults();
+
+    return;
+}
+
+    // Validation error
+    if (data.validation_error) {
+
+        submitting = false;
+
+        const input =
+            document.getElementById("countGuess");
+
+        input.disabled = false;
+        input.focus();
+
+        const button = document.querySelector(
+            'button[onclick="submitGuess()"]'
+        );
+
+        if (button) {
+            button.disabled = false;
+        }
+
+        return;
+    }
+
+    // Feedback jawaban
+    if (data.is_correct !== undefined) {
+
+        showFeedback(
+            data.is_correct,
+            data.score_earned
+        );
+    }
+
+    // Update score
+    if (data.new_score !== undefined) {
+
+        document.getElementById("playerScore").textContent =
+            "+" + data.new_score;
+    }
+
+    // Update target
+    if (data.new_target_character !== undefined) {
+
+        document.getElementById("targetCharacter").textContent =
+            data.new_target_character;
+    }
+
+    // Update board
+    if (data.new_board !== undefined) {
+
+        renderBoard(data.new_board);
+    }
+
+    // Update remaining time
+    if (data.remaining_time !== undefined) {
+
+        remainingTime =
+            Number(data.remaining_time);
+    }
+
+    // Reset input
+    document.getElementById("countGuess").value = "";
+
+    // Aktifkan kembali input
+    submitting = false;
+
+    document.getElementById("countGuess").disabled = false;
+
+    const button = document.querySelector(
+        'button[onclick="submitGuess()"]'
+    );
+
+    if (button) {
+        button.disabled = false;
+    }
+
+    document.getElementById("countGuess").focus();
+};
+    </script>
+{% endblock %}

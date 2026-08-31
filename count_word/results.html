@@ -1,0 +1,130 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Count Word - Results
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div class="text-center mb-4">
+
+                <h1 class="fw-bold">
+                    Count Word
+                </h1>
+
+                <h3 class="text-success">
+                    Permainan Selesai!
+                </h3>
+
+                <p class="text-muted">
+                    Berikut adalah hasil permainan Anda.
+                </p>
+
+            </div>
+
+
+            <!-- Total Score -->
+
+            <div class="card border-success mb-4">
+
+                <div class="card-body text-center">
+
+                    <div class="text-muted">
+                        Total Skor
+                    </div>
+
+                    <div class="display-4 fw-bold text-success">
+                        {{ total_score }}
+                    </div>
+
+                    <div class="text-muted">
+                        poin
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Statistics -->
+
+            <div class="row text-center">
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="card h-100">
+
+                        <div class="card-body">
+
+                            <div class="text-muted">
+                                Total Jawaban
+                            </div>
+
+                            <div class="fs-2 fw-bold">
+                                {{ total_attempts }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="card border-success h-100">
+
+                        <div class="card-body">
+
+                            <div class="text-muted">
+                                Jawaban Benar
+                            </div>
+
+                            <div class="fs-2 fw-bold text-success">
+                                {{ correct_answers }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="card border-danger h-100">
+
+                        <div class="card-body">
+
+                            <div class="text-muted">
+                                Jawaban Salah
+                            </div>
+
+                            <div class="fs-2 fw-bold text-danger">
+                                {{ wrong_answers }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
