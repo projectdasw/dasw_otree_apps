@@ -11,7 +11,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'transcription_exact'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    GAME_TIME = 60
+    GAME_TIME = 10000
 
 
 class Subsession(BaseSubsession):

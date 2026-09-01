@@ -2,13 +2,13 @@
 {% load otree static %}
 
 {% block title %}
-    <title>Exact game</title>
+    <title>Exact Transcription</title>
 {% endblock %}
 
 {% block content %}
     <div class="card">
         <div class="card-header d-flex flex-row justify-content-between align-items-center">
-            <h5 class="m-0">RET game - Exact Transciption</h5>
+            <h5 class="m-0">RET Transcription - Exact Transciption</h5>
             <h4 class="m-0">
                 <span class="badge text-bg-primary">Round {% player.round_number %}</span>
             </h4>
@@ -48,7 +48,7 @@
                                                   autocomplete="off" spellcheck="false"
                                                   placeholder="Type the text exactly as shown..."></textarea>
                                         <div class="invalid-feedback">
-                                            Please enter your game.
+                                            Please enter your transcription.
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -116,5 +116,5 @@
             initialIncorrect: {{ incorrect_count|json }}
         };
     </script>
-    <script src="{% static 'global/game/js/exact_transcription/main_script.js' %}"></script>
+    <script src="{% static 'global/transcription/js/exact_transcription/main_script.js' %}"></script>
 {% endblock %}

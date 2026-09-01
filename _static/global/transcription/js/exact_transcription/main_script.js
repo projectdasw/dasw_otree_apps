@@ -49,7 +49,7 @@ function submitAnswer() {
 
     const input =
         document.getElementById(
-            'game-input'
+            'transcription-input'
         );
 
 
@@ -101,7 +101,7 @@ function showValidationError(message) {
 
     const input =
         document.getElementById(
-            'game-input'
+            'transcription-input'
         );
 
     if (!input) {
@@ -118,7 +118,7 @@ function showValidationError(message) {
 
     const feedback =
         document.querySelector(
-            '#game-input ~ .invalid-feedback'
+            '#transcription-input ~ .invalid-feedback'
         );
 
 
@@ -134,7 +134,7 @@ function setupInputValidation() {
 
     const input =
         document.getElementById(
-            'game-input'
+            'transcription-input'
         );
 
     if (!input) {
@@ -190,7 +190,7 @@ function liveRecv(data) {
 
 function handleNextTask(data) {
     const button = document.getElementById('submit-answer');
-    const input = document.getElementById('game-input');
+    const input = document.getElementById('transcription-input');
     const sourceText = document.getElementById('source-text');
 
     submitting = false;
@@ -237,7 +237,7 @@ function showFeedback(correct) {
 
 function handleTimeUp(data) {
     const button = document.getElementById('submit-answer');
-    const input = document.getElementById('game-input');
+    const input = document.getElementById('transcription-input');
     const form = document.getElementById('form');
 
     if (gameFinished) {return;}
@@ -263,7 +263,7 @@ function updateElement(elementId, value) {
 }
 
 function focusInput() {
-    const input = document.getElementById('game-input');
+    const input = document.getElementById('transcription-input');
 
     if (input) {input.focus();}
 }
