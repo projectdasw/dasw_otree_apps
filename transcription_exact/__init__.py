@@ -4,7 +4,7 @@ import time
 import random
 
 doc = """
-RET Transcription -  Exact Transcription
+RET game -  Exact game
 """
 
 class C(BaseConstants):
@@ -206,7 +206,7 @@ class game(Page):
             return {
                 player.id_in_group: dict(
                     type='validation_error',
-                    message='Please enter your transcription.'
+                    message='Please enter your game.'
                 )
             }
 

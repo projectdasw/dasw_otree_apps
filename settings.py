@@ -26,6 +26,18 @@ SESSION_CONFIGS = [
     #     num_demo_participants=1,
     # ),
     dict(
+        display_name='real_effort_task_continuous_transcription - RET Continuous Transcription',
+        name='transcription_continuous',
+        app_sequence=['transcription_continuous'],
+        num_demo_participants=1,
+    ),
+    dict(
+        display_name='real_effort_task_count_word - RET Count Word',
+        name='count_word',
+        app_sequence=['count_word'],
+        num_demo_participants=1,
+    ),
+    dict(
         display_name='real_effort_task_exact_transcription - RET Exact Transcription',
         name='transcription_exact',
         app_sequence=['transcription_exact'],
@@ -37,12 +49,6 @@ SESSION_CONFIGS = [
     #     app_sequence=['slot_machine'],
     #     num_demo_participants=1,
     # ),
-    dict(
-        display_name='real_effort_task_count_word - RET Count Word',
-        name='count_word',
-        app_sequence=['count_word'],
-        num_demo_participants=1,
-    ),
     # dict(
     #     display_name='shop_apps - Shopping Apps',
     #     name='shop_apps',

@@ -1,0 +1,194 @@
+{{ block title }}
+    Continuous Transcription
+{{ endblock }}
+
+
+{{ block content }}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body text-center p-5">
+
+                    <h2 class="mb-2">
+                        Continuous Transcription
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        Task Completed
+                    </p>
+
+
+                    <div class="alert alert-success">
+
+                        <h4 class="mb-0">
+                            Time's Up!
+                        </h4>
+
+                    </div>
+
+
+                    <!-- Results -->
+
+                    <div class="row g-3 mt-4">
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <div class="text-muted">
+                                    Completed
+                                </div>
+
+                                <div class="fs-3 fw-bold">
+                                    {{ completed }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <div class="text-muted">
+                                    Total Attempts
+                                </div>
+
+                                <div class="fs-3 fw-bold">
+                                    {{ total_attempts }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <div class="text-muted">
+                                    Correct
+                                </div>
+
+                                <div class="fs-3 fw-bold">
+                                    {{ correct_answers }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <div class="text-muted">
+                                    Errors
+                                </div>
+
+                                <div class="fs-3 fw-bold">
+                                    {{ errors }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <div class="text-muted">
+                                    Accuracy
+                                </div>
+
+                                <div class="fs-3 fw-bold"
+                                     id="final-accuracy">
+
+                                    {{ accuracy }}%
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <div class="text-muted">
+                                    Total Reward
+                                </div>
+
+                                <div class="fs-3 fw-bold">
+
+                                    {{ reward }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const accuracyElement =
+            document.getElementById(
+                'final-accuracy'
+            );
+
+
+        const accuracy =
+            Number(
+                accuracyElement.textContent
+            );
+
+
+        if (Number.isFinite(accuracy)) {
+
+            accuracyElement.textContent =
+                accuracy.toFixed(1) + '%';
+
+        } else {
+
+            accuracyElement.textContent =
+                '0.0%';
+
+        }
+
+    }
+);
+
+</script>
+
+
+{{ endblock }}

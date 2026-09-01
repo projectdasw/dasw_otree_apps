@@ -1,0 +1,777 @@
+{{ block title }}
+    Continuous Transcription
+{{ endblock }}
+
+
+{{ block content }}
+
+<div class="container">
+
+    <!-- Timer -->
+
+    <div class="text-center mb-4">
+
+        <div class="text-muted">
+            Time Remaining
+        </div>
+
+        <div id="timer"
+             class="fs-2 fw-bold">
+
+            00:00
+
+        </div>
+
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                Let's Transcribe
+            </h4>
+
+
+            <p class="text-muted">
+                Transcribe the text exactly as shown below.
+            </p>
+
+
+            <!-- Statistics -->
+
+            <div class="row mb-4">
+
+    <div class="col-md-3">
+
+        <div class="border rounded p-3 text-center">
+
+            <div class="text-muted">
+                Attempts
+            </div>
+
+            <div id="total-attempts"
+                 class="fs-4 fw-bold">
+
+                {{ total_attempts }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="border rounded p-3 text-center">
+
+            <div class="text-muted">
+                Correct
+            </div>
+
+            <div id="correct-answers"
+                 class="fs-4 fw-bold">
+
+                {{ correct_answers }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="border rounded p-3 text-center">
+
+            <div class="text-muted">
+                Errors
+            </div>
+
+            <div id="errors"
+                 class="fs-4 fw-bold">
+
+                {{ errors }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="border rounded p-3 text-center">
+
+            <div class="text-muted">
+                Accuracy
+            </div>
+
+            <div id="accuracy"
+                 class="fs-4 fw-bold">
+
+                {{ accuracy }}%
+
+            </div>
+
+        </div>
+    </div>
+            </div>
+
+
+            <!-- Reward -->
+
+            <div class="alert alert-light border">
+
+                <strong>
+                    Reward:
+                </strong>
+
+                <span id="reward">
+                    {{ reward }}
+                </span>
+
+            </div>
+
+
+            <!-- Text -->
+
+            <div class="alert alert-light border mb-4">
+
+                <div class="fw-semibold">
+                    Text to Transcribe
+                </div>
+
+                <div id="transcription-text"
+                     class="mt-2">
+
+                    {{ transcription_text }}
+
+                </div>
+
+            </div>
+
+
+            <!-- Input -->
+
+            <div class="mb-3">
+
+                <label
+                    for="transcription-input"
+                    class="form-label">
+
+                    Your Answer
+
+                </label>
+
+
+                <textarea
+                    id="transcription-input"
+                    class="form-control"
+                    rows="4"
+                    autocomplete="off"
+                    spellcheck="false"></textarea>
+
+            </div>
+
+
+            <!-- Feedback -->
+
+            <div id="feedback"
+                 class="mb-3">
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+                type="button"
+                id="submit-transcription"
+                class="btn btn-primary">
+
+                Submit
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const input =
+            document.getElementById(
+                'transcription-input'
+            );
+
+        const submitButton =
+            document.getElementById(
+                'submit-transcription'
+            );
+
+        const textElement =
+            document.getElementById(
+                'transcription-text'
+            );
+
+        const feedback =
+            document.getElementById(
+                'feedback'
+            );
+
+        const attemptsElement =
+            document.getElementById(
+                'total-attempts'
+            );
+
+        const correctElement =
+            document.getElementById(
+                'correct-answers'
+            );
+
+        const errorsElement =
+            document.getElementById(
+                'errors'
+            );
+
+        const accuracyElement =
+            document.getElementById(
+                'accuracy'
+            );
+
+        const rewardElement =
+            document.getElementById(
+                'reward'
+            );
+
+        const timerElement =
+            document.getElementById(
+                'timer'
+            );
+
+        /*
+ * Disable Copy / Paste / Cut
+ */
+
+input.addEventListener(
+    'paste',
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+input.addEventListener(
+    'copy',
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+input.addEventListener(
+    'cut',
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+/*
+ * Disable keyboard shortcuts
+ */
+
+input.addEventListener(
+    'keydown',
+    function (event) {
+
+        if (
+            event.ctrlKey ||
+            event.metaKey
+        ) {
+
+            const key =
+                event.key.toLowerCase();
+
+
+            if (
+                key === 'v' ||
+                key === 'c' ||
+                key === 'x'
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        }
+
+    }
+);
+
+
+/*
+ * Disable drag & drop
+ */
+
+input.addEventListener(
+    'drop',
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+/*
+ * Disable context menu
+ */
+
+input.addEventListener(
+    'contextmenu',
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+        /*
+         * Remaining time received from server
+         */
+
+        let remainingTime =
+            Number(
+                "{{ remaining_time }}"
+            );
+
+
+        /*
+         * Game state
+         */
+
+        let gameFinished = false;
+
+        let submitting = false;
+
+        function updateAccuracy(value) {
+
+    const accuracy =
+        Number(value);
+
+    if (Number.isFinite(accuracy)) {
+
+        accuracyElement.textContent =
+            accuracy.toFixed(1) + '%';
+
+    } else {
+
+        accuracyElement.textContent =
+            '0.0%';
+
+    }
+
+}
+
+
+        /*
+         * Format timer
+         */
+
+        function updateTimer() {
+
+            remainingTime = Math.max(
+                0,
+                remainingTime
+            );
+
+
+            const totalSeconds =
+                Math.ceil(
+                    remainingTime
+                );
+
+
+            const minutes =
+                Math.floor(
+                    totalSeconds / 60
+                );
+
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            timerElement.textContent =
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+
+            if (
+                remainingTime <= 0 &&
+                !gameFinished
+            ) {
+
+                finishGame();
+
+            }
+
+        }
+
+
+        /*
+         * Finish game
+         */
+
+        function finishGame() {
+
+    if (gameFinished) {
+        return;
+    }
+
+
+    gameFinished = true;
+
+    submitting = false;
+
+
+    input.disabled = true;
+
+    submitButton.disabled = true;
+
+
+    feedback.innerHTML = `
+        <div class="alert alert-success">
+            <strong>Time is up!</strong>
+            <br>
+            The transcription task has ended.
+        </div>
+    `;
+
+
+    /*
+     * Wait briefly so the participant
+     * can see the time-up message.
+     */
+
+    const form = document.querySelector('form');
+
+    if (form) {
+        form.submit();
+    }
+
+}
+
+
+        /*
+         * Timer display
+         */
+
+        const timerInterval =
+            setInterval(
+                function () {
+
+                    if (gameFinished) {
+
+                        clearInterval(
+                            timerInterval
+                        );
+
+                        return;
+
+                    }
+
+
+                    remainingTime -= 0.1;
+
+                    updateTimer();
+
+                },
+                100
+            );
+
+
+        /*
+         * Submit
+         */
+
+        submitButton.addEventListener(
+            'click',
+            function () {
+
+                if (gameFinished) {
+                    return;
+                }
+
+
+                if (submitting) {
+                    return;
+                }
+
+
+                if (remainingTime <= 0) {
+
+                    finishGame();
+
+                    return;
+
+                }
+
+
+                const answer =
+                    input.value;
+
+
+                if (answer.trim() === '') {
+
+                    feedback.innerHTML = `
+                        <div class="alert alert-warning">
+                            Please enter your transcription.
+                        </div>
+                    `;
+
+                    input.focus();
+
+                    return;
+
+                }
+
+
+                submitting = true;
+
+                submitButton.disabled = true;
+
+
+                liveSend({
+
+                    action: 'submit',
+
+                    answer: answer
+
+                });
+
+            }
+        );
+
+
+        /*
+         * Receive server response
+         */
+
+        window.liveRecv =
+            function (data) {
+
+
+                /*
+                 * Finished
+                 */
+
+                if (
+                    data.action ===
+                    'finished'
+                ) {
+
+                    if (
+                        data.total_attempts
+                        !== undefined
+                    ) {
+
+                        attemptsElement.textContent =
+                            data.total_attempts;
+
+                    }
+
+
+                    if (
+                        data.correct_answers
+                        !== undefined
+                    ) {
+
+                        correctElement.textContent =
+                            data.correct_answers;
+
+                    }
+
+
+                    if (
+                        data.errors
+                        !== undefined
+                    ) {
+
+                        errorsElement.textContent =
+                            data.errors;
+
+                    }
+
+
+                    if (
+                        data.reward
+                        !== undefined
+                    ) {
+
+                        rewardElement.textContent =
+                            data.reward;
+
+                    }
+
+
+                    finishGame();
+
+                    return;
+
+                }
+
+
+                /*
+                 * Update timer
+                 */
+
+                if (
+                    data.remaining_time
+                    !== undefined
+                ) {
+
+                    remainingTime =
+                        Number(
+                            data.remaining_time
+                        );
+
+                }
+
+
+                /*
+                 * Incorrect
+                 */
+
+                if (
+                    data.action ===
+                    'incorrect'
+                ) {
+
+                    attemptsElement.textContent =
+                        data.total_attempts;
+
+                    correctElement.textContent =
+                        data.correct_answers;
+
+                    errorsElement.textContent =
+                        data.errors;
+
+                    updateAccuracy(
+                        data.accuracy
+                    );
+
+                    rewardElement.textContent =
+                        data.reward;
+
+
+                    feedback.innerHTML = `
+                        <div class="alert alert-danger">
+                            Incorrect. Try again.
+                        </div>
+                    `;
+
+
+                    /*
+                     * IMPORTANT:
+                     *
+                     * The transcription text
+                     * is NOT changed.
+                     */
+
+
+                    input.value = '';
+
+                    submitting = false;
+
+                    submitButton.disabled = false;
+
+                    input.focus();
+
+
+                    updateTimer();
+
+                    return;
+
+                }
+
+
+                /*
+                 * Correct
+                 */
+
+                if (
+                    data.action ===
+                    'correct'
+                ) {
+
+                    attemptsElement.textContent =
+                        data.total_attempts;
+
+                    correctElement.textContent =
+                        data.correct_answers;
+
+                    errorsElement.textContent =
+                        data.errors;
+
+                    updateAccuracy(
+                        data.accuracy
+                    );
+
+                    rewardElement.textContent =
+                        data.reward;
+
+
+                    feedback.innerHTML = `
+                        <div class="alert alert-success">
+                            Correct!
+                        </div>
+                    `;
+
+
+                    /*
+                     * Change text ONLY
+                     * after correct answer
+                     */
+
+                    textElement.textContent =
+                        data.next_text;
+
+
+                    input.value = '';
+
+                    submitting = false;
+
+                    submitButton.disabled = false;
+
+                    input.focus();
+
+
+                    updateTimer();
+
+                }
+
+            };
+
+
+        /*
+         * Initial timer
+         */
+
+        updateTimer();
+
+        input.focus();
+
+    }
+);
+
+</script>
+
+{{ endblock }}
