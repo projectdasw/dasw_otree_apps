@@ -11,7 +11,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'transcription_exact'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    GAME_TIME = 10000
+    GAME_TIME = 60
 
 
 class Subsession(BaseSubsession):
@@ -169,7 +169,6 @@ class game(Page):
         # =====================================================
         # VALIDATE REQUEST
         # =====================================================
-
         if not isinstance(data, dict):
             return
 
@@ -179,7 +178,6 @@ class game(Page):
         # =====================================================
         # CHECK SERVER TIMER
         # =====================================================
-
         remaining_time = get_remaining_time(player)
 
         if remaining_time <= 0:
@@ -196,7 +194,6 @@ class game(Page):
         # =====================================================
         # GET PARTICIPANT ANSWER
         # =====================================================
-
         participant_answer = data.get('answer','')
 
         if not isinstance(participant_answer,str):
@@ -210,29 +207,10 @@ class game(Page):
                 )
             }
 
-        # =====================================================
-        # GET CURRENT TRANSCRIPTION
-        # =====================================================
-
-        source_text = get_current_task(player)
-
-        # =====================================================
-        # EXACT VALIDATION
-        # =====================================================
-
-        is_correct = (participant_answer == source_text)
-
-        # =====================================================
-        # SCORE
-        # =====================================================
-
-        score_earned = 1 if is_correct else 0
-
-        # =====================================================
-        # UPDATE RESULT
-        # =====================================================
-
-        player.completed_count += 1
+        source_text = get_current_task(player) # GET CURRENT TRANSCRIPTION
+        is_correct = (participant_answer == source_text) # EXACT VALIDATION
+        score_earned = 1 if is_correct else 0 # SCORE
+        player.completed_count += 1 # UPDATE RESULT
 
         if is_correct:
             player.correct_count += 1
@@ -243,7 +221,6 @@ class game(Page):
         # =====================================================
         # SAVE ATTEMPT
         # =====================================================
-
         save_attempt(
             player=player,
             source_text=source_text,
@@ -252,17 +229,8 @@ class game(Page):
             score_earned=score_earned,
         )
 
-        # =====================================================
-        # GET NEXT TASK
-        # =====================================================
-
-        next_task = move_to_next_task(player)
-
-        # =====================================================
-        # CHECK TIMER AGAIN
-        # =====================================================
-
-        remaining_time = get_remaining_time(player)
+        next_task = move_to_next_task(player) # GET NEXT TASK
+        remaining_time = get_remaining_time(player) # CHECK TIMER AGAIN
 
         if remaining_time <= 0:
             return {
@@ -275,16 +243,11 @@ class game(Page):
                 )
             }
 
-        # =====================================================
-        # DEBUG
-        # =====================================================
-
-        # print("TRANSCRIPTION LIVE RESPONSE:",next_task)
+        # print("TRANSCRIPTION LIVE RESPONSE:",next_task) # DEBUG
 
         # =====================================================
         # SEND RESPONSE TO BROWSER
         # =====================================================
-
         return {
             player.id_in_group: dict(
                 type='next_task',

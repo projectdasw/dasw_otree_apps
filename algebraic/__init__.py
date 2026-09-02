@@ -1,5 +1,4 @@
 from otree.api import *
-from otree.assets.app_template import page_sequence
 
 doc = """
 RET - Algebraic

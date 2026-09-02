@@ -15,7 +15,7 @@ class Constants(BaseConstants):
     board_rows = 5
     board_columns = 7
     characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-    game_duration = 10000
+    game_duration = 60
 
 
 class Subsession(BaseSubsession):
@@ -31,17 +31,17 @@ class Player(BasePlayer):
     actual_count = models.IntegerField(initial=0)
     current_target = models.StringField(initial="")
     total_score = models.IntegerField(initial=0)
-    current_board = models.LongStringField(initial="") # Menyimpan board dalam bentuk JSON
+    current_board = models.LongStringField(initial="") # Save board in JSON
     correct_answers = models.IntegerField(initial=0)
     wrong_answers = models.IntegerField(initial=0)
     total_attempts = models.IntegerField(initial=0)
     game_start_time = models.FloatField(initial=0)
     game_end_time = models.FloatField(initial=0)
-    game_finished = models.BooleanField(initial=False) # Menandakan apakah game sudah selesai
+    game_finished = models.BooleanField(initial=False)
 
 
 def generate_board():
-    """Generate board baru."""
+    """Generate new board."""
     return [
         [
             random.choice(Constants.characters)
@@ -51,7 +51,7 @@ def generate_board():
     ]
 
 def generate_game():
-    """Generate target, board, dan jumlah target."""
+    """Generate target, board, and target."""
     target = random.choice(Constants.characters)
     board = generate_board()
     actual_count = sum(
@@ -74,20 +74,13 @@ def get_remaining_time(player):
     return max(0, remaining)
 
 def save_game_state(player, target, board, actual_count):
-    """Simpan state game ke database."""
+    """Save the state game to database."""
     player.current_target = target
     player.current_board = json.dumps(board)
     player.actual_count = actual_count
 
 def validate_guess(value):
-    """
-    Validasi jawaban Count Word.
-    Return:
-        (True, integer_value)
-    atau
-        (False, None)
-    """
-
+    """Validation."""
     if value is None:
         return False, None
 
@@ -125,11 +118,9 @@ def validate_guess(value):
     return True, guess
 
 def live_game(player: Player, data):
-    # Game sudah selesai?
     if player.game_finished:
         return
 
-    # Timer selesai?
     if data.get('timer_finished'):
         if get_remaining_time(player) <= 0:
             player.game_finished = True
@@ -143,8 +134,7 @@ def live_game(player: Player, data):
 
         return
 
-    # Cek waktu server
-    remaining_time = get_remaining_time(player)
+    remaining_time = get_remaining_time(player) # Time Server Check
 
     if remaining_time <= 0:
         player.game_finished = True
@@ -156,11 +146,11 @@ def live_game(player: Player, data):
             }
         }
 
-    # Pastikan ada jawaban
+    # Double check on answer
     if 'count_guess' not in data:
         return
 
-    # Validasi jawaban
+    # Validation the answer
     is_valid, guess = validate_guess(data.get('count_guess'))
 
     if not is_valid:
@@ -171,8 +161,7 @@ def live_game(player: Player, data):
             }
         }
 
-    # Batas maksimum
-    max_count = (Constants.board_rows * Constants.board_columns)
+    max_count = (Constants.board_rows * Constants.board_columns) # Maximum count
 
     if guess > max_count:
         return {
@@ -182,8 +171,8 @@ def live_game(player: Player, data):
             }
         }
 
-    player.count_guess = guess # Simpan jawaban
-    is_correct = guess == player.actual_count # Cek jawaban
+    player.count_guess = guess # save the answer
+    is_correct = guess == player.actual_count # Check the answer
     score_earned = 0
     player.total_attempts += 1
 
@@ -194,8 +183,7 @@ def live_game(player: Player, data):
     else:
         player.wrong_answers += 1
 
-    # Cek waktu lagi
-    remaining_time = get_remaining_time(player)
+    remaining_time = get_remaining_time(player) # Double check Time Server
 
     if remaining_time <= 0:
         player.game_finished = True
@@ -207,7 +195,7 @@ def live_game(player: Player, data):
             }
         }
 
-    # Generate soal berikutnya
+    # Generate next task
     target, board, actual_count = generate_game()
     save_game_state(player, target, board, actual_count)
 
@@ -228,7 +216,6 @@ class game(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        # Generate game HANYA jika belum ada game
         if not player.current_board:
             target, board, actual_count = generate_game()
             save_game_state(player, target, board, actual_count)

@@ -1,5 +1,4 @@
 from os import environ
-
 SESSION_CONFIGS = [
     # dict(
     #     display_name='donation_with_rank - Donation with rank',
@@ -49,13 +48,14 @@ SESSION_CONFIGS = [
     #     app_sequence=['slot_machine'],
     #     num_demo_participants=1,
     # ),
-    # dict(
-    #     display_name='shop_apps - Shopping Apps',
-    #     name='shop_apps',
-    #     app_sequence=['shop_apps'],
-    #     num_demo_participants=1,
-    # ),
+    dict(
+        display_name='shop_apps - Shopping Apps',
+        name='shop_apps',
+        app_sequence=['shop_apps'],
+        num_demo_participants=1,
+    ),
 ]
+
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
