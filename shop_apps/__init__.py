@@ -1,7 +1,7 @@
 from otree.api import *
 
 doc = """
-Shopping app (online grocery store)
+Shopping app
 """
 
 
@@ -88,14 +88,14 @@ def live_method(player: Player, data):
 
 
 # PAGES
-class MyPage(Page):
+class game(Page):
     live_method = live_method
 
 
-class Results(Page):
+class results(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(items=Item.filter(player=player))
 
 
-page_sequence = [MyPage, Results]
+page_sequence = [game, results]

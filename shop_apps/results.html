@@ -1,0 +1,40 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Results of Online Shop</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Results - Online Shop</h5>
+        </div>
+        <div class="card-body">
+            <div class="card w-50 text-center mx-auto mb-3">
+                <i class="fa-solid fa-circle-check text-success pt-3 mx-auto" style="font-size: 10em"></i>
+                <div class="card-body">
+                    <h2 class="card-title">Checkout Success</h2>
+                    <p class="card-text">
+                        Your transaction are shown on below. <br>
+                        Your order cost {{ player.total_price }}.
+                    </p>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+                {% for i in items %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.quantity }}</td>
+                        <td>{{ i.unit_price }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
