@@ -3,7 +3,7 @@
 > A modular collection of experimental applications built with **oTree** for behavioral, economic, decision-making, and Real Effort Task (RET) experiments.
 
 [![oTree](https://img.shields.io/badge/oTree-Experimental%20Framework-blue)](https://www.otree.org/)
-[![Python](https://img.shields.io/badge/Python-3.x-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.13-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ---
