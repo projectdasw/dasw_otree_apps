@@ -6,35 +6,144 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header">
-            <h5 class="m-0">Results - Online Shop</h5>
-        </div>
-        <div class="card-body">
-            <div class="card w-50 text-center mx-auto mb-3">
-                <i class="fa-solid fa-circle-check text-success pt-3 mx-auto" style="font-size: 10em"></i>
-                <div class="card-body">
-                    <h2 class="card-title">Checkout Success</h2>
-                    <p class="card-text">
-                        Your transaction are shown on below. <br>
-                        Your order cost {{ player.total_price }}.
-                    </p>
-                </div>
-            </div>
-            <table class="table table-striped">
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                </tr>
-                {% for i in items %}
-                    <tr>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.quantity }}</td>
-                        <td>{{ i.unit_price }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+
+<div class="card">
+
+    <div class="card-header">
+        <h5 class="m-0">Results - Online Shop</h5>
     </div>
+
+    <div class="card-body">
+
+        <div class="card w-50 text-center mx-auto mb-4">
+
+            <i
+                class="fa-solid fa-circle-check text-success pt-3 mx-auto"
+                style="font-size: 10em">
+            </i>
+
+            <div class="card-body">
+
+                <h2 class="card-title">
+                    Checkout Success
+                </h2>
+
+                <p class="card-text">
+                    Your transaction has been completed successfully.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <h5 class="m-0">
+                    Order Summary
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table mb-0">
+
+                    <tbody>
+
+                        <tr>
+                            <td>Cart Subtotal</td>
+                            <td class="text-end">
+                                {{ player.subtotal }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Tax (10%)</td>
+                            <td class="text-end">
+                                {{ player.tax }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Discount (30%)</td>
+                            <td class="text-end">
+                                {{ player.discount }}
+                            </td>
+                        </tr>
+
+                        <tr class="fw-bold">
+                            <td>Cart Total</td>
+                            <td class="text-end">
+                                {{ player.total_price }}
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER ITEMS -->
+
+        <div class="card">
+
+            <div class="card-header">
+                <h5 class="m-0">
+                    Purchased Products
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for i in items %}
+
+        <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.quantity }}</td>
+            <td>{{ i.unit_price }}</td>
+            <td>{{ i.total_price }}</td>
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="4" class="text-center text-muted">
+                No products were purchased.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}
