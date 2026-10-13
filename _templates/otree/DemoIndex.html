@@ -1,0 +1,375 @@
+{% extends "otree/BaseAdminRegular.html" %}
+
+{% block head_title %}DASW | Experiment Demo{% endblock %}
+
+{% block title %}DASW Experiment Demo{% endblock %}
+
+{% block internal_styles %}
+    {{ super() }}
+    <link
+        href="{% static 'demo/css/demo.css' %}"
+        rel="stylesheet"
+    />
+{% endblock %}
+
+{% block content %}
+
+<div class="dasw-demo">
+
+    <!-- Hero section -->
+    <section class="dasw-hero">
+        <div class="dasw-hero-content">
+            <div class="dasw-eyebrow">
+                DASW PROJECT
+            </div>
+
+            <h1>Experimental Research Laboratory</h1>
+
+            <p class="dasw-hero-description">
+                A collection of interactive experiments and research
+                applications developed using oTree.
+            </p>
+
+            <div class="dasw-hero-meta">
+                <span>Research &amp; Behavioral Experiments</span>
+                <span class="dasw-meta-divider">/</span>
+                <span>Powered by oTree</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="dasw-intro">
+        <div>
+            <div class="dasw-section-label">EXPERIMENT CATALOG</div>
+            <h2>Explore Our Experiments</h2>
+            <p>
+                Select an experiment below to launch its demo session.
+                Each experiment provides an interactive environment for
+                exploring its research task or experimental mechanism.
+            </p>
+        </div>
+
+        <div class="dasw-total">
+            <span class="dasw-total-number">{{ session_info|length }}</span>
+            <span class="dasw-total-label">Available Configurations</span>
+        </div>
+    </section>
+
+
+<!-- Search and filter -->
+<section class="dasw-toolbar">
+
+    <div class="dasw-search">
+        <label for="dasw-search-input">Search experiments</label>
+        <div class="dasw-search-field">
+            <span class="dasw-search-icon" aria-hidden="true">&#9906;</span>
+            <input
+                type="search"
+                id="dasw-search-input"
+                placeholder="Search by name or description..."
+                autocomplete="off"
+            />
+        </div>
+    </div>
+
+    <div class="dasw-filter">
+        <label for="dasw-category-filter">Category</label>
+        <select id="dasw-category-filter">
+            <option value="all">All categories</option>
+            <option value="decision-making">Decision-Making</option>
+            <option value="real-effort-task">Real Effort Task</option>
+            <option value="shopping-simulation">Shopping Simulation</option>
+            <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
+            <option value="research-experiment">Research Experiment</option>
+        </select>
+    </div>
+
+</section>
+
+<div class="dasw-results-info" aria-live="polite">
+    <span id="dasw-results-count">Showing all experiments</span>
+</div>
+
+
+    <!-- Experiment cards -->
+    <section class="dasw-experiment-grid">
+
+        {% for s in session_info %}
+            <article class="dasw-experiment-card">
+
+                <div class="dasw-card-top">
+                    <span class="dasw-card-index">
+                        EXPERIMENT
+                    </span>
+
+                    <span class="dasw-card-status">
+                        Demo
+                    </span>
+                </div>
+
+                <div class="dasw-card-body">
+
+<div class="dasw-card-body">
+
+    <div class="dasw-category">
+        {% if s.name == 'investment'
+            or s.name == 'donation_with_rank'
+            or s.name == 'slot_machine' %}
+            Decision-Making
+        {% elif s.name == 'transcription_continuous'
+            or s.name == 'transcription_exact'
+            or s.name == 'count_word' %}
+            Real Effort Task
+        {% elif s.name == 'shop_apps' %}
+            Shopping Simulation
+        {% elif s.name == 'algebraic'
+            or s.name == 'decoding' %}
+            Puzzle &amp; Problem Solving
+        {% else %}
+            Research Experiment
+        {% endif %}
+    </div>
+
+    <h3>{{ s.display_name }}</h3>
+
+
+
+<p class="dasw-card-description">
+    {% if s.name == 'transcription_continuous' %}
+        A continuous transcription task designed to explore text
+        processing and real-effort performance.
+    {% elif s.name == 'count_word' %}
+        A word-counting task for exploring participant effort,
+        accuracy, and performance in a text-based activity.
+    {% elif s.name == 'transcription_exact' %}
+        An exact transcription task focused on accurately
+        reproducing the provided text.
+    {% elif s.name == 'shop_apps' %}
+        An interactive shopping simulation involving item
+        selection and purchase-related decisions.
+    {% elif s.name == 'investment' %}
+        An investment decision experiment for exploring
+        choices under risk and uncertainty.
+    {% elif s.name == 'donation_with_rank' %}
+        A donation experiment that incorporates a ranking
+        mechanism into the decision-making process.
+    {% elif s.name == 'algebraic' %}
+        An algebraic problem-solving task for exploring
+        performance in mathematical activities.
+    {% elif s.name == 'decoding' %}
+        A decoding task involving the interpretation of
+        symbols or codes according to given rules.
+    {% elif s.name == 'slot_machine' %}
+        A slot-machine-style experiment for exploring
+        choices and responses to uncertain outcomes.
+    {% else %}
+        Explore this experimental application in a demo
+        session using its registered oTree configuration.
+    {% endif %}
+</p>
+
+                    <div class="dasw-card-details">
+                        <div>
+                            <span class="dasw-detail-label">
+                                Configuration
+                            </span>
+                            <code>{{ s.name }}</code>
+                        </div>
+
+                        <div>
+                            <span class="dasw-detail-label">
+                                Demo participants
+                            </span>
+                            <span>{{ s.num_demo_participants }}</span>
+                        </div>
+                    </div>
+                </div>
+
+
+<div class="dasw-card-details-panel">
+    <details class="dasw-details">
+        <summary>View Experiment Details</summary>
+
+        <div class="dasw-details-content">
+
+            {% if s.name == 'transcription_continuous' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore participant performance in a continuous text transcription task.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Real-effort task involving continuous transcription.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Text processing, task performance, and participant effort.</p>
+                </div>
+
+            {% elif s.name == 'transcription_exact' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore performance in a transcription task requiring accurate reproduction of text.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Text transcription and accuracy task.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Accuracy, attention to detail, and task completion.</p>
+                </div>
+
+            {% elif s.name == 'count_word' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore participant performance in a word-counting activity.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Text-based counting task.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Accuracy, concentration, and participant effort.</p>
+                </div>
+
+            {% elif s.name == 'shop_apps' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore choices and actions in an interactive shopping simulation.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Shopping and purchase-decision simulation.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Item selection and purchase-related decisions.</p>
+                </div>
+
+            {% elif s.name == 'investment' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore investment decisions under risk and uncertainty.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Investment decision-making experiment.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Investment choices and responses to uncertain outcomes.</p>
+                </div>
+
+            {% elif s.name == 'donation_with_rank' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore donation decisions in an experiment involving a ranking mechanism.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Donation and ranking experiment.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Donation choices and decision-making in a ranked setting.</p>
+                </div>
+
+            {% elif s.name == 'algebraic' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore participant performance in algebraic problem-solving tasks.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Mathematical problem-solving activity.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Problem-solving accuracy and task performance.</p>
+                </div>
+
+            {% elif s.name == 'decoding' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore performance in a task involving code or symbol interpretation.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Decoding and interpretation task.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Accuracy and performance when applying decoding rules.</p>
+                </div>
+
+            {% elif s.name == 'slot_machine' %}
+                <div class="dasw-detail-section">
+                    <h4>Objective</h4>
+                    <p>Explore participant choices in a slot-machine-style simulation.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Task Type</h4>
+                    <p>Interactive random-outcome simulation.</p>
+                </div>
+                <div class="dasw-detail-section">
+                    <h4>Research Focus</h4>
+                    <p>Choices and responses to uncertain outcomes.</p>
+                </div>
+
+            {% else %}
+                <div class="dasw-detail-section">
+                    <h4>Experiment Overview</h4>
+                    <p>Explore this research application through its registered oTree demo session.</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </details>
+</div>
+
+
+
+<footer class="dasw-demo-footer">
+
+    <div class="dasw-footer-brand">
+        <div class="dasw-footer-mark">D</div>
+        <div>
+            <strong>DASW Project</strong>
+            <span>Experimental Research Applications</span>
+        </div>
+    </div>
+
+    <div class="dasw-footer-information">
+        <span>Research &amp; Development</span>
+        <span>Built with oTree</span>
+    </div>
+
+    <div class="dasw-footer-meta">
+        <span>Experiment Demo Portal</span>
+    </div>
+
+</footer>
+
+
+            </article>
+        {% endfor %}
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="dasw-demo-footer">
+        <span>DASW Project</span>
+        <span>Experimental Research Applications</span>
+    </footer>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{% static 'demo/js/demo.js' %}"></script>
+{% endblock %}
