@@ -1,97 +1,88 @@
 {% extends "otree/BaseAdminRegular.html" %}
-
 {% block head_title %}DASW | Experiment Demo{% endblock %}
-
-{% block title %}DASW Experiment Demo{% endblock %}
-
 {% block internal_styles %}
     {{ super() }}
-    <link
-        href="{% static 'demo/css/demo.css' %}"
-        rel="stylesheet"
-    />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'global/node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Fontawesome Icon -->
+    <link rel="stylesheet" href="{% static 'global/node_modules/@fortawesome/fontawesome-free/css/all.css' %}">
+    {# Custom oTree Demo Page CSS #}
+    <link href="{% static 'demo/css/demo.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
-
-<div class="dasw-demo">
-
-    <!-- Hero section -->
-    <section class="dasw-hero">
-        <div class="dasw-hero-content">
-            <div class="dasw-eyebrow">
-                DASW PROJECT
-            </div>
-
-            <h1>Experimental Research Laboratory</h1>
-
-            <p class="dasw-hero-description">
-                A collection of interactive experiments and research
-                applications developed using oTree.
-            </p>
-
-            <div class="dasw-hero-meta">
-                <span>Research &amp; Behavioral Experiments</span>
-                <span class="dasw-meta-divider">/</span>
-                <span>Powered by oTree</span>
+    <div class="container custom-demo-page">
+        <!-- Hero section -->
+        <div class="card hero-section text-white p-4 mb-4">
+            <div class="card-body">
+                <h1>Experimental Research Laboratory</h1>
+                <p>
+                    A collection of interactive experiments and research
+                    applications developed using oTree.
+                </p>
+                <p class="m-0" style="font-size: 14px; color: var(--dasw-muted);">
+                    <span>Research &amp; Behavioral Experiments</span>
+                    <span class="meta-divider">/</span>
+                    <span>Powered by oTree</span>
+                </p>
             </div>
         </div>
-    </section>
 
-    <!-- Introduction -->
-    <section class="dasw-intro">
-        <div>
-            <div class="dasw-section-label">EXPERIMENT CATALOG</div>
-            <h2>Explore Our Experiments</h2>
-            <p>
-                Select an experiment below to launch its demo session.
-                Each experiment provides an interactive environment for
-                exploring its research task or experimental mechanism.
-            </p>
+        <!-- Introduction -->
+        <div class="row mb-4">
+            <div class="col-8">
+                <h4 class="fw-bold">Explore Our Experiments</h4>
+                <p style="font-size: 14px;">
+                    Select an experiment below to launch its demo session.
+                    Each experiment provides an interactive environment for
+                    exploring its research task or experimental mechanism.
+                </p>
+            </div>
+            <div class="col-4 d-flex flex-row justify-content-end">
+                <div class="card text-white" style="background: var(--dasw-blue);">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h1>{{ session_info|length }}</h1>
+                        <span style="font-size: 12px;">Available Configurations</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="dasw-total">
-            <span class="dasw-total-number">{{ session_info|length }}</span>
-            <span class="dasw-total-label">Available Configurations</span>
-        </div>
-    </section>
-
-
-<!-- Search and filter -->
-<section class="dasw-toolbar">
-
-    <div class="dasw-search">
-        <label for="dasw-search-input">Search experiments</label>
-        <div class="dasw-search-field">
-            <span class="dasw-search-icon" aria-hidden="true">&#9906;</span>
-            <input
-                type="search"
-                id="dasw-search-input"
-                placeholder="Search by name or description..."
-                autocomplete="off"
-            />
+        <!-- Search & Filter -->
+        <div class="d-flex flex-row mb-4">
+            <div>
+                <label for="search-input" class="form-label">Search experiments</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="search" class="form-control" id="search-input"
+                       placeholder="Search by name or description..." autocomplete="off">
+                </div>
+                <div class="form-text results-info" aria-live="polite">
+                    <span id="results-count">Showing all experiments</span>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" for="category-filter">Category</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </span>
+                    <select class="form-select" id="category-filter">
+                        <option value="all">All categories</option>
+                        <option value="decision-making">Decision-Making</option>
+                        <option value="real-effort-task">Real Effort Task</option>
+                        <option value="shopping-simulation">Shopping Simulation</option>
+                        <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
+                        <option value="research-experiment">Research Experiment</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="dasw-filter">
-        <label for="dasw-category-filter">Category</label>
-        <select id="dasw-category-filter">
-            <option value="all">All categories</option>
-            <option value="decision-making">Decision-Making</option>
-            <option value="real-effort-task">Real Effort Task</option>
-            <option value="shopping-simulation">Shopping Simulation</option>
-            <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
-            <option value="research-experiment">Research Experiment</option>
-        </select>
-    </div>
-
-</section>
-
-<div class="dasw-results-info" aria-live="polite">
-    <span id="dasw-results-count">Showing all experiments</span>
-</div>
-
-
+    <div class="dasw-demo">
     <!-- Experiment cards -->
     <section class="dasw-experiment-grid">
 
@@ -333,7 +324,10 @@
 
 
 <footer class="dasw-demo-footer">
-
+<a class="dasw-run-button" href="{{ s.url }}">
+                        Run Demo
+                        <span aria-hidden="true">&rarr;</span>
+                    </a>
     <div class="dasw-footer-brand">
         <div class="dasw-footer-mark">D</div>
         <div>
@@ -371,5 +365,10 @@
 
 {% block scripts %}
     {{ super() }}
+    <!-- Bootstrap Popper -->
+    <script src="{% static 'global/node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
+    <!-- Bootstrap Bundle -->
+    <script src="{% static 'global/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    {# Custom oTree Demo Page JS #}
     <script src="{% static 'demo/js/demo.js' %}"></script>
 {% endblock %}

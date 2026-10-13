@@ -1,8 +1,8 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('dasw-search-input');
-    const categoryFilter = document.getElementById('dasw-category-filter');
-    const resultsCount = document.getElementById('dasw-results-count');
+    const searchInput = document.getElementById('search-input');
+    const categoryFilter = document.getElementById('category-filter');
+    const resultsCount = document.getElementById('results-count');
     const experimentGrid = document.querySelector('.dasw-experiment-grid');
 
     if (!searchInput || !categoryFilter || !resultsCount || !experimentGrid) {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const noResults = document.createElement('div');
-    noResults.className = 'dasw-no-results';
+    noResults.className = 'no-results';
     noResults.hidden = true;
     noResults.innerHTML = `
         <h3>No experiments found</h3>
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cards.forEach(function (card) {
             const searchableText = card.textContent.toLowerCase();
 
-            const categoryElement = card.querySelector('.dasw-category');
+            const categoryElement = card.querySelector('.category');
             const categoryName = categoryElement
                 ? categoryElement.textContent.trim()
                 : 'Research Experiment';

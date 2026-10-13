@@ -1,8 +1,5 @@
-
-/* ========================================
-   DASW EXPERIMENT DEMO
-   ======================================== */
-
+/* CUSTOM DEMO PAGE */
+/* ======================================== */
 .dasw-demo {
     --dasw-navy: #17324d;
     --dasw-blue: #285b85;
@@ -16,19 +13,27 @@
     padding-bottom: 24px;
 }
 
-/* Hero */
+.custom-demo-page{
+    --dasw-navy: #17324d;
+    --dasw-blue: #285b85;
+    --dasw-accent: #d7a95b;
+    --dasw-text: #263747;
+    --dasw-muted: #adb8c8;
+    --dasw-border: #dce4eb;
+    --dasw-background: #f4f7fa;
+    color: var(--dasw-text);
+}
 
-.dasw-hero {
+/* Hero Section */
+/* ======================================== */
+.hero-section{
     position: relative;
     overflow: hidden;
-    padding: 38px 34px;
-    margin-bottom: 30px;
-    color: #ffffff;
     background: var(--dasw-navy);
     border-radius: 10px;
 }
 
-.dasw-hero::after {
+.hero-section:after{
     content: "";
     position: absolute;
     right: -55px;
@@ -43,52 +48,13 @@
     pointer-events: none;
 }
 
-.dasw-hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.dasw-eyebrow,
-.dasw-section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.dasw-eyebrow {
-    margin-bottom: 13px;
+.meta-divider {
     color: var(--dasw-accent);
 }
 
-.dasw-hero h1 {
-    max-width: 650px;
-    margin: 0 0 14px;
-    color: #ffffff;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.3;
-}
+/* Introduction Section */
+/* ======================================== */
 
-.dasw-hero-description {
-    max-width: 580px;
-    margin-bottom: 20px;
-    color: #dce6ef;
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.dasw-hero-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    color: #c3d2df;
-    font-size: 12px;
-}
-
-.dasw-meta-divider {
-    color: var(--dasw-accent);
-}
 
 /* Introduction */
 
@@ -325,7 +291,7 @@
 
 /* Experiment category */
 
-.dasw-category {
+.category {
     display: inline-flex;
     align-items: center;
     margin-bottom: 12px;
@@ -341,73 +307,7 @@
 
 
 /* Search and filter toolbar */
-
-.dasw-toolbar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 230px;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.dasw-search,
-.dasw-filter {
-    min-width: 0;
-}
-
-.dasw-toolbar label {
-    display: block;
-    margin-bottom: 7px;
-    color: var(--dasw-navy);
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.dasw-search-field {
-    position: relative;
-}
-
-.dasw-search-icon {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    color: var(--dasw-muted);
-    font-size: 22px;
-    line-height: 1;
-    transform: translateY(-55%) rotate(-20deg);
-    pointer-events: none;
-}
-
-.dasw-search-field input,
-.dasw-filter select {
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 42px;
-    padding: 10px 12px;
-    color: var(--dasw-text);
-    background: #ffffff;
-    border: 1px solid var(--dasw-border);
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 12px;
-}
-
-.dasw-search-field input {
-    padding-left: 38px;
-}
-
-.dasw-search-field input:focus,
-.dasw-filter select:focus {
-    border-color: var(--dasw-blue);
-    outline: 2px solid rgba(40, 91, 133, 0.12);
-}
-
-.dasw-results-info {
-    margin-bottom: 16px;
-    color: var(--dasw-muted);
-    font-size: 11px;
-}
-
-.dasw-no-results {
+.no-results {
     grid-column: 1 / -1;
     padding: 35px 20px;
     text-align: center;
@@ -416,27 +316,20 @@
     border-radius: 8px;
 }
 
-.dasw-no-results h3 {
+.no-results h3 {
     margin-top: 0;
     color: var(--dasw-navy);
     font-size: 17px;
 }
 
-.dasw-no-results p {
+.no-results p {
     margin-bottom: 0;
     color: var(--dasw-muted);
     font-size: 12px;
 }
 
-.dasw-no-results[hidden] {
+.no-results[hidden] {
     display: none !important;
-}
-
-@media (max-width: 640px) {
-    .dasw-toolbar {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
 }
 
 
