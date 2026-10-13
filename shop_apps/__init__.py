@@ -1,4 +1,5 @@
 from otree.api import *
+import json
 
 doc = """
 Shopping app
@@ -43,6 +44,7 @@ class Player(BasePlayer):
     tax = models.CurrencyField(initial=0)
     discount = models.CurrencyField(initial=0)
     total_price = models.CurrencyField(initial=0)
+    purchased = models.LongStringField()
 
 
 class Item(ExtraModel):
@@ -130,12 +132,25 @@ class game(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        items = Item.filter(player=player)
+
         subtotal, tax, discount, cart_total = calculate_cart(player)
 
         player.subtotal = subtotal
         player.tax = tax
         player.discount = discount
         player.total_price = cart_total
+
+        purchased_items = [
+            {
+                'name': item.name,
+                'quantity': item.quantity,
+                'unit_price': str(item.unit_price),
+            }
+            for item in items
+        ]
+
+        player.purchased = json.dumps(purchased_items, ensure_ascii=False)
 
 
 class results(Page):
