@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container custom-demo-page">
+    <div class="custom-demo-page mb-4">
         <!-- Hero section -->
         <div class="card hero-section text-white p-4 mb-4">
             <div class="card-body">
@@ -80,287 +80,245 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="dasw-demo">
-    <!-- Experiment cards -->
-    <section class="dasw-experiment-grid">
-
-        {% for s in session_info %}
-            <article class="dasw-experiment-card">
-
-                <div class="dasw-card-top">
-                    <span class="dasw-card-index">
-                        EXPERIMENT
-                    </span>
-
-                    <span class="dasw-card-status">
-                        Demo
-                    </span>
-                </div>
-
-                <div class="dasw-card-body">
-
-<div class="dasw-card-body">
-
-    <div class="dasw-category">
-        {% if s.name == 'investment'
-            or s.name == 'donation_with_rank'
-            or s.name == 'slot_machine' %}
-            Decision-Making
-        {% elif s.name == 'transcription_continuous'
-            or s.name == 'transcription_exact'
-            or s.name == 'count_word' %}
-            Real Effort Task
-        {% elif s.name == 'shop_apps' %}
-            Shopping Simulation
-        {% elif s.name == 'algebraic'
-            or s.name == 'decoding' %}
-            Puzzle &amp; Problem Solving
-        {% else %}
-            Research Experiment
-        {% endif %}
-    </div>
-
-    <h3>{{ s.display_name }}</h3>
-
-
-
-<p class="dasw-card-description">
-    {% if s.name == 'transcription_continuous' %}
-        A continuous transcription task designed to explore text
-        processing and real-effort performance.
-    {% elif s.name == 'count_word' %}
-        A word-counting task for exploring participant effort,
-        accuracy, and performance in a text-based activity.
-    {% elif s.name == 'transcription_exact' %}
-        An exact transcription task focused on accurately
-        reproducing the provided text.
-    {% elif s.name == 'shop_apps' %}
-        An interactive shopping simulation involving item
-        selection and purchase-related decisions.
-    {% elif s.name == 'investment' %}
-        An investment decision experiment for exploring
-        choices under risk and uncertainty.
-    {% elif s.name == 'donation_with_rank' %}
-        A donation experiment that incorporates a ranking
-        mechanism into the decision-making process.
-    {% elif s.name == 'algebraic' %}
-        An algebraic problem-solving task for exploring
-        performance in mathematical activities.
-    {% elif s.name == 'decoding' %}
-        A decoding task involving the interpretation of
-        symbols or codes according to given rules.
-    {% elif s.name == 'slot_machine' %}
-        A slot-machine-style experiment for exploring
-        choices and responses to uncertain outcomes.
-    {% else %}
-        Explore this experimental application in a demo
-        session using its registered oTree configuration.
-    {% endif %}
-</p>
-
-                    <div class="dasw-card-details">
-                        <div>
-                            <span class="dasw-detail-label">
-                                Configuration
+        {# Experiment Card #}
+        <div class="card no-results mx-auto border-0 rounded-4 overflow-hidden">
+            <div class="card-body bg-light text-center py-5">
+                <h3 class="text-muted">No apps found</h3>
+                <p class="text-muted m-0">Try another keyword or select a different category.</p>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4 experiment-grid">
+            {% for s in session_info %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
+                            <code>Demo Apps</code>
+                            <span class="badge text-bg-info bg-gradient">
+                                {% if s.name == 'investment' or s.name == 'donation_with_rank'%}
+                                    Decision-Making
+                                {% elif s.name == 'transcription_continuous' or s.name == 'transcription_exact'
+                                    or s.name == 'count_word' or s.name == 'slot_machine' %}
+                                    Real Effort Task
+                                {% elif s.name == 'shop_apps' %}
+                                    Shopping Simulation
+                                {% elif s.name == 'algebraic' or s.name == 'decoding' %}
+                                    Puzzle &amp; Problem Solving
+                                {% else %}
+                                    Research Experiment
+                                {% endif %}
                             </span>
-                            <code>{{ s.name }}</code>
                         </div>
-
-                        <div>
-                            <span class="dasw-detail-label">
-                                Demo participants
-                            </span>
-                            <span>{{ s.num_demo_participants }}</span>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ s.display_name }}</h4>
+                            <p class="card-text" style="font-size: 14px;">
+                                {% if s.name == 'transcription_continuous' %}
+                                    A continuous transcription task designed to explore text
+                                    processing and real-effort performance.
+                                {% elif s.name == 'count_word' %}
+                                    A word-counting task for exploring participant effort,
+                                    accuracy, and performance in a text-based activity.
+                                {% elif s.name == 'transcription_exact' %}
+                                    An exact transcription task focused on accurately
+                                    reproducing the provided text.
+                                {% elif s.name == 'shop_apps' %}
+                                    An interactive shopping simulation involving item
+                                    selection and purchase-related decisions.
+                                {% elif s.name == 'investment' %}
+                                    An investment decision experiment for exploring
+                                    choices under risk and uncertainty.
+                                {% elif s.name == 'donation_with_rank' %}
+                                    A donation experiment that incorporates a ranking
+                                    mechanism into the decision-making process.
+                                {% elif s.name == 'algebraic' %}
+                                    An algebraic problem-solving task for exploring
+                                    performance in mathematical activities.
+                                {% elif s.name == 'decoding' %}
+                                    A decoding task involving the interpretation of
+                                    symbols or codes according to given rules.
+                                {% elif s.name == 'slot_machine' %}
+                                    A slot-machine-style experiment for exploring
+                                    choices and responses to uncertain outcomes.
+                                {% else %}
+                                    Explore this experimental application in a demo
+                                    session using its registered oTree configuration.
+                                {% endif %}
+                            </p>
+                            <ul class="list-group mb-4">
+                                <li class="list-group-item d-flex flex-column">
+                                    <span style="font-size: 14px;">Configuration</span>
+                                    <code class="fs-5">{{ s.name }}</code>
+                                </li>
+                                <li class="list-group-item d-flex flex-column">
+                                    <span style="font-size: 14px;">Demo participants</span>
+                                    <code class="fs-4">{{ s.num_demo_participants }}</code>
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item active fw-bold rounded-3" style="font-size: 14px;">
+                                    <i class="fa-solid fa-vial-circle-check"></i>
+                                    <span>View Apps Details</span>
+                                </li>
+                                {% if s.name == 'transcription_continuous' %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Objective</div>
+                                            <span class="experiment-detail-text">
+                                                Explore participant performance in a continuous text transcription task.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Task Type</div>
+                                            <span class="experiment-detail-text">
+                                                Real-effort task involving continuous transcription.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Research Focus</div>
+                                            <span class="experiment-detail-text">
+                                                Text processing, task performance, and participant effort.
+                                            </span>
+                                        </div>
+                                    </li>
+                                {% elif s.name == 'transcription_exact' %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Objective</div>
+                                            <span class="experiment-detail-text">
+                                                Explore performance in a transcription task requiring accurate
+                                                reproduction of text.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Task Type</div>
+                                            <span class="experiment-detail-text">
+                                                Text transcription and accuracy task.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Research Focus</div>
+                                            <span class="experiment-detail-text">
+                                                Accuracy, attention to detail, and task completion.
+                                            </span>
+                                        </div>
+                                    </li>
+                                {% elif s.name == 'count_word' %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Objective</div>
+                                            <span class="experiment-detail-text">
+                                                Explore participant performance in a word-counting activity.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Task Type</div>
+                                            <span class="experiment-detail-text">
+                                                Text-based counting task.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Research Focus</div>
+                                            <span class="experiment-detail-text">
+                                                Accuracy, concentration, and participant effort.
+                                            </span>
+                                        </div>
+                                    </li>
+                                {% elif s.name == 'shop_apps' %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Objective</div>
+                                            <span class="experiment-detail-text">
+                                                Explore choices and actions in an interactive shopping simulation.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Task Type</div>
+                                            <span class="experiment-detail-text">
+                                                Shopping and purchase-decision simulation.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Research Focus</div>
+                                            <span class="experiment-detail-text">
+                                                Item selection and purchase-related decisions.
+                                            </span>
+                                        </div>
+                                    </li>
+                                {# {% elif s.name == 'investment' %} #}
+                                {# {% elif s.name == 'donation_with_rank' %} #}
+                                {# {% elif s.name == 'algebraic' %} #}
+                                {# {% elif s.name == 'decoding' %} #}
+                                {# {% elif s.name == 'slot_machine' %} #}
+                                {% else %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Experiment Overview</div>
+                                            <span class="experiment-detail-text">
+                                                Explore this research application through its registered
+                                                oTree demo session.
+                                            </span>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <a class="btn btn-success bg-gradient d-flex flex-row justify-content-between
+                                align-items-center w-100 mb-3" href="{{ s.url }}">
+                                <span>Run Demo</span>
+                                <i class="fa-solid fa-circle-play fs-5"></i>
+                            </a>
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div class="d-flex flex-row align-items-center">
+                                    <span class="text-light py-2 px-3 me-2 rounded-3 fw-bold fs-5"
+                                         style="background: var(--dasw-navy)">
+                                        D
+                                    </span>
+                                    <div class="d-flex flex-column">
+                                        <strong style="font-size: 14px;">DASW Project</strong>
+                                        <span style="font-size: 12px;">Experimental Research Applications</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <span class="text-end" style="font-size: 11px;">Research &amp; Development</span>
+                                    <span class="text-end" style="font-size: 11px;">Built with oTree</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-<div class="dasw-card-details-panel">
-    <details class="dasw-details">
-        <summary>View Experiment Details</summary>
-
-        <div class="dasw-details-content">
-
-            {% if s.name == 'transcription_continuous' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore participant performance in a continuous text transcription task.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Real-effort task involving continuous transcription.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Text processing, task performance, and participant effort.</p>
-                </div>
-
-            {% elif s.name == 'transcription_exact' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore performance in a transcription task requiring accurate reproduction of text.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Text transcription and accuracy task.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Accuracy, attention to detail, and task completion.</p>
-                </div>
-
-            {% elif s.name == 'count_word' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore participant performance in a word-counting activity.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Text-based counting task.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Accuracy, concentration, and participant effort.</p>
-                </div>
-
-            {% elif s.name == 'shop_apps' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore choices and actions in an interactive shopping simulation.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Shopping and purchase-decision simulation.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Item selection and purchase-related decisions.</p>
-                </div>
-
-            {% elif s.name == 'investment' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore investment decisions under risk and uncertainty.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Investment decision-making experiment.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Investment choices and responses to uncertain outcomes.</p>
-                </div>
-
-            {% elif s.name == 'donation_with_rank' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore donation decisions in an experiment involving a ranking mechanism.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Donation and ranking experiment.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Donation choices and decision-making in a ranked setting.</p>
-                </div>
-
-            {% elif s.name == 'algebraic' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore participant performance in algebraic problem-solving tasks.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Mathematical problem-solving activity.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Problem-solving accuracy and task performance.</p>
-                </div>
-
-            {% elif s.name == 'decoding' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore performance in a task involving code or symbol interpretation.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Decoding and interpretation task.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Accuracy and performance when applying decoding rules.</p>
-                </div>
-
-            {% elif s.name == 'slot_machine' %}
-                <div class="dasw-detail-section">
-                    <h4>Objective</h4>
-                    <p>Explore participant choices in a slot-machine-style simulation.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Task Type</h4>
-                    <p>Interactive random-outcome simulation.</p>
-                </div>
-                <div class="dasw-detail-section">
-                    <h4>Research Focus</h4>
-                    <p>Choices and responses to uncertain outcomes.</p>
-                </div>
-
-            {% else %}
-                <div class="dasw-detail-section">
-                    <h4>Experiment Overview</h4>
-                    <p>Explore this research application through its registered oTree demo session.</p>
-                </div>
-            {% endif %}
-
-        </div>
-    </details>
-</div>
-
-
-
-<footer class="dasw-demo-footer">
-<a class="dasw-run-button" href="{{ s.url }}">
-                        Run Demo
-                        <span aria-hidden="true">&rarr;</span>
-                    </a>
-    <div class="dasw-footer-brand">
-        <div class="dasw-footer-mark">D</div>
-        <div>
-            <strong>DASW Project</strong>
-            <span>Experimental Research Applications</span>
+            {% endfor %}
         </div>
     </div>
-
-    <div class="dasw-footer-information">
-        <span>Research &amp; Development</span>
-        <span>Built with oTree</span>
-    </div>
-
-    <div class="dasw-footer-meta">
-        <span>Experiment Demo Portal</span>
-    </div>
-
-</footer>
-
-
-            </article>
-        {% endfor %}
-
-    </section>
-
-    <!-- Footer -->
-    <footer class="dasw-demo-footer">
-        <span>DASW Project</span>
-        <span>Experimental Research Applications</span>
-    </footer>
-
-</div>
-
 {% endblock %}
 
 {% block scripts %}

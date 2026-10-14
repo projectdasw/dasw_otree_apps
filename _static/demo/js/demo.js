@@ -3,15 +3,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('search-input');
     const categoryFilter = document.getElementById('category-filter');
     const resultsCount = document.getElementById('results-count');
-    const experimentGrid = document.querySelector('.dasw-experiment-grid');
+    const experimentGrid = document.querySelector('.experiment-grid');
 
     if (!searchInput || !categoryFilter || !resultsCount || !experimentGrid) {
         return;
     }
 
     const cards = Array.from(
-        experimentGrid.querySelectorAll('.dasw-experiment-card')
-    );
+        experimentGrid.querySelectorAll('.experiment-grid, .col')
+    ).filter(function (card) {
+        return card.querySelector('.card');
+    });
 
     const categoryMap = {
         'Decision-Making': 'decision-making',
@@ -21,15 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
         'Research Experiment': 'research-experiment'
     };
 
-    const noResults = document.createElement('div');
-    noResults.className = 'no-results';
+    const noResults = document.querySelector('.no-results');
     noResults.hidden = true;
-    noResults.innerHTML = `
-        <h3>No experiments found</h3>
-        <p>Try another keyword or select a different category.</p>
-    `;
-
-    experimentGrid.appendChild(noResults);
 
     function filterExperiments() {
         const keyword = searchInput.value.trim().toLowerCase();
@@ -38,14 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         cards.forEach(function (card) {
             const searchableText = card.textContent.toLowerCase();
-
-            const categoryElement = card.querySelector('.category');
+            const categoryElement = card.querySelector('.badge');
             const categoryName = categoryElement
                 ? categoryElement.textContent.trim()
                 : 'Research Experiment';
 
             const cardCategory = categoryMap[categoryName] || 'research-experiment';
-
             const matchesKeyword = searchableText.includes(keyword);
             const matchesCategory =
                 selectedCategory === 'all' ||
@@ -61,9 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         noResults.hidden = visibleCount > 0;
-
-        resultsCount.textContent =
-            'Showing ' + visibleCount + ' of ' + cards.length + ' experiments';
+        resultsCount.textContent = 'Showing ' + visibleCount + ' of ' + cards.length + ' experiments';
     }
 
     searchInput.addEventListener('input', filterExperiments);
