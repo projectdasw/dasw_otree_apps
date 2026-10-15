@@ -38,11 +38,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 ? categoryElement.textContent.trim()
                 : 'Research Experiment';
 
+            const category = card.querySelector('[data-category]')
+                ?.dataset.category || 'research-experiment';
+
+            const status = card.querySelector('[data-status]')
+                ?.dataset.status || 'completed';
+
             const cardCategory = categoryMap[categoryName] || 'research-experiment';
             const matchesKeyword = searchableText.includes(keyword);
-            const matchesCategory =
-                selectedCategory === 'all' ||
-                cardCategory === selectedCategory;
+            const matchesCategory = selectedCategory === 'all'
+                || cardCategory === selectedCategory
+                || category === selectedCategory
+                || (selectedCategory === 'in-process' && status === 'in-process');
 
             const isVisible = matchesKeyword && matchesCategory;
 

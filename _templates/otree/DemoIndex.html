@@ -50,7 +50,7 @@
 
         <!-- Search & Filter -->
         <div class="d-flex flex-row mb-4">
-            <div>
+            <div class="w-100">
                 <label for="search-input" class="form-label">Search experiments</label>
                 <div class="input-group">
                     <span class="input-group-text">
@@ -63,7 +63,7 @@
                     <span id="results-count">Showing all experiments</span>
                 </div>
             </div>
-            <div>
+            <div class="w-100">
                 <label class="form-label" for="category-filter">Category</label>
                 <div class="input-group">
                     <span class="input-group-text">
@@ -71,10 +71,11 @@
                     </span>
                     <select class="form-select" id="category-filter">
                         <option value="all">All categories</option>
+                        <option value="in-process">In-Process</option>
                         <option value="decision-making">Decision-Making</option>
                         <option value="real-effort-task">Real Effort Task</option>
                         <option value="shopping-simulation">Shopping Simulation</option>
-                        <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
+                        {#<option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>#}
                         <option value="research-experiment">Research Experiment</option>
                     </select>
                 </div>
@@ -94,23 +95,50 @@
                     <div class="card h-100">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
                             <code>Demo Apps</code>
-                            <span class="badge text-bg-info bg-gradient">
+                            <span class="badge text-bg-info bg-gradient"
+                                    data-category="
+                                    {% if s.name == 'investment' or s.name == 'donation_with_rank' %}
+                                        decision-making
+                                    {% elif s.name == 'transcription_continuous' or s.name == 'transcription_exact'
+                                    or s.name == 'count_word' or s.name == 'slot_machine' or s.name == 'algebraic'
+                                    or s.name == 'decoding' %}
+                                        real-effort-task
+                                    {% elif s.name == 'shop_apps' %}
+                                        shopping-simulation
+                                    {#{% elif s.name == 'algebraic' or s.name == 'decoding' %}#}
+                                    {#puzzle-problem-solving#}
+                                    {#{% else %}#}
+                                        research-experiment
+                                    {% endif %}">
                                 {% if s.name == 'investment' or s.name == 'donation_with_rank'%}
                                     Decision-Making
                                 {% elif s.name == 'transcription_continuous' or s.name == 'transcription_exact'
-                                    or s.name == 'count_word' or s.name == 'slot_machine' %}
+                                    or s.name == 'count_word' or s.name == 'slot_machine' or s.name == 'algebraic'
+                                    or s.name == 'decoding'%}
                                     Real Effort Task
                                 {% elif s.name == 'shop_apps' %}
                                     Shopping Simulation
-                                {% elif s.name == 'algebraic' or s.name == 'decoding' %}
-                                    Puzzle &amp; Problem Solving
+                                {#{% elif s.name == 'algebraic' or s.name == 'decoding' %}#}
+                                {#Puzzle &amp; Problem Solving#}
                                 {% else %}
                                     Research Experiment
                                 {% endif %}
                             </span>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">{{ s.display_name }}</h4>
+                            <div class="d-flex flex-row align-items-center">
+                                <h4 class="card-title">{{ s.display_name }}</h4>
+                                {% if s.name == 'algebraic' %}
+                                    <span class="badge text-bg-warning bg-gradient ms-2" data-status="in-process">
+                                        <i class="fa-regular fa-clock"></i>
+                                        In-Process
+                                    </span>
+{#                                    <span class="badge text-bg-success bg-gradient ms-2" data-status="completed">#}
+{#                                        <i class="fa-regular fa-circle-check"></i>#}
+{#                                        Completed#}
+{#                                    </span>#}
+                                {% endif %}
+                            </div>
                             <p class="card-text" style="font-size: 14px;">
                                 {% if s.name == 'transcription_continuous' %}
                                     A continuous transcription task designed to explore text
@@ -274,7 +302,34 @@
                                     </li>
                                 {# {% elif s.name == 'investment' %} #}
                                 {# {% elif s.name == 'donation_with_rank' %} #}
-                                {# {% elif s.name == 'algebraic' %} #}
+                                {% elif s.name == 'algebraic' %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Development Status</div>
+                                            <span class="experiment-detail-text">
+                                                Development started on October 15, 2026.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Current Progress</div>
+                                            <span class="experiment-detail-text">
+                                                Currently under development.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Availability</div>
+                                            <span class="experiment-detail-text">
+                                                Features and functionality may change during development.
+                                            </span>
+                                        </div>
+                                    </li>
                                 {# {% elif s.name == 'decoding' %} #}
                                 {# {% elif s.name == 'slot_machine' %} #}
                                 {% else %}
