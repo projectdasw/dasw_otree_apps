@@ -12,12 +12,12 @@ SESSION_CONFIGS = [
     #     app_sequence=['investment'],
     #     num_demo_participants=1,
     # ),
-    # dict(
-    #     display_name='real_effort_task_algebraic - RET Algebraic',
-    #     name='algebraic',
-    #     app_sequence=['algebraic'],
-    #     num_demo_participants=1,
-    # ),
+    dict(
+        display_name='RET Algebraic',
+        name='algebraic',
+        app_sequence=['algebraic'],
+        num_demo_participants=1,
+    ),
     # dict(
     #     display_name='real_effort_task_decoding - RET Decoding',
     #     name='decoding',
