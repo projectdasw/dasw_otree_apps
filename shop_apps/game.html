@@ -39,49 +39,27 @@
                 <div class="col-5">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title text-muted m-0">
-    Cart Subtotal
-</h5>
-
-<h1 class="float-end" id="cart-subtotal">
-    0 points
-</h1>
-
-<table class="table">
-    <tbody>
-        <tr>
-            <td>Tax Rate 10%</td>
-            <td class="text-end" id="cart-tax">
-                0 points
-            </td>
-        </tr>
-
-        <tr>
-            <td>Discount 30%</td>
-            <td class="text-end" id="cart-discount">
-                0 points
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<h5 class="card-title text-muted m-0">
-    Cart Total
-</h5>
-
-<h1 class="float-end m-0" id="cart-total">
-    0 points
-</h1>
+                            <h5 class="card-title text-muted m-0">Cart Subtotal</h5>
+                            <h1 class="float-end" id="cart-subtotal">0 points</h1>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Tax Rate 10%</td>
+                                        <td class="text-end" id="cart-tax">0 points</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discount 30%</td>
+                                        <td class="text-end" id="cart-discount">0 points</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h5 class="card-title text-muted m-0">Cart Total</h5>
+                            <h1 class="float-end m-0" id="cart-total">0 points</h1>
                         </div>
                         <div class="card-footer text-center">
                             <div class="card-footer text-center">
-    <button
-        type="submit"
-        class="btn btn-primary">
-        Checkout
-        (<b><span id="cart-total">0 points</span></b>)
-    </button>
-</div>
+                                <button type="submit" class="btn btn-primary">Checkout</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +71,7 @@
                     {% for p in C.PRODUCTS %}
                         <div class="col">
                             <div class="card h-100">
-                                <img src="{% static p.image_path %}" class="card-img-top mx-auto w-70 p-4">
+                                <img src="{% static p.image_path %}" class="card-img-top mx-auto w-70 p-4" alt="">
                                 <div class="card-body p-3">
                                     <h2 class="card-title text-center">{{ p.name }}</h2>
                                     <table class="table text-center m-0 fs-4">
@@ -107,34 +85,18 @@
                                     </table>
                                 </div>
                                 <div class="card-footer">
-    <div class="input-group justify-content-center align-items-center">
-
-        <button
-    type="button"
-    value="{{ p.sku }}"
-    onclick="removeFromCart(this)"
-    class="btn btn-danger"
-    id="remove-{{ p.sku }}"
-    disabled>
-    <i class="fa-solid fa-minus"></i>
-</button>
-
-        <span
-            id="quantity-{{ p.sku }}"
-            class="mx-3 fw-bold">
-            0
-        </span>
-
-        <button
-            type="button"
-            value="{{ p.sku }}"
-            onclick="addToCart(this)"
-            class="btn btn-success">
-            <i class="fa-solid fa-plus"></i>
-        </button>
-
-    </div>
-</div>
+                                    <div class="input-group justify-content-center align-items-center">
+                                    <button type="button" value="{{ p.sku }}" onclick="removeFromCart(this)"
+                                            class="btn btn-danger" id="remove-{{ p.sku }}" disabled>
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span id="quantity-{{ p.sku }}" class="mx-3 fw-bold">0</span>
+                                        <button type="button" value="{{ p.sku }}" onclick="addToCart(this)"
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -149,90 +111,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        let myCart = document.getElementById('cart-body');
-        let cartSubtotal = document.getElementById('cart-subtotal');
-        let cartTax = document.getElementById('cart-tax');
-        let cartDiscount = document.getElementById('cart-discount');
-        let cartTotal = document.getElementById('cart-total');
-
-        function addToCart(ele) {
-            modifyCart(ele.value, 1);
-        }
-
-        function removeFromCart(ele) {
-            modifyCart(ele.value, -1);
-        }
-
-        function updateProductQuantities(items) {
-
-    // Reset semua quantity menjadi 0
-    document.querySelectorAll('[id^="quantity-"]').forEach(function (element) {
-        element.innerText = '0';
-    });
-
-    // Nonaktifkan semua tombol minus
-    document.querySelectorAll('[id^="remove-"]').forEach(function (button) {
-        button.disabled = true;
-    });
-
-    // Update quantity produk yang ada di cart
-    for (let item of items) {
-
-        let quantityElement = document.getElementById(
-            `quantity-${item.sku}`
-        );
-
-        let removeButton = document.getElementById(
-            `remove-${item.sku}`
-        );
-
-        if (quantityElement) {
-            quantityElement.innerText = item.quantity;
-        }
-
-        // Aktifkan tombol minus jika quantity > 0
-        if (removeButton && item.quantity > 0) {
-            removeButton.disabled = false;
-        }
-    }
-}
-
-        function modifyCart(sku, delta) {
-            liveSend({'sku': sku, 'delta': delta});
-        }
-
-        function cu(amount) {
-            return `${amount} points`;
-        }
-
-        function liveRecv(data) {
-    let html = '';
-
-    for (let item of data.items) {
-        html += `
-            <tr>
-                <td>${item.name}</td>
-                <td>${item.quantity}</td>
-                <td>${cu(item.total_price)}</td>
-            </tr>
-        `;
-    }
-
-    myCart.innerHTML = html;
-
-    // Update quantity pada katalog
-    updateProductQuantities(data.items);
-
-    // Update cart summary
-    cartSubtotal.innerText = cu(data.subtotal);
-    cartTax.innerText = cu(data.tax);
-    cartDiscount.innerText = cu(data.discount);
-    cartTotal.innerText = cu(data.total_price);
-}
-
-        document.addEventListener("DOMContentLoaded", function (event) {
-            liveSend({});
-        });
-    </script>
+    {# Main JS #}
+    <script src="{% static 'global/shop_apps/js/main_script.js' %}"></script>
 {% endblock %}

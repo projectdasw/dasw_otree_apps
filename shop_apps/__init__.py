@@ -5,7 +5,6 @@ doc = """
 Shopping app
 """
 
-
 class Product(ExtraModel):
     sku = models.StringField()
     name = models.StringField()
@@ -16,7 +15,7 @@ class Product(ExtraModel):
 def load_products():
     rows = read_csv(__name__ + '/catalog.csv', Product)
     for row in rows:
-        row['image_path'] = 'grocery/{}.png'.format(row['image_png'])
+        row['image_path'] = 'global/shop_apps/assets/grocery/{}.png'.format(row['image_png'])
     return rows
 
 
@@ -27,8 +26,7 @@ class C(BaseConstants):
     TAX_RATE = 0.10
     DISCOUNT_RATE = 0.30
     PRODUCTS = load_products()
-    # SKU = 'stock keeping unit' = product ID
-    PRODUCTS_DICT = {row['sku']: row for row in PRODUCTS}
+    PRODUCTS_DICT = {row['sku']: row for row in PRODUCTS} # SKU = 'stock keeping unit' = product ID
 
 
 class Subsession(BaseSubsession):
@@ -57,20 +55,17 @@ class Item(ExtraModel):
 
 def calculate_cart(player):
     items = Item.filter(player=player)
-
-    subtotal = sum(
-        total_price(item)
-        for item in items
-    )
-
+    subtotal = sum(total_price(item) for item in items)
     tax = subtotal * C.TAX_RATE
     discount = subtotal * C.DISCOUNT_RATE
     cart_total = subtotal + tax - discount
 
     return subtotal, tax, discount, cart_total
 
+
 def total_price(item: Item):
     return item.quantity * item.unit_price
+
 
 def to_dict(item: Item):
     return dict(
@@ -108,11 +103,8 @@ def live_method(player: Player, data):
                 )
 
     items = Item.filter(player=player)
-
     subtotal, tax, discount, cart_total = calculate_cart(player)
-
     player.total_price = cart_total
-
     item_dicts = [to_dict(item) for item in items]
 
     return {
@@ -133,9 +125,7 @@ class game(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         items = Item.filter(player=player)
-
         subtotal, tax, discount, cart_total = calculate_cart(player)
-
         player.subtotal = subtotal
         player.tax = tax
         player.discount = discount
@@ -156,7 +146,6 @@ class game(Page):
 class results(Page):
     @staticmethod
     def vars_for_template(player: Player):
-
         items = Item.filter(player=player)
 
         return dict(
