@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const noResults = document.querySelector('.no-results');
     noResults.hidden = true;
 
+
     function filterExperiments() {
         const keyword = searchInput.value.trim().toLowerCase();
         const selectedCategory = categoryFilter.value;
@@ -33,23 +34,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         cards.forEach(function (card) {
             const searchableText = card.textContent.toLowerCase();
-            const categoryElement = card.querySelector('.badge');
-            const categoryName = categoryElement
-                ? categoryElement.textContent.trim()
-                : 'Research Experiment';
+            const category = (
+                card.querySelector('[data-category]')?.dataset.category
+                || 'research-experiment'
+            ).trim().replace(/\s+/g, '');
 
-            const category = card.querySelector('[data-category]')
-                ?.dataset.category || 'research-experiment';
-
-            const status = card.querySelector('[data-status]')
-                ?.dataset.status || 'completed';
-
-            const cardCategory = categoryMap[categoryName] || 'research-experiment';
+            const statusElement = card.querySelector('[data-status]');
+            const status = statusElement ? statusElement.dataset.status.trim() : '';
             const matchesKeyword = searchableText.includes(keyword);
-            const matchesCategory = selectedCategory === 'all'
-                || cardCategory === selectedCategory
+            const matchesCategory =
+                selectedCategory === 'all'
                 || category === selectedCategory
-                || (selectedCategory === 'in-process' && status === 'in-process');
+                || status === selectedCategory;
 
             const isVisible = matchesKeyword && matchesCategory;
 

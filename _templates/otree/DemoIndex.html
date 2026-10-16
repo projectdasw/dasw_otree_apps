@@ -72,10 +72,11 @@
                     <select class="form-select" id="category-filter">
                         <option value="all">All categories</option>
                         <option value="in-process">In-Process</option>
+                        <option value="completed">Development Complete</option>
                         <option value="decision-making">Decision-Making</option>
                         <option value="real-effort-task">Real Effort Task</option>
                         <option value="shopping-simulation">Shopping Simulation</option>
-                        {#<option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>#}
+                        <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
                         <option value="research-experiment">Research Experiment</option>
                     </select>
                 </div>
@@ -91,6 +92,79 @@
         </div>
         <div class="row row-cols-1 row-cols-md-2 g-4 experiment-grid">
             {% for s in session_info %}
+                <!-- Update / Patch History Modal -->
+                <div class="modal fade" id="patchModal-{{ s.name }}" tabindex="-1"
+                     aria-labelledby="patchModalLabel-{{ s.name }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div>
+                                    <h5 class="modal-title"
+                                        id="patchModalLabel-{{ s.name }}">
+                                        <i class="fa-solid fa-clock-rotate-left me-2"></i>
+                                        Update / Patch History
+                                    </h5>
+                                    <small class="text-muted">
+                                        {{ s.display_name }}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+
+                                {% if s.name == 'algebraic' %}
+
+                                    <div class="border rounded p-3 mb-3">
+                                        <div class="d-flex justify-content-between
+                                                    align-items-center flex-wrap gap-2">
+                                            <strong>Development Started</strong>
+                                            <span class="badge text-bg-warning">
+                                                In-Process
+                                            </span>
+                                        </div>
+
+                                        <small class="text-muted">
+                                            October 15, 2026
+                                        </small>
+
+                                        <p class="mb-0 mt-2">
+                                            Initial development of the Algebraic
+                                            experiment application.
+                                        </p>
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="text-center py-4">
+                                        <i class="fa-regular fa-clipboard fa-2x
+                                                  text-muted mb-3"></i>
+
+                                        <h6>No Update History</h6>
+
+                                        <p class="text-muted mb-0">
+                                            No update or patch notes have been
+                                            recorded for this application yet.
+                                        </p>
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
@@ -133,11 +207,13 @@
                                         <i class="fa-regular fa-clock"></i>
                                         In-Process
                                     </span>
+                                {% endif %}
+{#                                {% if s.name == 'investment' %}#}
 {#                                    <span class="badge text-bg-success bg-gradient ms-2" data-status="completed">#}
 {#                                        <i class="fa-regular fa-circle-check"></i>#}
 {#                                        Completed#}
 {#                                    </span>#}
-                                {% endif %}
+{#                                {% endif %}#}
                             </div>
                             <p class="card-text" style="font-size: 14px;">
                                 {% if s.name == 'transcription_continuous' %}
@@ -187,6 +263,17 @@
                                     <i class="fa-solid fa-vial-circle-check"></i>
                                     <span>View Apps Details</span>
                                 </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                        p-0 py-2">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold experiment-detail-head">Patch Notes</div>
+                                            <button type="button" class="btn btn-outline-primary btn-sm mt-2"
+                                                    data-bs-toggle="modal" data-bs-target="#patchModal-{{ s.name }}">
+                                                <i class="fa-solid fa-clock-rotate-left me-1"></i>
+                                                View Patch History
+                                            </button>
+                                        </div>
+                                    </li>
                                 {% if s.name == 'transcription_continuous' %}
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
@@ -303,15 +390,6 @@
                                 {# {% elif s.name == 'investment' %} #}
                                 {# {% elif s.name == 'donation_with_rank' %} #}
                                 {% elif s.name == 'algebraic' %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-start
-                                        p-0 py-2">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold experiment-detail-head">Development Status</div>
-                                            <span class="experiment-detail-text">
-                                                Development started on October 15, 2026.
-                                            </span>
-                                        </div>
-                                    </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
                                         <div class="ms-2 me-auto">
