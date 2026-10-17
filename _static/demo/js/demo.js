@@ -9,19 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    const cards = Array.from(
-        experimentGrid.querySelectorAll('.experiment-grid, .col')
-    ).filter(function (card) {
-        return card.querySelector('.card');
-    });
-
-    const categoryMap = {
-        'Decision-Making': 'decision-making',
-        'Real Effort Task': 'real-effort-task',
-        'Shopping Simulation': 'shopping-simulation',
-        'Puzzle & Problem Solving': 'puzzle-problem-solving',
-        'Research Experiment': 'research-experiment'
-    };
+    const cards = Array.from(experimentGrid.querySelectorAll('.experiment-grid, .col')
+        ).filter(function (card) {
+            return card.querySelector('.card');
+        });
 
     const noResults = document.querySelector('.no-results');
     noResults.hidden = true;
@@ -34,17 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         cards.forEach(function (card) {
             const searchableText = card.textContent.toLowerCase();
-            const category = (
-                card.querySelector('[data-category]')?.dataset.category
-                || 'research-experiment'
-            ).trim().replace(/\s+/g, '');
+            const category = (card.querySelector('[data-category]')?.dataset.category
+                || 'research-experiment').trim().replace(/\s+/g, '');
 
             const statusElement = card.querySelector('[data-status]');
             const status = statusElement ? statusElement.dataset.status.trim() : '';
             const matchesKeyword = searchableText.includes(keyword);
-            const matchesCategory =
-                selectedCategory === 'all'
-                || category === selectedCategory
+            const matchesCategory = selectedCategory === 'all' || category === selectedCategory
                 || status === selectedCategory;
 
             const isVisible = matchesKeyword && matchesCategory;
