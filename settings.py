@@ -12,6 +12,9 @@ SESSION_CONFIGS = [
     #     app_sequence=['investment'],
     #     num_demo_participants=1,
     # ),
+
+    # Real Effort Task
+    # ------------------------------------------------------------
     dict(
         display_name='RET Algebraic',
         name='algebraic',
@@ -48,12 +51,67 @@ SESSION_CONFIGS = [
     #     app_sequence=['slot_machine'],
     #     num_demo_participants=1,
     # ),
+    # ------------------------------------------------------------
+
+    # Shopping Simulation
+    # ------------------------------------------------------------
     dict(
         display_name='Shopping Apps',
         name='shop_apps',
         app_sequence=['shop_apps'],
         num_demo_participants=1,
     ),
+    # ------------------------------------------------------------
+
+    # Research Experiment
+    # ------------------------------------------------------------
+    dict(
+        display_name='Poor Assistance',
+        name='poor_assistance',
+        app_sequence=['poor_assistance'],
+        num_demo_participants=1,
+    ),
+    dict(
+        display_name='Moral Environments',
+        name='moral_environments',
+        app_sequence=['moral_environments'],
+        num_demo_participants=1,
+    ),
+    dict(
+        display_name='Donation',
+        name='donation',
+        app_sequence=['donation'],
+        num_demo_participants=1,
+    ),
+    dict(
+        display_name='Digital Payment',
+        name='digital_payment',
+        app_sequence=['digital_payment'],
+        num_demo_participants=1,
+    ),
+    dict(
+        display_name='Tax Evasion',
+        name='tax_evasion',
+        app_sequence=['tax_evasion'],
+        num_demo_participants=1,
+    ),
+    dict(
+        display_name='Alabama Project',
+        name='alabama_project',
+        app_sequence=['alabama_project'],
+        num_demo_participants=1,
+    ),
+    # ------------------------------------------------------------
+
+    # Templates Custom Style
+    # ------------------------------------------------------------
+    dict(
+        display_name='Custom Templates',
+        name='templates_style',
+        app_sequence=['templates_style'],
+        num_demo_participants=1,
+    ),
+    # ------------------------------------------------------------
 ]
 
 
