@@ -1,5 +1,5 @@
 {% extends "otree/BaseAdminRegular.html" %}
-{% block head_title %}DASW | Experiment Demo{% endblock %}
+{% block head_title %}DASW | Experiment Demo {% endblock %}
 {% block internal_styles %}
     {{ super() }}
     <!-- Bootstrap -->
@@ -71,13 +71,18 @@
                     </span>
                     <select class="form-select" id="category-filter">
                         <option value="all">All categories</option>
-                        <option value="in-process">In-Process</option>
-                        <option value="completed">Development Complete</option>
                         <option value="decision-making">Decision-Making</option>
                         <option value="real-effort-task">Real Effort Task</option>
                         <option value="shopping-simulation">Shopping Simulation</option>
                         <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
                         <option value="research-experiment">Research Experiment</option>
+                        <option value="development-process">In-Process (Development)</option>
+                        <option value="integration-process">In-Process (Integration)</option>
+                        <option value="patch-process">In-Process (Patch)</option>
+                        <option value="development-complete">Completed (Development)</option>
+                        <option value="integration-complete">Completed (Integration)</option>
+                        <option value="patch-complete">Completed (Patch)</option>
+                        <option value="style-templates">Custom Templates</option>
                     </select>
                 </div>
             </div>
@@ -122,6 +127,139 @@
                                             <span class="badge text-bg-warning rounded-pill">
                                                 <i class="fa-regular fa-clock"></i>
                                                 <span>In-Process</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'poor_assistance' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Poor Assistance.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Integration)</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'moral_environments' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Moral Environments.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Integration)</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'donation' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Donation.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Integration)</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'digital_payment' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Digital Payment.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Integration)</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'tax_evasion' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Tax Evasion.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Integration)</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'alabama_project' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Alabama Project.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Integration)</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                {% elif s.name == 'templates_style' %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 19, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Development Started</div>
+                                                <p class="m-0">
+                                                    Initial development of the Custom Templates.
+                                                    Features and functionality may change during development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-warning rounded-pill">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>In-Process (Development)</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -173,8 +311,8 @@
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-warning rounded-pill">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span>In-Process</span>
+                                                <i class="fa-solid fa-code-merge"></i>
+                                                <span>In-Process (Integration)</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -213,6 +351,8 @@
                                         real-effort-task
                                     {% elif s.name == 'shop_apps' %}
                                         shopping-simulation
+                                    {% elif s.name == 'templates_style' %}
+                                        style-templates
                                     {#{% elif s.name == 'algebraic' or s.name == 'decoding' %}#}
                                     {#puzzle-problem-solving#}
                                     {% else %}
@@ -228,6 +368,8 @@
                                     Shopping Simulation
                                 {#{% elif s.name == 'algebraic' or s.name == 'decoding' %}#}
                                 {#Puzzle &amp; Problem Solving#}
+                                {% elif s.name == 'templates_style' %}
+                                    Custom Templates
                                 {% else %}
                                     Research Experiment
                                 {% endif %}
@@ -236,16 +378,62 @@
                         <div class="card-body">
                             <div class="d-flex flex-row align-items-center">
                                 <h4 class="card-title">{{ s.display_name }}</h4>
-                                {% if s.name == 'algebraic' %}
-                                    <span class="badge text-bg-warning bg-gradient ms-2" data-status="in-process">
+
+                                <!-- In-Process (Development) -->
+                                {% if s.name == 'algebraic' or s.name == 'templates_style' %}
+                                    <span class="badge text-bg-warning bg-gradient ms-2"
+                                          data-status="development-process">
                                         <i class="fa-regular fa-clock"></i>
-                                        In-Process
+                                        <span>In-Process (Development)</span>
                                     </span>
                                 {% endif %}
-{#                                {% if s.name == 'investment' %}#}
-{#                                    <span class="badge text-bg-success bg-gradient ms-2" data-status="completed">#}
+
+                                <!-- In Process (Integration) -->
+                                {% if s.name == 'poor_assistance' or s.name == 'moral_environments'
+                                or s.name == 'donation' or s.name == 'digital_payment' or s.name == 'tax_evasion'
+                                or s.name == 'alabama_project' %}
+                                    <span class="badge text-bg-danger bg-gradient ms-2"
+                                          data-status="integration-process">
+                                        <i class="fa-solid fa-code-merge"></i>
+                                        <span>In-Process (Integration)</span>
+                                    </span>
+                                {% endif %}
+
+                                <!-- In Process (Patch) -->
+{#                                {% if s.name == 'shop_apps' %}#}
+{#                                    <span class="badge text-bg-dark bg-gradient ms-2"#}
+{#                                          data-status="patch-process">#}
+{#                                        <i class="fa-solid fa-code-merge"></i>#}
+{#                                        <span>In-Process (Patch)</span>#}
+{#                                    </span>#}
+{#                                {% endif %}#}
+
+                                <!-- Completed (Development) -->
+{#                                {% if s.name == 'algebraic' %}#}
+{#                                    <span class="badge text-bg-success bg-gradient ms-2"#}
+{#                                          data-status="development-complete">#}
 {#                                        <i class="fa-regular fa-circle-check"></i>#}
-{#                                        Completed#}
+{#                                        <span>Completed (Development)</span>#}
+{#                                    </span>#}
+{#                                {% endif %}#}
+
+                                <!-- Completed (Integration) -->
+{#                                {% if s.name == 'poor_assistance' or s.name == 'moral_environments'#}
+{#                                or s.name == 'donation' or s.name == 'digital_payment' or s.name == 'tax_evasion'#}
+{#                                or s.name == 'alabama_project' %}#}
+{#                                    <span class="badge text-bg-danger bg-gradient ms-2"#}
+{#                                          data-status="integration-complete">#}
+{#                                        <i class="fa-solid fa-code-merge"></i>#}
+{#                                        <span>Complete (Integration)</span>#}
+{#                                    </span>#}
+{#                                {% endif %}#}
+
+                                <!-- Completed (Patch) -->
+{#                                {% if s.name == 'algebraic' %}#}
+{#                                    <span class="badge text-bg-success bg-gradient ms-2"#}
+{#                                          data-status="patch-complete">#}
+{#                                        <i class="fa-regular fa-circle-check"></i>#}
+{#                                        <span>Completed (Patch)</span>#}
 {#                                    </span>#}
 {#                                {% endif %}#}
                             </div>
