@@ -1,0 +1,282 @@
+
+{{ block title }}
+Aljebraic | Game
+{{ endblock }}
+
+{{ block content }}
+<style>
+    .aljebraic-container {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .aljebraic-stat {
+        background: var(--bs-tertiary-bg);
+        border-radius: 14px;
+        padding: 18px;
+        height: 100%;
+    }
+
+    .aljebraic-stat-label {
+        color: var(--bs-secondary-color);
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+    }
+
+    .aljebraic-stat-value {
+        font-size: 1.7rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .aljebraic-question {
+        font-size: clamp(2.2rem, 7vw, 4rem);
+        font-weight: 700;
+        text-align: center;
+        padding: 35px 0;
+        overflow-wrap: anywhere;
+    }
+
+    .aljebraic-answer {
+        max-width: 320px;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 1.4rem;
+        padding: 14px;
+    }
+
+    .aljebraic-submit {
+        min-width: 180px;
+    }
+
+    #message {
+        min-height: 24px;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="aljebraic-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <div class="text-muted small">ALJEBRAIC</div>
+                <h4 class="fw-bold mb-0">Arithmetic Challenge</h4>
+            </div>
+
+            <div class="text-end">
+                <div class="text-muted small">Sisa Waktu</div>
+                <div id="timer" class="h3 fw-bold mb-0">00:00</div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center text-muted">
+                    Hitung hasil operasi berikut
+                </div>
+
+                <div id="question" class="aljebraic-question">
+                    {{ question }}
+                </div>
+
+                <form id="answer-form" onsubmit="return false;">
+                    <input
+                        type="number"
+                        id="answer-input"
+                        class="form-control aljebraic-answer mb-3"
+                        placeholder="Masukkan jawaban"
+                        autocomplete="off"
+                        inputmode="numeric"
+                        step="1"
+                        required
+                    >
+
+                    <div class="text-center">
+                        <button
+                            type="button"
+                            id="submit-answer"
+                            class="btn btn-primary btn-lg aljebraic-submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+                <div id="message" class="text-center small mt-3"
+                     role="status"></div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-4">
+                <div class="aljebraic-stat text-center">
+                    <div class="aljebraic-stat-label">Jawaban Benar</div>
+                    <div id="correct-count" class="aljebraic-stat-value">
+                        {{ correct_count }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="aljebraic-stat text-center">
+                    <div class="aljebraic-stat-label">Jawaban Salah</div>
+                    <div id="wrong-count" class="aljebraic-stat-value">
+                        {{ wrong_count }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="aljebraic-stat text-center">
+                    <div class="aljebraic-stat-label">Total Skor</div>
+                    <div id="score" class="aljebraic-stat-value">
+                        {{ total_score }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-none">
+    {{ next_button }}
+</div>
+
+<script>
+    let questionId = {{ question_id }};
+    let remainingSeconds = Math.ceil({{ remaining_seconds }});
+    let waitingForResponse = false;
+    let gameFinished = false;
+
+    const timerElement = document.getElementById('timer');
+    const answerInput = document.getElementById('answer-input');
+    const submitButton = document.getElementById('submit-answer');
+    const messageElement = document.getElementById('message');
+
+    function renderTimer() {
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+
+        timerElement.textContent =
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+    }
+
+    function finishGame() {
+        if (gameFinished) return;
+
+        gameFinished = true;
+        waitingForResponse = true;
+
+        answerInput.disabled = true;
+        submitButton.disabled = true;
+        messageElement.textContent = 'Waktu habis. Menampilkan hasil...';
+
+        clearInterval(timerInterval);
+
+        const nextButton = document.querySelector(
+            '.otree-btn-next, button[name="submit"]'
+        );
+
+        if (nextButton) {
+            nextButton.click();
+        }
+    }
+
+    function submitAnswer() {
+        if (gameFinished || waitingForResponse) return;
+
+        const value = answerInput.value.trim();
+
+        if (value === '' || !Number.isInteger(Number(value))) {
+            messageElement.textContent =
+                'Masukkan jawaban berupa bilangan bulat.';
+            answerInput.focus();
+            return;
+        }
+
+        waitingForResponse = true;
+        submitButton.disabled = true;
+        messageElement.textContent = '';
+
+        liveSend({
+            type: 'answer',
+            answer: value,
+            question_id: questionId
+        });
+    }
+
+    submitButton.addEventListener('click', submitAnswer);
+
+    answerInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            submitAnswer();
+        }
+    });
+
+
+function liveRecv(data) {
+    if (data.finished) {
+        finishGame();
+        return;
+    }
+
+    if (data.error) {
+        messageElement.textContent = data.error;
+        waitingForResponse = false;
+        submitButton.disabled = false;
+        answerInput.focus();
+        return;
+    }
+
+    if (data.stale) {
+        messageElement.textContent =
+            'Soal telah berubah. Silakan jawab soal yang tampil.';
+        waitingForResponse = false;
+        submitButton.disabled = false;
+        return;
+    }
+
+    if (data.question !== undefined) {
+        questionId = data.question_id;
+
+        document.getElementById('question').textContent =
+            data.question;
+
+        document.getElementById('correct-count').textContent =
+            data.correct_count;
+
+        document.getElementById('wrong-count').textContent =
+            data.wrong_count;
+
+        document.getElementById('score').textContent =
+            data.total_score;
+
+        answerInput.value = '';
+        answerInput.focus();
+
+        waitingForResponse = false;
+        submitButton.disabled = false;
+    }
+}
+
+
+    renderTimer();
+
+    const timerInterval = setInterval(function () {
+        if (gameFinished) {
+            clearInterval(timerInterval);
+            return;
+        }
+
+        remainingSeconds = Math.max(0, remainingSeconds - 1);
+        renderTimer();
+
+        if (remainingSeconds <= 0) {
+            finishGame();
+        }
+    }, 1000);
+
+    answerInput.focus();
+</script>
+{{ endblock }}

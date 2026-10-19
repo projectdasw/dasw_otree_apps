@@ -1,0 +1,89 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>RET Algebraic - Basic Arithmetic - Instruction</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row bg-white">
+            <div class="text-center">
+                <div class="display-5 fw-bold">Aljebraic</div>
+                <p class="text-muted">Arithmetic Challenge</p>
+                <p class="m-0">
+                    Selesaikan sebanyak mungkin soal aritmetika
+                    sebelum waktu permainan berakhir.
+                </p>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="fw-bold mb-3">Aturan Permainan</h5>
+
+            <ul class="mb-0">
+                <li class="mb-2">
+                    Soal menggunakan operasi tambah (+),
+                    kurang (−), kali (×), dan bagi (÷).
+                </li>
+                <li class="mb-2">
+                    Operasi dan angka pada setiap soal dipilih secara acak.
+                </li>
+                <li class="mb-2">
+                    Masukkan jawaban berupa bilangan bulat,
+                    kemudian tekan Submit.
+                </li>
+                <li class="mb-2">
+                    Jawaban benar mendapatkan poin.
+                    Jawaban salah mendapatkan 0 poin.
+                </li>
+                <li class="mb-2">
+                    Soal berikutnya muncul setelah jawaban dikirim.
+                </li>
+                <li>
+                    Permainan berakhir ketika waktu habis.
+                </li>
+            </ul>
+            <div class="row g-3 mb-4">
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="text-muted small mb-2">
+                                Durasi Permainan
+                            </div>
+                            <div class="display-6 fw-bold">
+                                {{ duration }}
+                            </div>
+                            <div class="text-muted small">detik</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="text-muted small mb-2">
+                                Poin Jawaban Benar
+                            </div>
+                            <div class="display-6 fw-bold">
+                                {{ points_correct }}
+                            </div>
+                            <div class="text-muted small">poin per soal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+            <div class="text-center">
+                <p class="text-muted small mb-3">
+                    Pastikan Anda siap sebelum memulai.
+                    Waktu dimulai setelah masuk ke permainan.
+                </p>
+
+                <button class="btn btn-primary btn-lg px-5" type="submit">
+                    Start Game
+                </button>
+            </div>
+        </div>
+    </div>
+{{ endblock }}

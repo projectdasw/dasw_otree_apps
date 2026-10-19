@@ -1,0 +1,71 @@
+
+{{ block title }}
+Aljebraic | Results
+{{ endblock }}
+
+{{ block content }}
+<div class="container py-5">
+    <div class="mx-auto" style="max-width: 700px;">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Permainan Selesai!</h2>
+            <p class="text-muted">
+                Berikut adalah hasil permainan Aljebraic Anda.
+            </p>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="text-muted mb-2">Total Skor</div>
+                    <div class="display-2 fw-bold">{{ total_score }}</div>
+                    <div class="text-muted">poin</div>
+                </div>
+
+                <hr>
+
+                <div class="row g-3 text-center mt-2">
+                    <div class="col-6">
+                        <div class="border rounded-3 p-3 h-100">
+                            <div class="text-muted small">Total Soal</div>
+                            <div class="h2 fw-bold mb-0">
+                                {{ total_questions }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="border rounded-3 p-3 h-100">
+                            <div class="text-muted small">Belum Dijawab</div>
+                            <div class="h2 fw-bold mb-0">
+                                {{ unanswered }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="bg-success bg-opacity-10 rounded-3 p-3 h-100">
+                            <div class="text-success small">Jawaban Benar</div>
+                            <div class="h2 fw-bold mb-0">
+                                {{ correct_count }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="bg-danger bg-opacity-10 rounded-3 p-3 h-100">
+                            <div class="text-danger small">Jawaban Salah</div>
+                            <div class="h2 fw-bold mb-0">
+                                {{ wrong_count }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-muted small">
+            Terima kasih telah bermain Aljebraic.
+        </div>
+    </div>
+</div>
+{{ endblock }}
