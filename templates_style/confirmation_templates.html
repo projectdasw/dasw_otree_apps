@@ -1,0 +1,39 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Confirmation - [Main Category] - [Sub Category]</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
+                <h5 class="m-0">[Title text]</h5>
+                <span class="text-muted">[Sub Title text]</span>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-center align-items-center">
+                    <i class="fa-solid fa-triangle-exclamation fs-2 me-2 text-warning"></i>
+                    <h3 class="text-center">[Confirmation text]</h3>
+                    <i class="fa-solid fa-triangle-exclamation fs-2 ms-2 text-warning"></i>
+                </div>
+                <p class="m-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu, cursus id dignissim
+                    sed, porta a arcu. Aliquam sit amet porttitor nunc. Vestibulum ut erat augue. Etiam congue pharetra
+                    pretium. Maecenas egestas vitae lorem et venenatis. Nam posuere facilisis rutrum. Fusce sit amet
+                    malesuada sem, ac dapibus ex. Mauris non gravida lectus. Duis augue elit, pellentesque sit amet
+                    rutrum at, rutrum a mauris. Praesent mattis mollis dolor quis ullamcorper. Cras vel ligula at nunc
+                    aliquam pretium. Maecenas et fringilla diam.
+                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center bg-white">
+                <button class="otree-btn btn btn-primary w-25">
+                    <span>Next Templates</span>
+                    <i class="fa-solid fa-forward-fast"></i>
+                </button>
+                <span class="text-muted text-center">Developed by DASW Project</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

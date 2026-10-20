@@ -30,6 +30,10 @@ class instruction_templates(Page):
     pass
 
 
+class confirmation_templates(Page):
+    pass
+
+
 class game_templates(Page):
     pass
 
@@ -45,6 +49,7 @@ class final_results_templates(Page):
 page_sequence = [
     introduction_templates,
     instruction_templates,
+    confirmation_templates,
     game_templates,
     single_results_templates,
     final_results_templates,

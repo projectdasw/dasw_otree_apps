@@ -2,5 +2,110 @@
 {% load otree static %}
 
 {% block title %}
-    <title>RET Transcription - Continuous Transcription</title>
+    <title>Instruction - [Main Category] - [Sub Category]</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
+                <h5 class="m-0">[Title text]</h5>
+                <span class="text-muted">[Sub Title text]</span>
+            </div>
+            <div class="card-body">
+                <h3 class="text-center">[Instruction text]</h3>
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                        <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">[Instruction title]</div>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu, cursus id
+                            dignissim sed, porta a arcu. Aliquam sit amet porttitor nunc. Vestibulum ut erat augue.
+                            Etiam congue pharetra pretium. Maecenas egestas vitae lorem et venenatis. Nam posuere
+                            facilisis rutrum. Fusce sit amet malesuada sem, ac dapibus ex.
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">[Instruction title]</div>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu, cursus id
+                            dignissim sed, porta a arcu. Aliquam sit amet porttitor nunc. Vestibulum ut erat augue.
+                            Etiam congue pharetra pretium. Maecenas egestas vitae lorem et venenatis. Nam posuere
+                            facilisis rutrum. Fusce sit amet malesuada sem, ac dapibus ex.
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">[Instruction title]</div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu, cursus
+                                id dignissim sed, porta a arcu. Aliquam sit amet porttitor nunc. Vestibulum ut erat
+                                augue. Etiam congue pharetra pretium. Maecenas egestas vitae lorem et venenatis. Nam
+                                posuere facilisis rutrum. Fusce sit amet malesuada sem, ac dapibus ex.
+                            </p>
+                            <img src="{% static 'global/custom_templates/assets/img/example_img.png' %}"
+                                 class="img-fluid w-50 mx-auto d-block" alt="image/png">
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">[Instruction title]</div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu, cursus
+                                id dignissim sed, porta a arcu. Aliquam sit amet porttitor nunc. Vestibulum ut erat
+                                augue. Etiam congue pharetra pretium. Maecenas egestas vitae lorem et venenatis. Nam
+                                posuere facilisis rutrum. Fusce sit amet malesuada sem, ac dapibus ex.
+                            </p>
+                            <p class="m-0">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit:
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                                    <div class="ms-2 me-auto">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu,
+                                        cursus id dignissim sed, porta a arcu. Aliquam sit amet porttitor nunc.
+                                        Vestibulum ut erat augue. Etiam congue pharetra pretium. Maecenas egestas vitae
+                                        lorem et venenatis. Nam posuere facilisis rutrum. Fusce sit amet malesuada sem,
+                                        ac dapibus ex.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <i class="fa-solid fa-circle-check text-success"></i>
+                                    <div class="ms-2 me-auto">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor arcu,
+                                        cursus id dignissim sed, porta a arcu. Aliquam sit amet porttitor nunc.
+                                        Vestibulum ut erat augue. Etiam congue pharetra pretium. Maecenas egestas vitae
+                                        lorem et venenatis. Nam posuere facilisis rutrum. Fusce sit amet malesuada sem,
+                                        ac dapibus ex.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor
+                                            arcu, cursus id dignissim sed, porta a arcu. Aliquam sit amet porttitor
+                                            nunc. Vestibulum ut erat augue. Etiam congue pharetra pretium. Maecenas
+                                            egestas vitae lorem et venenatis. Nam posuere facilisis rutrum. Fusce sit
+                                            amet malesuada sem, ac dapibus ex.
+                                        </p>
+                                        <img src="{% static 'global/custom_templates/assets/img/example_img.png' %}"
+                                             class="img-fluid w-50 mx-auto d-block" alt="image/png">
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center bg-white">
+                <button class="otree-btn btn btn-primary w-25">
+                    <span>Next Templates</span>
+                    <i class="fa-solid fa-forward-fast"></i>
+                </button>
+                <span class="text-muted text-center">Developed by DASW Project</span>
+            </div>
+        </div>
+    </div>
 {% endblock %}
