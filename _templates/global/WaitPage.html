@@ -1,0 +1,39 @@
+{% extends "otree/WaitPage.html" %}
+{% load otree static %}
+
+{% block title %}    
+    <title>{% title_text %}</title>
+{% endblock %}
+
+{% block styles  %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'global/node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Fontawesome Icon -->
+    <link rel="stylesheet" href="{% static 'global/node_modules/@fortawesome/fontawesome-free/css/all.css' %}">
+    {# oTree Custom CSS #}
+    <link rel="stylesheet" href="{% static 'global/otree_custom.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% block title %}
+        <div class="text-center">{% title_text %}</div>
+    {% endblock %}
+    <h3 class="text-center mb-3">[Title text]</h3>
+    <div class="container d-flex justify-content-center align-items-center mb-3">
+        <img src="{% static 'global/custom_templates/assets/img/example_img.png' %}" class="img-fluid w-25" alt="image/png">
+        <img src="{% static 'global/custom_templates/assets/img/example_img.png' %}" class="img-fluid w-25" alt="image/png">
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="spinner-border spinnerSize text-primary mb-3" role="status"></div>
+        <h5 class="text-center text-muted m-0">[Description text]</h5>
+    </div>
+{% endblock %}
+
+{% block scripts  %}
+    <!-- Bootstrap Popper -->
+    <script src="{% static 'global/node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
+    <!-- Bootstrap Bundle -->
+    <script src="{% static 'global/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- SweetAlert2 Message Alert -->
+    <script src="{% static 'global/node_modules/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+{% endblock %}
