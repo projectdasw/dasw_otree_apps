@@ -257,9 +257,30 @@
                                                     Features and functionality may change during development.
                                                 </p>
                                             </div>
-                                            <span class="badge text-bg-warning rounded-pill">
+                                            <!-- <span class="badge text-bg-warning rounded-pill">
                                                 <i class="fa-regular fa-clock"></i>
                                                 <span>In-Process (Development)</span>
+                                            </span> -->
+                                            <span class="badge text-bg-success bg-gradient ms-2"
+                                                data-status="development-complete">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Development)</span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 21, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Development Completed</div>
+                                                <p class="m-0">
+                                                    Custom templates have been completed development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-success bg-gradient ms-2"
+                                                data-status="development-complete">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Development)</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -342,7 +363,7 @@
                         <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
                             <code>Demo Apps</code>
                             <span class="badge text-bg-info bg-gradient"
-                                    data-category="
+                                data-category="
                                     {% if s.name == 'investment' or s.name == 'donation_with_rank' %}
                                         decision-making
                                     {% elif s.name == 'transcription_continuous' or s.name == 'transcription_exact'
@@ -380,7 +401,7 @@
                                 <h4 class="card-title">{{ s.display_name }}</h4>
 
                                 <!-- In-Process (Development) -->
-                                {% if s.name == 'algebraic' or s.name == 'templates_style' %}
+                                {% if s.name == 'algebraic' %}
                                     <span class="badge text-bg-warning bg-gradient ms-2"
                                           data-status="development-process">
                                         <i class="fa-regular fa-clock"></i>
@@ -409,13 +430,13 @@
 {#                                {% endif %}#}
 
                                 <!-- Completed (Development) -->
-{#                                {% if s.name == 'algebraic' %}#}
-{#                                    <span class="badge text-bg-success bg-gradient ms-2"#}
-{#                                          data-status="development-complete">#}
-{#                                        <i class="fa-regular fa-circle-check"></i>#}
-{#                                        <span>Completed (Development)</span>#}
-{#                                    </span>#}
-{#                                {% endif %}#}
+                                {% if s.name == 'templates_style' %}
+                                    <span class="badge text-bg-success bg-gradient ms-2"
+                                          data-status="development-complete">
+                                        <i class="fa-regular fa-circle-check"></i>
+                                        <span>Completed (Development)</span>
+                                    </span>
+                                {% endif %}
 
                                 <!-- Completed (Integration) -->
 {#                                {% if s.name == 'poor_assistance' or s.name == 'moral_environments'#}
