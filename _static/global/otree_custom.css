@@ -1,6 +1,24 @@
-/*Disabled oTree Timer Template*/
-/*if you want use this timer template, you can make this code as a comment*/
 @charset "utf-8";
-.otree-timer{
+
+/*Disabled oTree Timer Template*/
+/*if you want use default timer template, you can make this code as a comment*/
+/* --------------------------------------------------------------------------- */
+.otree-timer {
     display: none;
+}
+
+/*Disabled oTree Wait Page*/
+/*if you want use default template, you can make this code as a comment*/
+/* --------------------------------------------------------------------------- */
+.spinnerSize {
+    width: 80px;
+    height: 80px;
+}
+
+.progress {
+    display: none;
+}
+
+.otree-wait-page .card-body {
+    margin: 0;
 }
