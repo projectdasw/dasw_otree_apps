@@ -22,6 +22,14 @@ class Player(BasePlayer):
     pass
 
 
+# class Loading(WaitPage):
+#     title_text = "Please wait" # use {% title_text %} on HTML for display Wait Page title text
+
+
+class wait_pages_templates(Page):
+    pass
+
+
 class introduction_templates(Page):
     pass
 
@@ -47,6 +55,8 @@ class final_results_templates(Page):
 
 
 page_sequence = [
+    # Loading,
+    wait_pages_templates,
     introduction_templates,
     instruction_templates,
     confirmation_templates,
