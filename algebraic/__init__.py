@@ -10,7 +10,7 @@ class Constants(BaseConstants):
     name_in_url = "algebraic"
     players_per_group = None
     num_rounds = 1
-    duration = 10000 # timer permainan
+    duration = 5 # timer permainan
     points_correct = 1 # skor per jawaban benar
 
 
@@ -83,9 +83,7 @@ def create_next_question(player):
 
     participant.vars['aljebraic_question'] = question
     participant.vars['aljebraic_answer'] = answer
-    participant.vars['aljebraic_question_id'] = (
-        participant.vars.get('aljebraic_question_id', 0) + 1
-    )
+    participant.vars['aljebraic_question_id'] = (participant.vars.get('aljebraic_question_id', 0) + 1)
 
     # Menghitung setiap soal yang ditampilkan.
     player.total_questions += 1
@@ -117,17 +115,13 @@ class game(Page):
     @staticmethod
     def vars_for_template(player):
         game.get_timeout_seconds(player)
-
         participant = player.participant
 
         if 'aljebraic_question' not in participant.vars:
             create_next_question(player)
 
         start_time = participant.vars['aljebraic_start_time']
-        remaining = max(
-            0,
-            get_duration(player) - (time.time() - start_time),
-        )
+        remaining = max(0, get_duration(player) - (time.time() - start_time))
 
         return dict(
             question=participant.vars['aljebraic_question'],
@@ -188,9 +182,7 @@ class game(Page):
             }
 
         submitted_question_id = data.get('question_id')
-        current_question_id = participant.vars.get(
-            'aljebraic_question_id'
-        )
+        current_question_id = participant.vars.get('aljebraic_question_id')
 
         # Mencegah jawaban ganda atau jawaban untuk soal lama.
         if submitted_question_id != current_question_id:
@@ -202,9 +194,7 @@ class game(Page):
 
         correct_answer = participant.vars['aljebraic_answer']
         is_correct = player_answer == correct_answer
-        score_earned = (
-            get_points_correct(player) if is_correct else 0
-        )
+        score_earned = (get_points_correct(player) if is_correct else 0)
 
         # Simpan seluruh riwayat jawaban di model Player.
         player.correct_answer = append_history(
@@ -260,12 +250,7 @@ class game(Page):
 class results(Page):
     @staticmethod
     def vars_for_template(player):
-        unanswered = max(
-            0,
-            player.total_questions
-            - player.correct_count
-            - player.wrong_count,
-        )
+        unanswered = max(0, player.total_questions - player.correct_count - player.wrong_count)
 
         return dict(
             total_questions=player.total_questions,

@@ -1,71 +1,73 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
 
-{{ block title }}
-Aljebraic | Results
-{{ endblock }}
+{% block title %}
+    <title>Single Results - RET Aljebraic - Basic Aljebraic</title>
+{% endblock %}
 
-{{ block content }}
-<div class="container py-5">
-    <div class="mx-auto" style="max-width: 700px;">
-        <div class="text-center mb-4">
-            <h2 class="fw-bold">Permainan Selesai!</h2>
-            <p class="text-muted">
-                Berikut adalah hasil permainan Aljebraic Anda.
-            </p>
-        </div>
-
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body p-4 p-md-5">
-                <div class="text-center mb-4">
-                    <div class="text-muted mb-2">Total Skor</div>
-                    <div class="display-2 fw-bold">{{ total_score }}</div>
-                    <div class="text-muted">poin</div>
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
+                <h5 class="m-0">RET Aljebraic</h5>
+                <span class="text-muted">Basic Aljebraic</span>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex flex-column">
+                        <h3>Results</h3>
+                        <hr class="m-0 mb-1">
+                        <p class="m-0">Berikut adalah hasil permainan Basic Aljebraic Anda:</p>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="card text-bg-primary border-0 me-2">
+                            <div class="card-body">
+                                <span class="fw-bold text-center">Round</span>
+                                <h2 class="m-0 text-center">{% player.round_number %}</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
                 <hr>
-
-                <div class="row g-3 text-center mt-2">
-                    <div class="col-6">
-                        <div class="border rounded-3 p-3 h-100">
-                            <div class="text-muted small">Total Soal</div>
-                            <div class="h2 fw-bold mb-0">
-                                {{ total_questions }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="border rounded-3 p-3 h-100">
-                            <div class="text-muted small">Belum Dijawab</div>
-                            <div class="h2 fw-bold mb-0">
-                                {{ unanswered }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="bg-success bg-opacity-10 rounded-3 p-3 h-100">
-                            <div class="text-success small">Jawaban Benar</div>
-                            <div class="h2 fw-bold mb-0">
-                                {{ correct_count }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="bg-danger bg-opacity-10 rounded-3 p-3 h-100">
-                            <div class="text-danger small">Jawaban Salah</div>
-                            <div class="h2 fw-bold mb-0">
-                                {{ wrong_count }}
-                            </div>
-                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table m-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Total Soal Aljebraic</th>
+                                    <th scope="col">Jumlah Soal belum dijawab</th>
+                                    <th scope="col">Jawaban Benar</th>
+                                    <th scope="col">Jawaban Salah</th>
+                                    <th scope="col">Total Skor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{% total_questions %}</td>
+                                    <td>{% unanswered %}</td>
+                                    <td>{% correct_count %}</td>
+                                    <td>{% wrong_count %}</td>
+                                    <td>{% total_score %}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="text-center text-muted small">
-            Terima kasih telah bermain Aljebraic.
+            <div class="card-footer d-flex justify-content-between align-items-center bg-white">
+                {% if player.round_number == Constants.num_rounds %}
+                    <button class="otree-btn btn btn-danger w-25">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                        <span>Finish the game</span>
+                    </button>
+                {% else %}
+                    <button class="otree-btn btn btn-primary w-25">
+                        <span>Next Round</span>
+                        <i class="fa-solid fa-forward-fast"></i>
+                    </button>
+                {% endif %}
+                <span class="text-muted text-center">Developed by DASW Project</span>
+            </div>
         </div>
     </div>
-</div>
-{{ endblock }}
+{% endblock %}

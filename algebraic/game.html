@@ -1,282 +1,105 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
 
-{{ block title }}
-Aljebraic | Game
-{{ endblock }}
+{% block title %}
+    <title>Game - RET Aljebraic - Basic Aljebraic</title>
+{% endblock %}
 
-{{ block content }}
-<style>
-    .aljebraic-container {
-        max-width: 760px;
-        margin: 0 auto;
-    }
-
-    .aljebraic-stat {
-        background: var(--bs-tertiary-bg);
-        border-radius: 14px;
-        padding: 18px;
-        height: 100%;
-    }
-
-    .aljebraic-stat-label {
-        color: var(--bs-secondary-color);
-        font-size: 0.85rem;
-        margin-bottom: 6px;
-    }
-
-    .aljebraic-stat-value {
-        font-size: 1.7rem;
-        font-weight: 700;
-        font-variant-numeric: tabular-nums;
-    }
-
-    .aljebraic-question {
-        font-size: clamp(2.2rem, 7vw, 4rem);
-        font-weight: 700;
-        text-align: center;
-        padding: 35px 0;
-        overflow-wrap: anywhere;
-    }
-
-    .aljebraic-answer {
-        max-width: 320px;
-        margin: 0 auto;
-        text-align: center;
-        font-size: 1.4rem;
-        padding: 14px;
-    }
-
-    .aljebraic-submit {
-        min-width: 180px;
-    }
-
-    #message {
-        min-height: 24px;
-    }
-</style>
-
-<div class="container py-4">
-    <div class="aljebraic-container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <div class="text-muted small">ALJEBRAIC</div>
-                <h4 class="fw-bold mb-0">Arithmetic Challenge</h4>
+{% block content %}
+    <div class="container" id="aljebraic-game" data-question-id="{{ question_id }}"
+         data-remaining-seconds="{{ remaining_seconds }}">
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
+                <h5 class="m-0">RET Aljebraic</h5>
+                <span class="text-muted">Basic Aritmethic</span>
             </div>
-
-            <div class="text-end">
-                <div class="text-muted small">Sisa Waktu</div>
-                <div id="timer" class="h3 fw-bold mb-0">00:00</div>
-            </div>
-        </div>
-
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-body p-4 p-md-5">
-                <div class="text-center text-muted">
-                    Hitung hasil operasi berikut
-                </div>
-
-                <div id="question" class="aljebraic-question">
-                    {{ question }}
-                </div>
-
-                <form id="answer-form" onsubmit="return false;">
-                    <input
-                        type="number"
-                        id="answer-input"
-                        class="form-control aljebraic-answer mb-3"
-                        placeholder="Masukkan jawaban"
-                        autocomplete="off"
-                        inputmode="numeric"
-                        step="1"
-                        required
-                    >
-
-                    <div class="text-center">
-                        <button
-                            type="button"
-                            id="submit-answer"
-                            class="btn btn-primary btn-lg aljebraic-submit"
-                        >
-                            Submit
-                        </button>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex flex-column">
+                        <h3 class="m-0">Arithmethic Challenge</h3>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-group list-group-numbered mt-2">
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 p-0">
+                                <div class="ms-2 me-auto">
+                                    Hitung hasil operasi aritmatika
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 p-0">
+                                <div class="ms-2 me-auto">
+                                    Poin per jawaban benar bernilai 1 poin
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                </form>
-
-                <div id="message" class="text-center small mt-3"
-                     role="status"></div>
-            </div>
-        </div>
-
-        <div class="row g-3">
-            <div class="col-4">
-                <div class="aljebraic-stat text-center">
-                    <div class="aljebraic-stat-label">Jawaban Benar</div>
-                    <div id="correct-count" class="aljebraic-stat-value">
-                        {{ correct_count }}
+                    <div class="d-flex flex-row">
+                        <div class="card text-bg-primary border-0 me-2">
+                            <div class="card-body">
+                                <span class="fw-bold text-center">Round</span>
+                                <h2 class="m-0 text-center">{% player.round_number %}</h2>
+                            </div>
+                        </div>
+                        <div class="card text-bg-warning border-0">
+                            <div class="card-body">
+                                <span class="fw-bold text-center">Time Remaining</span>
+                                <h2 id="timer" class="m-0 text-center">00:00</h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-4">
-                <div class="aljebraic-stat text-center">
-                    <div class="aljebraic-stat-label">Jawaban Salah</div>
-                    <div id="wrong-count" class="aljebraic-stat-value">
-                        {{ wrong_count }}
+                <hr>
+                <div class="row row-cols-1 row-cols-md-3 g-3 text-center">
+                    <div class="col">
+                        <div class="card h-100 text-bg-success bg-gradient border-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Jawaban Benar</h6>
+                                <div class="display-5 fw-bold" id="correct-count">{{ correct_count }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 text-bg-danger bg-gradient border-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Jawaban Salah</h6>
+                                <div class="display-5 fw-bold" id="wrong-count">{{ wrong_count }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 text-bg-primary bg-gradient border-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Skor</h6>
+                                <div class="display-5 fw-bold" id="score">{{ total_score }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-4">
-                <div class="aljebraic-stat text-center">
-                    <div class="aljebraic-stat-label">Total Skor</div>
-                    <div id="score" class="aljebraic-stat-value">
-                        {{ total_score }}
+                <div class="card d-flex flex-column justify-content-center align-items-center mt-3">
+                    <div class="card-body"></div>
+                        <h4>Soal Aljebraic ke</h4>
+                        <div id="question" class="display-3 fw-bold border border-primary
+                            border-2 p-4 rounded-4 mb-3 mt-2">
+                            {{ question }}
+                        </div>
+                        <form id="answer-form" onsubmit="return false;">
+                            <div class="input-group">
+                                <input type="text" id="answer-input" class="form-control"
+                                       placeholder="Masukkan jawaban" autocomplete="off" inputmode="numeric" step="1"
+                                       required>
+                                <button type="button" id="submit-answer" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                        <div id="message" class="text-center small mt-3" role="status"></div>
                     </div>
-                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <span class="float-end text-muted text-center">Developed by DASW Project</span>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
 
-<div class="d-none">
-    {{ next_button }}
-</div>
-
-<script>
-    let questionId = {{ question_id }};
-    let remainingSeconds = Math.ceil({{ remaining_seconds }});
-    let waitingForResponse = false;
-    let gameFinished = false;
-
-    const timerElement = document.getElementById('timer');
-    const answerInput = document.getElementById('answer-input');
-    const submitButton = document.getElementById('submit-answer');
-    const messageElement = document.getElementById('message');
-
-    function renderTimer() {
-        const minutes = Math.floor(remainingSeconds / 60);
-        const seconds = remainingSeconds % 60;
-
-        timerElement.textContent =
-            String(minutes).padStart(2, '0') + ':' +
-            String(seconds).padStart(2, '0');
-    }
-
-    function finishGame() {
-        if (gameFinished) return;
-
-        gameFinished = true;
-        waitingForResponse = true;
-
-        answerInput.disabled = true;
-        submitButton.disabled = true;
-        messageElement.textContent = 'Waktu habis. Menampilkan hasil...';
-
-        clearInterval(timerInterval);
-
-        const nextButton = document.querySelector(
-            '.otree-btn-next, button[name="submit"]'
-        );
-
-        if (nextButton) {
-            nextButton.click();
-        }
-    }
-
-    function submitAnswer() {
-        if (gameFinished || waitingForResponse) return;
-
-        const value = answerInput.value.trim();
-
-        if (value === '' || !Number.isInteger(Number(value))) {
-            messageElement.textContent =
-                'Masukkan jawaban berupa bilangan bulat.';
-            answerInput.focus();
-            return;
-        }
-
-        waitingForResponse = true;
-        submitButton.disabled = true;
-        messageElement.textContent = '';
-
-        liveSend({
-            type: 'answer',
-            answer: value,
-            question_id: questionId
-        });
-    }
-
-    submitButton.addEventListener('click', submitAnswer);
-
-    answerInput.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            submitAnswer();
-        }
-    });
-
-
-function liveRecv(data) {
-    if (data.finished) {
-        finishGame();
-        return;
-    }
-
-    if (data.error) {
-        messageElement.textContent = data.error;
-        waitingForResponse = false;
-        submitButton.disabled = false;
-        answerInput.focus();
-        return;
-    }
-
-    if (data.stale) {
-        messageElement.textContent =
-            'Soal telah berubah. Silakan jawab soal yang tampil.';
-        waitingForResponse = false;
-        submitButton.disabled = false;
-        return;
-    }
-
-    if (data.question !== undefined) {
-        questionId = data.question_id;
-
-        document.getElementById('question').textContent =
-            data.question;
-
-        document.getElementById('correct-count').textContent =
-            data.correct_count;
-
-        document.getElementById('wrong-count').textContent =
-            data.wrong_count;
-
-        document.getElementById('score').textContent =
-            data.total_score;
-
-        answerInput.value = '';
-        answerInput.focus();
-
-        waitingForResponse = false;
-        submitButton.disabled = false;
-    }
-}
-
-
-    renderTimer();
-
-    const timerInterval = setInterval(function () {
-        if (gameFinished) {
-            clearInterval(timerInterval);
-            return;
-        }
-
-        remainingSeconds = Math.max(0, remainingSeconds - 1);
-        renderTimer();
-
-        if (remainingSeconds <= 0) {
-            finishGame();
-        }
-    }, 1000);
-
-    answerInput.focus();
-</script>
-{{ endblock }}
+{% block scripts %}
+    <script src="{% static 'global/aljebraic/js/basic_aljebraic/main_script.js' %}"></script>
+{% endblock %}
