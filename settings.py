@@ -16,7 +16,7 @@ SESSION_CONFIGS = [
     # Real Effort Task
     # ------------------------------------------------------------
     dict(
-        display_name='RET Algebraic',
+        display_name='RET Basic Algebraic',
         name='algebraic',
         app_sequence=['algebraic'],
         num_demo_participants=1,
