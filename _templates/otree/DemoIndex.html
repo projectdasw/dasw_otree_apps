@@ -1,5 +1,5 @@
 {% extends "otree/BaseAdminRegular.html" %}
-{% block head_title %}DASW | Experiment Demo {% endblock %}
+{% block head_title %}Experiment Demo {% endblock %}
 {% block internal_styles %}
     {{ super() }}
     <!-- Bootstrap -->
@@ -64,30 +64,77 @@
                 </div>
             </div>
             <div class="w-100">
-                <label class="form-label" for="category-filter">Category</label>
+                <label class="form-label" for="category-filter">Apps Status</label>
                 <div class="input-group">
                     <span class="input-group-text">
                         <i class="fa-solid fa-layer-group"></i>
                     </span>
                     <select class="form-select" id="category-filter">
-                        <option value="all">All categories</option>
-                        <option value="decision-making">Decision-Making</option>
-                        <option value="real-effort-task">Real Effort Task</option>
-                        <option value="shopping-simulation">Shopping Simulation</option>
-                        <option value="puzzle-problem-solving">Puzzle &amp; Problem Solving</option>
-                        <option value="research-experiment">Research Experiment</option>
+                        <option value="all">All status</option>
                         <option value="development-process">In-Process (Development)</option>
                         <option value="integration-process">In-Process (Integration)</option>
                         <option value="patch-process">In-Process (Patch)</option>
                         <option value="development-complete">Completed (Development)</option>
                         <option value="integration-complete">Completed (Integration)</option>
                         <option value="patch-complete">Completed (Patch)</option>
-                        <option value="style-templates">Custom Templates</option>
                     </select>
                 </div>
             </div>
         </div>
 
+        <!-- Category Badge -->
+        <div class="card sticky-top mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                <h5 class="m-0">Apps Category</h5>
+                <div class="d-flex flex-row align-items-center gap-2">
+                    <!-- Active Filter Summary -->
+                    <div id="active-filter-summary" class="d-flex flex-wrap align-items-center gap-2"
+                         hidden></div>
+                    <!-- Reset Filter button -->
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="reset-filter">
+                        <i class="fa-solid fa-rotate-left me-1"></i>
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <button type="button" class="btn badge text-bg-primary bg-gradient category-filter-badge active"
+                        data-category-filter="all" aria-pressed="true">
+                    All Categories
+                    <span data-category-count="all">0</span>
+                </button>
+                <button type="button" class="btn badge text-bg-secondary bg-gradient category-filter-badge"
+                        data-category-filter="decision-making" aria-pressed="false">
+                    Decision-Making
+                    <span data-category-count="decision-making">0</span>
+                </button>
+                <button type="button" class="btn badge text-bg-success bg-gradient category-filter-badge"
+                        data-category-filter="real-effort-task" aria-pressed="false">
+                    Real Effort Task
+                    <span data-category-count="real-effort-task">0</span>
+                </button>
+                <button type="button" class="btn badge text-bg-warning bg-gradient category-filter-badge"
+                        data-category-filter="shopping-simulation" aria-pressed="false">
+                    Shopping Simulation
+                    <span data-category-count="shopping-simulation">0</span>
+                </button>
+                <button type="button" class="btn badge text-bg-info bg-gradient category-filter-badge"
+                        data-category-filter="puzzle-problem-solving" aria-pressed="false">
+                    Puzzle &amp; Problem Solving
+                    <span data-category-count="puzzle-problem-solving">0</span>
+                </button>
+                <button type="button" class="btn badge text-bg-dark bg-gradient category-filter-badge"
+                        data-category-filter="style-templates" aria-pressed="false">
+                    Custom Templates
+                    <span data-category-count="style-templates">0</span>
+                </button>
+                <button type="button" class="btn badge text-bg-danger bg-gradient category-filter-badge"
+                        data-category-filter="research-experiment" aria-pressed="false">
+                    Research Experiment
+                    <span data-category-count="research-experiment">0</span>
+                </button>
+            </div>
+        </div>
         <!-- No Results apps card -->
         <div class="card no-results mx-auto border-0 rounded-4 overflow-hidden">
             <div class="card-body bg-light text-center py-5">
@@ -95,6 +142,7 @@
                 <p class="text-muted m-0">Try another keyword or select a different category.</p>
             </div>
         </div>
+        <!-- Main Content card -->
         <div class="row row-cols-1 row-cols-md-2 g-4 experiment-grid">
             {% for s in session_info %}
                 <!-- Update / Patch History Modal -->
@@ -120,13 +168,32 @@
                                                 </span>
                                                 <div class="fw-bold mb-2">Development Started</div>
                                                 <p class="m-0">
-                                                    Initial development of the Algebraic experiment application.
+                                                    Initial development of the RET Basic Algebraic application.
                                                     Features and functionality may change during development.
                                                 </p>
                                             </div>
-                                            <span class="badge text-bg-warning rounded-pill">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span>In-Process</span>
+{#                                            <span class="badge text-bg-warning rounded-pill">#}
+{#                                                <i class="fa-regular fa-clock"></i>#}
+{#                                                <span>In-Process</span>#}
+{#                                            </span>#}
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Development)</span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 21, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Development Completed</div>
+                                                <p class="m-0">
+                                                    RET Basic Algebraic have been completed development.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Development)</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -137,10 +204,10 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <div class="fw-bold mb-2">Integration in-queue</div>
                                                 <p class="m-0">
                                                     Initial real experiment integration of the Poor Assistance.
-                                                    Features and functionality may change during development.
+                                                    Integration process in-queue.
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-danger rounded-pill">
@@ -156,10 +223,10 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <div class="fw-bold mb-2">Integration in-queue</div>
                                                 <p class="m-0">
                                                     Initial real experiment integration of the Moral Environments.
-                                                    Features and functionality may change during development.
+                                                    Integration process in-queue.
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-danger rounded-pill">
@@ -175,10 +242,10 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <div class="fw-bold mb-2">Integration in-queue</div>
                                                 <p class="m-0">
                                                     Initial real experiment integration of the Donation.
-                                                    Features and functionality may change during development.
+                                                    Integration process in-queue.
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-danger rounded-pill">
@@ -194,10 +261,10 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <div class="fw-bold mb-2">Integration in-queue</div>
                                                 <p class="m-0">
                                                     Initial real experiment integration of the Digital Payment.
-                                                    Features and functionality may change during development.
+                                                    Integration process in-queue.
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-danger rounded-pill">
@@ -213,10 +280,10 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <div class="fw-bold mb-2">Integration in-queue</div>
                                                 <p class="m-0">
                                                     Initial real experiment integration of the Tax Evasion.
-                                                    Features and functionality may change during development.
+                                                    Integration process in-queue.
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-danger rounded-pill">
@@ -232,10 +299,10 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Integration Started</div>
+                                                <div class="fw-bold mb-2">Integration in-queue</div>
                                                 <p class="m-0">
                                                     Initial real experiment integration of the Alabama Project.
-                                                    Features and functionality may change during development.
+                                                    Integration process in-queue.
                                                 </p>
                                             </div>
                                             <span class="badge text-bg-danger rounded-pill">
@@ -251,7 +318,7 @@
                                                 <span class="text-muted" style="font-size: 14px;">
                                                     October 19, 2026
                                                 </span>
-                                                <div class="fw-bold mb-2">Development Started</div>
+                                                <div class="fw-bold mb-2">Development in-queue</div>
                                                 <p class="m-0">
                                                     Initial development of the Custom Templates.
                                                     Features and functionality may change during development.
@@ -261,8 +328,7 @@
                                                 <i class="fa-regular fa-clock"></i>
                                                 <span>In-Process (Development)</span>
                                             </span> -->
-                                            <span class="badge text-bg-success bg-gradient ms-2"
-                                                data-status="development-complete">
+                                            <span class="badge text-bg-success bg-gradient ms-2">
                                                 <i class="fa-regular fa-circle-check"></i>
                                                 <span>Completed (Development)</span>
                                             </span>
@@ -277,8 +343,7 @@
                                                     Custom Templates have been completed development.
                                                 </p>
                                             </div>
-                                            <span class="badge text-bg-success bg-gradient ms-2"
-                                                data-status="development-complete">
+                                            <span class="badge text-bg-success bg-gradient ms-2">
                                                 <i class="fa-regular fa-circle-check"></i>
                                                 <span>Completed (Development)</span>
                                             </span>
@@ -303,7 +368,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Documentation Modal -->
                 <div class="modal fade" id="documentationModal-{{ s.name }}" tabindex="-1"
                      aria-labelledby="documentationModalLabel-{{ s.name }}" aria-hidden="true">
@@ -356,7 +420,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Demo Apps Card -->
                 <div class="col">
                     <div class="card h-100">
@@ -401,13 +464,13 @@
                                 <h4 class="card-title">{{ s.display_name }}</h4>
 
                                 <!-- In-Process (Development) -->
-                                {% if s.name == 'algebraic' %}
-                                    <span class="badge text-bg-warning bg-gradient ms-2"
-                                          data-status="development-process">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <span>In-Process (Development)</span>
-                                    </span>
-                                {% endif %}
+{#                                {% if s.name == 'algebraic' %}#}
+{#                                    <span class="badge text-bg-warning bg-gradient ms-2"#}
+{#                                          data-status="development-process">#}
+{#                                        <i class="fa-regular fa-clock"></i>#}
+{#                                        <span>In-Process (Development)</span>#}
+{#                                    </span>#}
+{#                                {% endif %}#}
 
                                 <!-- In Process (Integration) -->
                                 {% if s.name == 'poor_assistance' or s.name == 'moral_environments'
@@ -430,7 +493,7 @@
 {#                                {% endif %}#}
 
                                 <!-- Completed (Development) -->
-                                {% if s.name == 'templates_style' %}
+                                {% if s.name == 'templates_style' or s.name == 'algebraic' %}
                                     <span class="badge text-bg-success bg-gradient ms-2"
                                           data-status="development-complete">
                                         <i class="fa-regular fa-circle-check"></i>
