@@ -1,0 +1,121 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>RET Transcription - Exact Transcription</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">RET Transcription - Exact Transciption</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {% player.round_number %}</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="alert p-0 m-0">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="alert-heading">
+                        <h4 class="m-0">Let's Transcribe the Text</h4>
+                        <p class="m-0 fs-5">
+                            Transcribe the text exactly as shown, enter your answer, and proceed.
+                        </p>
+                    </div>
+                    <span class="badge text-bg-warning fs-4">
+                        Time remaining: <span id="timer" class="timer-value"></span>
+                    </span>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <h3>Transcribe the following text:</h3>
+                    <div class="alert alert-light" role="alert">
+                        <div id="source-text" class="source-text fs-4 m-0">{% transcription_text %}</div>
+                    </div>
+                </div>
+                <div class="container p-0">
+                    <div class="row align-items-center">
+                        <div class="col-7 p-0">
+                            <div class="container">
+                                <div class="card m-0">
+                                    <div class="card-body">
+                                        <label for="transcription-input"
+                                               class="form-label d-flex flex-row justify-content-between">
+                                            <span class="fw-semibold">Your Answer</span>
+                                            <span id="feedback" style="display: none;"></span>
+                                        </label>
+                                        <textarea id="transcription-input" class="form-control" rows="5"
+                                                  autocomplete="off" spellcheck="false"
+                                                  placeholder="Type the text exactly as shown..."></textarea>
+                                        <div class="invalid-feedback">
+                                            Please enter your transcription.
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="button" id="submit-answer" class="btn btn-success">
+                                            <i class="fa-solid fa-paper-plane me-1"></i>
+                                            <span>Submit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5 p-0 text-center">
+                            <div class="container">
+                                <div class="row row-cols-1 row-cols-md-2 g-2">
+                                    <div class="col">
+                                        <div class="card h-100 bg-info border-0">
+                                            <div class="card-body">
+                                                <h4 class="mb-4">Completed</h4>
+                                                <h4 id="completed-count">
+                                                    {{ completed_count }}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 bg-primary text-light border-0">
+                                            <div class="card-body">
+                                                <h4 class="mb-4">Score</h4>
+                                                <h4 id="score">{{ score }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 bg-success text-light border-0">
+                                            <div class="card-body">
+                                                <h4 class="mb-4">Correct</h4>
+                                                <h4 id="correct-count">{{ correct_count }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 bg-danger text-light border-0">
+                                            <div class="card-body">
+                                                <h4 class="mb-4">Incorrect</h4>
+                                                <h4 id="incorrect-count">{{ incorrect_count }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        window.transcriptionGame = {
+            remainingTime: {{ remaining_time|json }},
+            initialScore: {{ score|json }},
+            initialCompleted: {{ completed_count|json }},
+            initialCorrect: {{ correct_count|json }},
+            initialIncorrect: {{ incorrect_count|json }}
+        };
+    </script>
+    <script src="{% static 'global/transcription/js/exact_transcription/main_script.js' %}"></script>
+{% endblock %}
