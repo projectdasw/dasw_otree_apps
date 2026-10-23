@@ -1,0 +1,145 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Contoh Halaman Ambiguity Task</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Contoh Halaman Ambiguity Task</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                Berikut adalah contoh untuk sebuah ronde di dalam <i>Ambiguity Task</i> dimana Anda harus memilih salah
+                satu dari 3 warna kotak berikut.
+            </p>
+
+            <!-- Info situasi -->
+            <div class="ct-damage-banner mb-3" style="border-left-color: #0d6efd; border-color: #0d6efd; background: linear-gradient(135deg, #e7f1ff, #cfe2ff); color: #084298;">
+                <strong>Situasi:</strong> Terdapat 100 kotak berwarna Biru, Merah, dan Kuning di dalam sebuah tempat
+                tertutup untuk kemudian diambil salah satu secara acak. Diketahui ada 30 kotak berwarna Merah.
+                Sisanya berwarna Kuning dan Biru dengan komposisi yang tidak diketahui.
+            </div>
+
+            <!-- Ilustrasi kotak (inline styles for reliability) -->
+            <div style="display:flex; justify-content:center; margin:16px 0;">
+                <div id="exampleBallBox" style="width:400px; height:400px; background:linear-gradient(145deg,#f8f9fa,#e9ecef); border:3px solid #adb5bd; border-radius:14px; position:relative; overflow:hidden; box-shadow:inset 0 3px 12px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.08);"></div>
+            </div>
+
+            <!-- Legenda -->
+            <div class="text-center mb-3">
+                <span class="badge bg-danger me-1">Merah: 30</span>
+                <span class="badge bg-secondary me-1">Tidak diketahui: 70</span>
+            </div>
+
+            <!-- Ilustrasi pilihan prospek -->
+            <div class="text-center mb-3">
+                <h6 class="text-success fw-bold m-0">
+                    <i class="fa-solid fa-hand-pointer me-1"></i>
+                    Pilih satu warna kotak. Jika kotak pilihan Anda yang keluar,
+                    Anda mendapatkan <strong>3.000 token</strong>.
+                </h6>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+                <div class="col">
+                    <div class="card text-center" style="cursor:default; border:2px solid #dee2e6; border-radius:12px;">
+                        <div class="card-header" style="background:#f8f9fa;">
+                            <strong>Merah</strong>
+                        </div>
+                        <div class="card-body py-3">
+                            <div style="width:50px; height:50px; border-radius:4px; margin:0 auto; background:radial-gradient(circle at 35% 35%, #ff6b6b, #e53935); box-shadow:0 3px 8px rgba(0,0,0,0.2);"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center" style="cursor:default; border:2px solid #dee2e6; border-radius:12px;">
+                        <div class="card-header" style="background:#f8f9fa;">
+                            <strong>Kuning</strong>
+                        </div>
+                        <div class="card-body py-3">
+                            <div style="width:50px; height:50px; border-radius:4px; margin:0 auto; background:radial-gradient(circle at 35% 35%, #fff176, #fdd835); box-shadow:0 3px 8px rgba(0,0,0,0.2);"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center" style="cursor:default; border:2px solid #dee2e6; border-radius:12px;">
+                        <div class="card-header" style="background:#f8f9fa;">
+                            <strong>Biru</strong>
+                        </div>
+                        <div class="card-body py-3">
+                            <div style="width:50px; height:50px; border-radius:4px; margin:0 auto; background:radial-gradient(circle at 35% 35%, #64b5f6, #1e88e5); box-shadow:0 3px 8px rgba(0,0,0,0.2);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Tim peneliti tidak mengetahui komposisi warna kotak di dalam tempat tertutup tersebut. Penentuannya murni
+                dilakukan oleh komputer.
+            </p>
+            <p class="m-0">
+                Klik <strong>'Lanjutkan'</strong> untuk menuju ke contoh selanjutnya jika Anda sudah memahami contoh
+                <i>Ambiguity Task</i> ini.
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <span>Lanjutkan</span>
+                <i class="fa-solid fa-forward ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Render static ball box illustration (30 red, 70 grey unknown)
+        const box = document.getElementById('exampleBallBox');
+        const boxSize = 400;
+        const ballSize = 22;
+        const padding = 12;
+        const gridSize = 10;
+        const usableSize = boxSize - padding * 2;
+        const spacing = usableSize / gridSize;
+
+        const balls = [];
+        for (let i = 0; i < 30; i++) balls.push('red');
+        for (let i = 0; i < 70; i++) balls.push('grey');
+
+        // Shuffle
+        for (let i = balls.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [balls[i], balls[j]] = [balls[j], balls[i]];
+        }
+
+        const colorMap = {
+            red: 'radial-gradient(circle at 35% 35%, #ff6b6b, #e53935)',
+            grey: 'radial-gradient(circle at 35% 35%, #bdbdbd, #9e9e9e)'
+        };
+
+        balls.forEach((color, idx) => {
+            const row = Math.floor(idx / gridSize);
+            const col = idx % gridSize;
+            const jitterX = (Math.random() - 0.5) * (spacing * 0.25);
+            const jitterY = (Math.random() - 0.5) * (spacing * 0.25);
+            let x = padding + col * spacing + spacing / 2 - ballSize / 2 + jitterX;
+            let y = padding + row * spacing + spacing / 2 - ballSize / 2 + jitterY;
+            x = Math.max(padding, Math.min(boxSize - padding - ballSize, x));
+            y = Math.max(padding, Math.min(boxSize - padding - ballSize, y));
+
+            const el = document.createElement('div');
+            el.style.cssText = 'position:absolute; width:22px; height:22px; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; box-shadow:0 2px 4px rgba(0,0,0,0.2);';
+            el.style.background = colorMap[color];
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            if (color === 'grey') {
+                el.textContent = '?';
+                el.style.fontSize = '13px';
+            }
+            box.appendChild(el);
+        });
+    </script>
+{% endblock %}

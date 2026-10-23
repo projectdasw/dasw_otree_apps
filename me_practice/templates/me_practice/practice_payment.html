@@ -1,0 +1,70 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Contoh Pembayaran dari Hasil Latihan</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Contoh Pembayaran dari Hasil Latihan</h5>
+        </div>
+        <div class="card-body">
+            <p>Berikut adalah hasil pembayaran total dari hasil Sesi Latihan yang telah Anda lakukan:</p>
+
+            <div class="card border-secondary mx-auto mb-4" style="max-width: 480px;">
+                <div class="card-body">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                            <tr>
+                                <td><i>Risk Task</i></td>
+                                <td class="text-end fw-bold">{{ risk_token }} token</td>
+                            </tr>
+                            <tr>
+                                <td><i>Ambiguity Task</i></td>
+                                <td class="text-end fw-bold">{{ ambiguity_token }} token</td>
+                            </tr>
+                            <tr>
+                                <td><i>Company Task</i></td>
+                                <td class="text-end fw-bold">{{ company_token }} token</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td class="fw-bold">Total Perolehan</td>
+                                <td class="text-end fw-bold">
+                                    {{ risk_token }} + {{ ambiguity_token }} + {{ company_token }} = <strong>{{ total_token }} token</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted small" colspan="2">
+                                    <i class="fa-solid fa-circle-info me-1"></i>
+                                    Exchange Rate: 1 Token = Rp 1
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Total Pembayaran</td>
+                                <td class="text-end fw-bold text-success">{{ total_token }} token = Rp {{ total_token }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                <strong>Catatan:</strong> Ini hanya contoh dari Sesi Latihan dan <strong>tidak menentukan pembayaran</strong> nyata Anda.
+                Hanya Sesi Eksperimen Utama yang menjadi basis pembayaran.
+            </div>
+
+            <p class="mb-0">
+                Klik <strong>'Lanjutkan'</strong> jika Anda sudah memahami bentuk eksperimen ini, termasuk pembayaran yang akan Anda terima.
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <span>Lanjutkan</span>
+                <i class="fa-solid fa-forward ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

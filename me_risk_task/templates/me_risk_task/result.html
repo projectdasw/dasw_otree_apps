@@ -1,0 +1,76 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Hasil Risk Task - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Hasil Risk Task</h3>
+        <span class="badge text-bg-primary fs-6">Ronde {{ player.round_number }} dari 5</span>
+    </div>
+
+    <!-- Info undian -->
+    <div class="ct-damage-banner mb-3" style="border-left-color: #0d6efd; border-color: #0d6efd; background: linear-gradient(135deg, #e7f1ff, #cfe2ff); color: #084298;">
+        <strong>Implementasi probabilitas:</strong> Anda mengundi angka 1-100 dan keluar angka
+        <strong>{{ player.angka_keluar }}</strong>.
+    </div>
+
+    {% if outcome_ranges %}
+        <div class="mb-3">
+            <p class="mb-2">Berdasarkan
+                <strong>
+                    {% if player.prospek_terpilih == 'prospek-A' %}Prospek A{% else %}Prospek B{% endif %}
+                </strong>:
+            </p>
+            <div class="ct-outcomes">
+                {% for r in outcome_ranges %}
+                    <div class="ct-outcome-row {% if player.angka_keluar >= r.start and player.angka_keluar <= r.end %}border border-success border-2{% endif %}">
+                        {% if r.payoff > 0 %}
+                            <span class="ct-outcome-dot ct-dot-green"></span>
+                        {% else %}
+                            <span class="ct-outcome-dot ct-dot-red"></span>
+                        {% endif %}
+                        Angka <strong>{{ r.start }}-{{ r.end }}</strong>
+                        &rarr; Payoff <strong>{{ r.payoff }} token</strong>
+                        {% if player.angka_keluar >= r.start and player.angka_keluar <= r.end %}
+                            <span class="badge text-bg-success ms-auto">Terpilih</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Tabel Hasil -->
+    <div class="table-responsive mb-4">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Angka yang keluar</th>
+                    <td>{{ player.angka_keluar }}</td>
+                </tr>
+                <tr>
+                    <th>Prospek yang dipilih</th>
+                    <td>
+                        {% if player.prospek_terpilih == 'prospek-A' %}Prospek A{% else %}Prospek B{% endif %}
+                    </td>
+                </tr>
+                <tr class="table-primary">
+                    <th>Token yang didapatkan</th>
+                    <td><strong class="fs-5">{{ player.hasil_token }} token</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="text-center">
+        <button type="submit" class="otree-btn btn btn-primary btn-lg ct-cta-btn">
+            <span>Lanjut</span>
+            <i class="fa-solid fa-forward ms-2"></i>
+        </button>
+    </div>
+{% endblock %}

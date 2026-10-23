@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Risk Task Selesai - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <div class="text-center mb-4">
+        <div style="font-size: 4rem; color: #28a745;">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h2 class="mt-3 mb-2">Risk Task Selesai!</h2>
+        <p class="text-muted fs-5">
+            Anda telah menyelesaikan seluruh 5 ronde Risk Task.
+        </p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title mb-3">
+                <i class="fa-solid fa-info-circle me-1 text-primary"></i>
+                Sesi Selanjutnya: Ambiguity Task
+            </h5>
+            <ul class="mb-0">
+                <li class="mb-2">
+                    Selanjutnya Anda akan memasuki <strong>Ambiguity Task</strong> yang terdiri dari
+                    <strong>5 ronde</strong>.
+                </li>
+                <li class="mb-2">
+                    Pada Ambiguity Task, Anda akan memilih warna kotak dari sebuah tempat tertutup
+                    yang berisi 100 kotak dengan komposisi yang <strong>tidak sepenuhnya diketahui</strong>.
+                </li>
+                <li>
+                    Silakan klik <strong>'Mulai Ambiguity Task'</strong> jika Anda sudah siap.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="otree-btn btn btn-success btn-lg ct-cta-btn">
+            <i class="fa-solid fa-play me-2"></i>
+            Mulai Ambiguity Task
+        </button>
+    </div>
+{% endblock %}

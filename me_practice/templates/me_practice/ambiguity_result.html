@@ -1,0 +1,219 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block style %}
+    <style>
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 12px 5px rgba(255,255,255,0.8); }
+            50% { transform: scale(1.18); box-shadow: 0 0 18px 8px rgba(255,255,255,0.95); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Sesi Latihan - Hasil Ambiguity Task</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Practice Banner -->
+    <div class="alert alert-info text-center mb-3">
+        <i class="fa-solid fa-graduation-cap me-1"></i>
+        <strong>Sesi Latihan</strong>: Hasil tidak memengaruhi pembayaran Anda
+    </div>
+
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Hasil Ambiguity Task</h3>
+        <span class="badge text-bg-secondary fs-6">Latihan 2 dari 3</span>
+    </div>
+
+    <!-- Label animasi -->
+    <div class="text-center mb-2">
+        <h5 id="animLabel" class="text-muted">Membuka kotak...</h5>
+    </div>
+
+    <!-- Ambiguity Box Animation Container (inline styles for reliability) -->
+    <div style="display:flex; justify-content:center; margin:16px 0;">
+        <div id="ambiguityBox" style="position:relative; background:#263238; border-radius:14px; box-shadow:0 6px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); overflow:hidden;"></div>
+    </div>
+
+    <!-- Legenda komposisi (muncul setelah animasi) -->
+    <div class="text-center mt-2 mb-3" id="compLegend" style="display: none;">
+        <span class="badge bg-danger me-1">Merah: {{ player.amb_comp_red }}</span>
+        <span class="badge bg-warning text-dark me-1">Kuning: {{ player.amb_comp_yellow }}</span>
+        <span class="badge bg-primary me-1">Biru: {{ player.amb_comp_blue }}</span>
+    </div>
+
+    <!-- Hasil (muncul setelah animasi) -->
+    <div id="resultPanel" style="display: none;">
+        {% if win %}
+            <div class="alert alert-success text-center mb-3">
+                <h4 class="mb-1">
+                    <i class="fa-solid fa-circle-check me-1"></i>
+                    Kotak yang keluar: <strong class="{{ drawn_color_text }}">{{ drawn_color }}</strong>
+                </h4>
+                <p class="fw-bold fs-5 mb-0">
+                    Selamat! Anda mendapatkan <strong>{{ player.amb_hasil_token }} token</strong> pada ronde ini.
+                </p>
+            </div>
+        {% else %}
+            <div class="alert alert-danger text-center mb-3">
+                <h4 class="mb-1">
+                    <i class="fa-solid fa-circle-xmark me-1"></i>
+                    Kotak yang keluar: <strong class="{{ drawn_color_text }}">{{ drawn_color }}</strong>
+                </h4>
+                <p class="fw-bold fs-5 mb-0">
+                    Anda tidak mendapatkan token pada ronde ini.
+                </p>
+            </div>
+        {% endif %}
+
+        <!-- Tabel Hasil -->
+        <div class="table-responsive mb-4">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Pilihan Anda</th>
+                        <td>{{ chosen_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>Kotak yang keluar</th>
+                        <td><strong class="{{ drawn_color_text }}">{{ drawn_color }}</strong></td>
+                    </tr>
+                    <tr class="table-primary">
+                        <th>Token yang didapatkan</th>
+                        <td><strong class="fs-5">{{ player.amb_hasil_token }} token</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="text-center">
+        <button type="submit" class="otree-btn btn btn-primary btn-lg ct-cta-btn" id="btnNext" disabled>
+            <span>Lanjut ke Latihan Berikutnya</span>
+            <i class="fa-solid fa-forward ms-2"></i>
+        </button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // === Data dari server ===
+        const comp = JSON.parse('{{ comp_json|safe }}');
+        const drawnColor = '{{ drawn_color }}';
+        const drawnColorCss = '{{ drawn_color_css }}';
+
+        // === Setup ===
+        const container = document.getElementById('ambiguityBox');
+        const gridSize = 10;
+        const cellSize = 34;
+        const gap = 2;
+        const containerPadding = 6;
+        const totalSize = containerPadding * 2 + gridSize * cellSize + (gridSize - 1) * gap;
+        container.style.width = totalSize + 'px';
+        container.style.height = totalSize + 'px';
+
+        // === Bangun array warna berdasarkan komposisi sebenarnya ===
+        const colorArray = [];
+        for (let i = 0; i < comp.red; i++) colorArray.push('red');
+        for (let i = 0; i < comp.yellow; i++) colorArray.push('yellow');
+        for (let i = 0; i < comp.blue; i++) colorArray.push('blue');
+
+        // === Buat cell (inline styles for reliability) ===
+        const cellColorMap = {
+            red: 'linear-gradient(135deg, #ff6b6b, #e53935)',
+            yellow: 'linear-gradient(135deg, #fff176, #fdd835)',
+            blue: 'linear-gradient(135deg, #64b5f6, #1e88e5)'
+        };
+
+        const cells = [];
+        for (let i = 0; i < 100; i++) {
+            const cell = document.createElement('div');
+            cell.style.cssText = 'position:absolute; border-radius:5px; box-shadow:0 1px 3px rgba(0,0,0,0.3); transition:left 0.35s ease, top 0.35s ease;';
+            cell.style.width = cellSize + 'px';
+            cell.style.height = cellSize + 'px';
+            cell.style.background = cellColorMap[colorArray[i]];
+            container.appendChild(cell);
+            cells.push({el: cell, color: colorArray[i]});
+        }
+
+        // === Fungsi posisi grid ===
+        function getGridPos(gridIndex) {
+            const row = Math.floor(gridIndex / gridSize);
+            const col = gridIndex % gridSize;
+            return {
+                left: containerPadding + col * (cellSize + gap),
+                top: containerPadding + row * (cellSize + gap),
+            };
+        }
+
+        function applyPositions(order) {
+            order.forEach((cellIdx, gridPos) => {
+                const pos = getGridPos(gridPos);
+                cells[cellIdx].el.style.left = pos.left + 'px';
+                cells[cellIdx].el.style.top = pos.top + 'px';
+            });
+        }
+
+        // === Fisher-Yates shuffle ===
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        // === Mulai animasi ===
+        let order = shuffleArray(Array.from({length: 100}, (_, i) => i));
+        applyPositions(order);
+
+        let shuffleCount = 0;
+        const maxShuffles = 10;
+        const shuffleInterval = setInterval(() => {
+            order = shuffleArray(order);
+            applyPositions(order);
+            shuffleCount++;
+
+            if (shuffleCount >= maxShuffles) {
+                clearInterval(shuffleInterval);
+
+                // Tampilkan legenda komposisi
+                setTimeout(() => {
+                    document.getElementById('compLegend').style.display = 'block';
+                    document.getElementById('animLabel').textContent = 'Komposisi sebenarnya:';
+                }, 400);
+
+                // Highlight bola yang terambil
+                setTimeout(() => {
+                    for (const c of cells) {
+                        if (c.color === drawnColorCss) {
+                            c.el.style.border = '2px solid white';
+                            c.el.style.boxShadow = '0 0 12px 5px rgba(255,255,255,0.8)';
+                            c.el.style.zIndex = '10';
+                            c.el.style.animation = 'pulse-glow 0.8s infinite';
+                            break;
+                        }
+                    }
+
+                    // Tampilkan panel hasil
+                    document.getElementById('resultPanel').style.display = 'block';
+                    document.getElementById('resultPanel').classList.add('fade-in');
+
+                    // Aktifkan tombol lanjut
+                    document.getElementById('btnNext').disabled = false;
+                }, 1000);
+            }
+        }, 400);
+    </script>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Pembayaran - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="m-0">Pengundian Ronde Pembayaran</h3>
+        </div>
+        <div class="card-body">
+            <p class="text-center text-muted mb-4">
+                Dari setiap task, akan dipilih <strong>1 ronde secara acak</strong> untuk menentukan pembayaran Anda.
+            </p>
+
+            <div class="row g-3 mb-4">
+                <!-- Risk Task -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-primary">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h6 class="m-0">Risk Task</h6>
+                        </div>
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <div class="text-muted small">Ronde terpilih</div>
+                            <div id="risk-round" class="display-4 fw-bold my-2"></div>
+                            <div id="risk-payoff" class="text-success fw-bold" style="display:none;">
+                                {{ risk_payoff }} Token
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ambiguity Task -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-warning">
+                        <div class="card-header bg-warning text-dark text-center">
+                            <h6 class="m-0">Ambiguity Task</h6>
+                        </div>
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <div class="text-muted small">Ronde terpilih</div>
+                            <div id="ambiguity-round" class="display-4 fw-bold my-2"></div>
+                            <div id="ambiguity-payoff" class="text-success fw-bold" style="display:none;">
+                                {{ ambiguity_payoff }} Token
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Task -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-info">
+                        <div class="card-header bg-info text-white text-center">
+                            <h6 class="m-0">Company Task</h6>
+                        </div>
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <div class="text-muted small">Ronde terpilih</div>
+                            <div id="company-round" class="display-4 fw-bold my-2"></div>
+                            <div id="company-payoff" class="text-success fw-bold" style="display:none;">
+                                {{ company_return_payoff }} Token
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total -->
+            <div id="total-section" class="card border-success mb-3" style="display:none;">
+                <div class="card-body text-center">
+                    <h5 class="mb-3">Ringkasan Pembayaran</h5>
+                    <table class="table table-borderless w-auto mx-auto text-start">
+                        <tr>
+                            <td>Risk Task (Ronde {{ chosen_risk_round }})</td>
+                            <td class="text-end fw-bold">{{ risk_payoff }} Token</td>
+                        </tr>
+                        <tr>
+                            <td>Ambiguity Task (Ronde {{ chosen_ambiguity_round }})</td>
+                            <td class="text-end fw-bold">{{ ambiguity_payoff }} Token</td>
+                        </tr>
+                        <tr>
+                            <td>Company Task (Ronde {{ chosen_company_return_round }})</td>
+                            <td class="text-end fw-bold">{{ company_return_payoff }} Token</td>
+                        </tr>
+                        <tr class="border-top">
+                            <td class="fw-bold">Total Token</td>
+                            <td class="text-end fw-bold text-success">{{ total_token }} Token</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted small" colspan="2">
+                                <i class="fa-solid fa-circle-info me-1"></i>
+                                Exchange Rate: 1 Token = Rp 1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Total (dalam Rupiah)</td>
+                            <td class="text-end fw-bold text-success">Rp {{ total_token }}</td>
+                        </tr>
+                        <tr>
+                            <td>Participation Fee</td>
+                            <td class="text-end fw-bold">Rp {{ participation_fee }}</td>
+                        </tr>
+                        <tr class="border-top">
+                            <td class="fw-bold">Total Pembayaran</td>
+                            <td class="text-end fw-bold text-success">Rp {{ total_payment }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Spin Button -->
+            <div class="text-center">
+                <button id="spin-btn" class="btn btn-warning btn-lg">
+                    🎰 Putar Undian
+                </button>
+            </div>
+        </div>
+        <div class="card-footer" id="next-btn-container" style="display:none;">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <i class="fa-solid fa-money-bills me-1"></i>
+                <span>Lihat Hasil Pembayaran</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let finalRiskRound = {{ chosen_risk_round }};
+        let finalAmbiguityRound = {{ chosen_ambiguity_round }};
+        let finalCompanyRound = {{ chosen_company_return_round }};
+
+        let riskBox = document.getElementById("risk-round");
+        let ambiguityBox = document.getElementById("ambiguity-round");
+        let companyBox = document.getElementById("company-round");
+        let spinBtn = document.getElementById("spin-btn");
+
+        spinBtn.addEventListener("click", function () {
+            spinBtn.disabled = true;
+            spinBtn.innerHTML = "Mengacak...";
+
+            // Phase 1: Spin Risk Task
+            let riskCounter = 0;
+            let riskInterval = setInterval(function () {
+                riskBox.innerHTML = Math.floor(Math.random() * 5) + 1;
+                riskCounter++;
+                if (riskCounter > 20) {
+                    clearInterval(riskInterval);
+                    riskBox.innerHTML = finalRiskRound;
+                    riskBox.classList.add("text-primary");
+                    document.getElementById("risk-payoff").style.display = "block";
+
+                    // Phase 2: Spin Ambiguity Task
+                    let ambCounter = 0;
+                    let ambInterval = setInterval(function () {
+                        ambiguityBox.innerHTML = Math.floor(Math.random() * 5) + 1;
+                        ambCounter++;
+                        if (ambCounter > 20) {
+                            clearInterval(ambInterval);
+                            ambiguityBox.innerHTML = finalAmbiguityRound;
+                            ambiguityBox.classList.add("text-warning");
+                            document.getElementById("ambiguity-payoff").style.display = "block";
+
+                            // Phase 3: Spin Company Task
+                            let compCounter = 0;
+                            let compInterval = setInterval(function () {
+                                companyBox.innerHTML = Math.floor(Math.random() * 20) + 1;
+                                compCounter++;
+                                if (compCounter > 20) {
+                                    clearInterval(compInterval);
+                                    companyBox.innerHTML = finalCompanyRound;
+                                    companyBox.classList.add("text-info");
+                                    document.getElementById("company-payoff").style.display = "block";
+
+                                    setTimeout(function () {
+                                        spinBtn.style.display = "none";
+                                        document.getElementById("total-section").style.display = "block";
+                                        document.getElementById("next-btn-container").style.display = "block";
+                                    }, 500);
+                                }
+                            }, 70);
+                        }
+                    }, 70);
+                }
+            }, 70);
+        });
+    </script>
+{% endblock %}

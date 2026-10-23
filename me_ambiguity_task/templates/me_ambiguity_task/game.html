@@ -1,0 +1,226 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block style %}
+    <style>
+        .ct-prospect-title { font-size: 1.15rem; }
+        .ct-prospect-body p { font-size: 1.05rem; }
+        .ct-header h3 { font-size: 1.6rem; }
+        .text-success.fw-bold { font-size: 1.1rem; }
+        #ballLegend .badge { font-size: 0.95rem; }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Ambiguity Task - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Ambiguity Task</h3>
+        <span class="badge text-bg-primary fs-6">Ronde {{ player.round_number }} dari 5</span>
+    </div>
+
+    <!-- Informasi situasi -->
+    <div class="ct-damage-banner mb-3" style="border-left-color: #0d6efd; border-color: #0d6efd; background: linear-gradient(135deg, #e7f1ff, #cfe2ff); color: #084298;">
+        {{ info_text }}
+    </div>
+
+    <!-- Visualisasi kotak (inline styles for reliability) -->
+    <div style="display:flex; justify-content:center; margin:16px 0;">
+        <div id="ballBox" style="width:400px; height:400px; background:linear-gradient(145deg,#f8f9fa,#e9ecef); border:3px solid #adb5bd; border-radius:14px; position:relative; overflow:hidden; box-shadow:inset 0 3px 12px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.08);"></div>
+    </div>
+
+    <!-- Legenda warna -->
+    <div class="text-center mb-3" id="ballLegend"></div>
+
+    <!-- Instruksi pilihan -->
+    <div class="text-center mb-3">
+        <h5 class="text-success fw-bold m-0">
+            <i class="fa-solid fa-hand-pointer me-1"></i>
+            {% if choice_type == 'single' %}
+                Pilih satu warna kotak. Jika kotak pilihan Anda yang keluar,
+                Anda mendapatkan <strong>3.000 token</strong>.
+            {% else %}
+                Pilih salah satu kombinasi warna. Jika kotak dalam kombinasi
+                pilihan Anda yang keluar, Anda mendapatkan <strong>3.000 token</strong>.
+            {% endif %}
+        </h5>
+    </div>
+
+    {% if choice_type == 'single' %}
+        <!-- Pilih satu warna: 3 cards -->
+        <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+            <div class="col">
+                <label class="ct-prospect-card w-100">
+                    <input class="visually-hidden" type="radio"
+                           name="prospek_terpilih" value="Merah" required>
+                    <div class="ct-prospect-header" style="justify-content: center;">
+                        <span class="ct-prospect-radio"></span>
+                        <span class="ct-prospect-title">Merah</span>
+                    </div>
+                    <div class="ct-prospect-body text-center">
+                        <div style="width:50px; height:50px; border-radius:4px; margin:0 auto; background:radial-gradient(circle at 35% 35%, #ff6b6b, #e53935); box-shadow:0 3px 8px rgba(0,0,0,0.2);"></div>
+                    </div>
+                </label>
+            </div>
+            <div class="col">
+                <label class="ct-prospect-card w-100">
+                    <input class="visually-hidden" type="radio"
+                           name="prospek_terpilih" value="Kuning" required>
+                    <div class="ct-prospect-header" style="justify-content: center;">
+                        <span class="ct-prospect-radio"></span>
+                        <span class="ct-prospect-title">Kuning</span>
+                    </div>
+                    <div class="ct-prospect-body text-center">
+                        <div style="width:50px; height:50px; border-radius:4px; margin:0 auto; background:radial-gradient(circle at 35% 35%, #fff176, #fdd835); box-shadow:0 3px 8px rgba(0,0,0,0.2);"></div>
+                    </div>
+                </label>
+            </div>
+            <div class="col">
+                <label class="ct-prospect-card w-100">
+                    <input class="visually-hidden" type="radio"
+                           name="prospek_terpilih" value="Biru" required>
+                    <div class="ct-prospect-header" style="justify-content: center;">
+                        <span class="ct-prospect-radio"></span>
+                        <span class="ct-prospect-title">Biru</span>
+                    </div>
+                    <div class="ct-prospect-body text-center">
+                        <div style="width:50px; height:50px; border-radius:4px; margin:0 auto; background:radial-gradient(circle at 35% 35%, #64b5f6, #1e88e5); box-shadow:0 3px 8px rgba(0,0,0,0.2);"></div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    {% else %}
+        <!-- Pilih kombinasi: 2 cards -->
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+            <div class="col">
+                <label class="ct-prospect-card w-100">
+                    <input class="visually-hidden" type="radio"
+                           name="prospek_terpilih" value="merah-kuning" required>
+                    <div class="ct-prospect-header">
+                        <span class="ct-prospect-radio"></span>
+                        <span class="ct-prospect-title">Merah atau Kuning</span>
+                    </div>
+                    <div class="ct-prospect-body text-center">
+                        <div class="d-flex justify-content-center gap-2 mb-2">
+                            <div style="width:32px; height:32px; border-radius:4px; background:radial-gradient(circle at 35% 35%, #ff6b6b, #e53935); box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+                            <div style="width:32px; height:32px; border-radius:4px; background:radial-gradient(circle at 35% 35%, #fff176, #fdd835); box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+                        </div>
+                        <p class="mb-0">
+                            Anda mendapatkan <strong>3.000 token</strong> jika kotak
+                            <strong class="text-danger">Merah</strong> atau
+                            <strong class="text-warning">Kuning</strong> yang keluar.
+                        </p>
+                    </div>
+                </label>
+            </div>
+            <div class="col">
+                <label class="ct-prospect-card w-100">
+                    <input class="visually-hidden" type="radio"
+                           name="prospek_terpilih" value="biru-kuning" required>
+                    <div class="ct-prospect-header">
+                        <span class="ct-prospect-radio"></span>
+                        <span class="ct-prospect-title">Biru atau Kuning</span>
+                    </div>
+                    <div class="ct-prospect-body text-center">
+                        <div class="d-flex justify-content-center gap-2 mb-2">
+                            <div style="width:32px; height:32px; border-radius:4px; background:radial-gradient(circle at 35% 35%, #64b5f6, #1e88e5); box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+                            <div style="width:32px; height:32px; border-radius:4px; background:radial-gradient(circle at 35% 35%, #fff176, #fdd835); box-shadow:0 2px 6px rgba(0,0,0,0.2);"></div>
+                        </div>
+                        <p class="mb-0">
+                            Anda mendapatkan <strong>3.000 token</strong> jika kotak
+                            <strong class="text-primary">Biru</strong> atau
+                            <strong class="text-warning">Kuning</strong> yang keluar.
+                        </p>
+                    </div>
+                </label>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- CTA Button -->
+    <div class="text-center">
+        <button type="submit" class="otree-btn btn btn-success btn-lg ct-cta-btn">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            Konfirmasi Pilihan
+        </button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // === Data dari server ===
+        const displayBalls = JSON.parse('{{ display_balls_json|safe }}');
+
+        // === Render ball scatter box ===
+        const box = document.getElementById('ballBox');
+        const boxSize = 400;
+        const ballSize = 22;
+        const padding = 12;
+        const gridSize = 10;
+        const usableSize = boxSize - padding * 2;
+        const spacing = usableSize / gridSize;
+
+        const balls = [];
+        for (let i = 0; i < displayBalls.red; i++) balls.push('red');
+        for (let i = 0; i < displayBalls.yellow; i++) balls.push('yellow');
+        for (let i = 0; i < displayBalls.blue; i++) balls.push('blue');
+        for (let i = 0; i < displayBalls.grey; i++) balls.push('grey');
+
+        for (let i = balls.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [balls[i], balls[j]] = [balls[j], balls[i]];
+        }
+
+        const colorMap = {
+            red: 'radial-gradient(circle at 35% 35%, #ff6b6b, #e53935)',
+            yellow: 'radial-gradient(circle at 35% 35%, #fff176, #fdd835)',
+            blue: 'radial-gradient(circle at 35% 35%, #64b5f6, #1e88e5)',
+            grey: 'radial-gradient(circle at 35% 35%, #bdbdbd, #9e9e9e)'
+        };
+
+        balls.forEach((color, idx) => {
+            const row = Math.floor(idx / gridSize);
+            const col = idx % gridSize;
+            const jitterX = (Math.random() - 0.5) * (spacing * 0.25);
+            const jitterY = (Math.random() - 0.5) * (spacing * 0.25);
+            let x = padding + col * spacing + spacing / 2 - ballSize / 2 + jitterX;
+            let y = padding + row * spacing + spacing / 2 - ballSize / 2 + jitterY;
+            x = Math.max(padding, Math.min(boxSize - padding - ballSize, x));
+            y = Math.max(padding, Math.min(boxSize - padding - ballSize, y));
+
+            const el = document.createElement('div');
+            el.style.cssText = 'position:absolute; width:22px; height:22px; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; box-shadow:0 2px 4px rgba(0,0,0,0.2);';
+            el.style.background = colorMap[color];
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            if (color === 'grey') {
+                el.textContent = '?';
+                el.style.fontSize = '13px';
+            }
+            if (color === 'yellow') el.style.color = '#5d4037';
+            box.appendChild(el);
+        });
+
+        // === Legenda ===
+        const legend = document.getElementById('ballLegend');
+        const legendItems = [];
+        if (displayBalls.red > 0) legendItems.push(`<span class="badge bg-danger me-1">Merah: ${displayBalls.red}</span>`);
+        if (displayBalls.yellow > 0) legendItems.push(`<span class="badge bg-warning text-dark me-1">Kuning: ${displayBalls.yellow}</span>`);
+        if (displayBalls.blue > 0) legendItems.push(`<span class="badge bg-primary me-1">Biru: ${displayBalls.blue}</span>`);
+        if (displayBalls.grey > 0) legendItems.push(`<span class="badge bg-secondary me-1">Tidak diketahui: ${displayBalls.grey}</span>`);
+        legend.innerHTML = legendItems.join('');
+
+        // === Clickable cards ===
+        document.querySelectorAll('.ct-prospect-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.ct-prospect-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Instruksi Eksperimen</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Instruksi Eksperimen</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                Selamat datang dan terima kasih telah bersedia untuk mengikuti eksperimen ini. Mohon baca dengan
+                seksama agar Anda paham apa yang harus dilakukan di dalam eksperimen ini.
+            </p>
+            <p>
+                Eksperimen ini terdiri atas 30 ronde yang terbagi ke dalam tiga bentuk. Pertama adalah <i>Risk Task</i>
+                dimana Anda diminta untuk memilih salah satu dari dua <strong>prospek berisiko</strong> untuk
+                memaksimalkan utilitas Anda dalam 5 ronde. Kedua adalah <i>Ambiguity Task</i> dimana Anda diminta
+                untuk memilih salah satu dari dua <strong>prospek ambigu</strong> untuk memaksimalkan utilitas Anda
+                dalam 5 ronde. Ketiga adalah <i>Company Task</i> dimana Anda diminta untuk memilih salah satu dari dua
+                <strong>prospek investasi</strong> untuk memaksimalkan keuntungan perusahaan Anda berdasarkan kapasitas
+                perusahaan dan kondisi wilayah setempat sebanyak 20 ronde.
+            </p>
+            <p>
+                Semua ronde di semua bentuk adalah terpisah satu sama lain (independen) dan tidak menjadi penentu
+                ronde berikutnya. Pembayaran yang Anda peroleh berasal dari penjumlahan hasil yang Anda peroleh dari
+                pengambilan acak sebuah ronde di masing-masing bentuk (<i>Risk Task</i>, <i>Ambiguity Task</i>, dan
+                <i>Company Task</i>). Eksperimen ini menggunakan token sebagai mata uang dengan nilai tukar
+                <strong>1 token = Rp1</strong> untuk menjadi pembayaran bagi Anda. Pembayaran tersebut akan
+                ditambahkan uang kehadiran sebesar Rp20.000.
+            </p>
+            <p class="m-0">
+                Kami mengestimasi waktu penyelesaian keseluruhan eksperimen ini adalah +/-90 menit dalam kondisi tanpa
+                gangguan. Silakan tekan tombol <strong>‘Lanjutkan’</strong> untuk menuju ke halaman contoh sebuah ronde.
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <span>Lanjutkan</span>
+                <i class="fa-solid fa-forward ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

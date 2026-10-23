@@ -1,0 +1,177 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block style %}
+    <style>
+        .ms-question-card {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .ms-question-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .ms-question-card.answered {
+            border-color: #28a745;
+            background: #f8fff8;
+        }
+        .ms-question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #0d6efd;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .ms-question-text {
+            font-size: 0.95rem;
+            color: #212529;
+            margin-left: 12px;
+            flex: 1;
+        }
+        .ms-likert-group {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-top: 14px;
+        }
+        .ms-likert-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 80px;
+        }
+        .ms-likert-option input[type="radio"] {
+            display: none;
+        }
+        .ms-likert-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #dee2e6;
+            background: #f8f9fa;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .ms-likert-option label:hover {
+            border-color: #0d6efd;
+            background: #e7f1ff;
+            color: #0d6efd;
+            transform: scale(1.1);
+        }
+        .ms-likert-option input[type="radio"]:checked + label {
+            background: #28a745;
+            border-color: #28a745;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+            transform: scale(1.15);
+        }
+        .ms-scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+        .ms-scale-label {
+            font-size: 0.72rem;
+            color: #6c757d;
+            max-width: 120px;
+            text-align: center;
+        }
+        .ms-scale-label:first-child { text-align: left; }
+        .ms-scale-label:last-child { text-align: right; }
+
+        @media (max-width: 576px) {
+            .ms-likert-option label {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Survei Moral - Bagian 2</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Survei Moral Preference toward Environment</h3>
+        <span class="badge text-bg-primary fs-6">Bagian {{ page_number }} dari {{ total_pages }}</span>
+    </div>
+
+    <!-- Instruksi -->
+    <div class="ct-damage-banner mb-4" style="border-left-color: #0d6efd; border-color: #0d6efd; background: linear-gradient(135deg, #e7f1ff, #cfe2ff); color: #084298;">
+        <p class="mb-0">
+            <i class="fa-solid fa-clipboard-list me-1"></i>
+            Berikanlah skala penilaian untuk pernyataan di bawah ini dengan rentang nilai
+            <strong>1</strong> yang berarti <em>"sangat tidak penting atau sangat tidak prioritas"</em>
+            sampai dengan <strong>7</strong> yang berarti <em>"sangat penting atau sangat prioritas"</em>.
+        </p>
+    </div>
+
+    {% for q in questions %}
+        <div class="ms-question-card" id="card-{{ q.field }}">
+            <div class="d-flex align-items-start">
+                <span class="ms-question-number">{{ q.number }}</span>
+                <span class="ms-question-text">{{ q.text }}</span>
+            </div>
+
+            <div class="ms-likert-group">
+                {% for val in likert_values %}
+                    <div class="ms-likert-option">
+                        <input type="radio" name="{{ q.field }}"
+                               id="{{ q.field }}_{{ val }}" value="{{ val }}"
+                               onchange="markAnswered('{{ q.field }}')">
+                        <label for="{{ q.field }}_{{ val }}">{{ val }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="ms-scale-labels">
+                <span class="ms-scale-label">Sangat tidak penting / tidak prioritas</span>
+                <span class="ms-scale-label">Sangat penting / prioritas</span>
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- CTA Button -->
+    <div class="text-center mt-4">
+        <button type="submit" class="otree-btn btn btn-success btn-lg ct-cta-btn">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            Kirim Jawaban
+        </button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function markAnswered(fieldName) {
+            const card = document.getElementById('card-' + fieldName);
+            if (card) card.classList.add('answered');
+        }
+        document.querySelectorAll('.ms-question-card').forEach(card => {
+            const radios = card.querySelectorAll('input[type="radio"]');
+            radios.forEach(r => {
+                if (r.checked) card.classList.add('answered');
+            });
+        });
+    </script>
+{% endblock %}

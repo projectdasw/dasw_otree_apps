@@ -1,0 +1,240 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block style %}
+    <style>
+        /* --- Survey Form Custom --- */
+        .sp-form-card {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .sp-form-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .sp-form-card label.sp-label {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: #212529;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .sp-form-card .form-control,
+        .sp-form-card .form-select {
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        .sp-form-card .form-control:focus,
+        .sp-form-card .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+        }
+
+        /* Radio gender */
+        .sp-radio-group {
+            display: flex;
+            gap: 12px;
+        }
+        .sp-radio-option {
+            flex: 1;
+        }
+        .sp-radio-option input[type="radio"] {
+            display: none;
+        }
+        .sp-radio-option label {
+            display: block;
+            text-align: center;
+            padding: 12px 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #495057;
+            transition: all 0.2s ease;
+            background: #f8f9fa;
+        }
+        .sp-radio-option label:hover {
+            border-color: #0d6efd;
+            background: #e7f1ff;
+            color: #0d6efd;
+        }
+        .sp-radio-option input[type="radio"]:checked + label {
+            background: #28a745;
+            border-color: #28a745;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+        }
+
+        .sp-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #6c757d;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .sp-hint {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Survei Data Diri - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Survei Data Diri</h3>
+    </div>
+
+    <!-- Instruksi -->
+    <div class="ct-damage-banner mb-4" style="border-left-color: #0d6efd; border-color: #0d6efd; background: linear-gradient(135deg, #e7f1ff, #cfe2ff); color: #084298;">
+        <p class="mb-0">
+            <i class="fa-solid fa-user-pen me-1"></i>
+            Silakan isi kuesioner berikut. Pastikan data yang Anda masukkan benar
+            untuk kelancaran proses pembayaran.
+        </p>
+    </div>
+
+    <!-- 1. Usia -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">1</span>Usia
+        </label>
+        <input type="number" name="usia" class="form-control" min="15" max="80"
+               placeholder="Masukkan usia Anda" required>
+        {{ formfield_errors 'usia' }}
+    </div>
+
+    <!-- 2. Jenis Kelamin -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">2</span>Jenis Kelamin
+        </label>
+        <div class="sp-radio-group">
+            <div class="sp-radio-option">
+                <input type="radio" name="jenis_kelamin" id="jk_laki" value="Laki-laki" required>
+                <label for="jk_laki">
+                    <i class="fa-solid fa-mars me-1"></i>
+                    Laki-laki
+                </label>
+            </div>
+            <div class="sp-radio-option">
+                <input type="radio" name="jenis_kelamin" id="jk_perempuan" value="Perempuan" required>
+                <label for="jk_perempuan">
+                    <i class="fa-solid fa-venus me-1"></i>
+                    Perempuan
+                </label>
+            </div>
+        </div>
+        {{ formfield_errors 'jenis_kelamin' }}
+    </div>
+
+    <!-- 3. Jenjang Pendidikan -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">3</span>Jenjang pendidikan yang sedang/terakhir ditempuh
+        </label>
+        <select name="jenjang_pendidikan" class="form-select" required>
+            <option value="" selected disabled>-- Pilih jenjang pendidikan --</option>
+            <option value="SMA/SMK/MA">SMA / SMK / MA</option>
+            <option value="D1">D1 (Diploma 1)</option>
+            <option value="D2">D2 (Diploma 2)</option>
+            <option value="D3">D3 (Diploma 3)</option>
+            <option value="D4/S1">D4 / S1 (Sarjana)</option>
+            <option value="S2">S2 (Magister)</option>
+            <option value="S3">S3 (Doktor)</option>
+        </select>
+        {{ formfield_errors 'jenjang_pendidikan' }}
+    </div>
+
+    <!-- 4. Bidang Studi -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">4</span>Bidang Studi
+        </label>
+        <input type="text" name="bidang_studi" class="form-control"
+               placeholder="Contoh: Ilmu Ekonomi, Teknik Informatika, dll." required>
+        {{ formfield_errors 'bidang_studi' }}
+    </div>
+
+    <!-- 5. Pengeluaran -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">5</span>Pengeluaran rata-rata sebulan
+        </label>
+        <select name="pengeluaran" class="form-select" required>
+            <option value="" selected disabled>-- Pilih range pengeluaran --</option>
+            <option value="< Rp500.000">Kurang dari Rp500.000</option>
+            <option value="Rp500.000 - Rp1.000.000">Rp500.000 - Rp1.000.000</option>
+            <option value="Rp1.000.001 - Rp1.500.000">Rp1.000.001 - Rp1.500.000</option>
+            <option value="Rp1.500.001 - Rp2.000.000">Rp1.500.001 - Rp2.000.000</option>
+            <option value="Rp2.000.001 - Rp3.000.000">Rp2.000.001 - Rp3.000.000</option>
+            <option value="Rp3.000.001 - Rp5.000.000">Rp3.000.001 - Rp5.000.000</option>
+            <option value="> Rp5.000.000">Lebih dari Rp5.000.000</option>
+        </select>
+        {{ formfield_errors 'pengeluaran' }}
+    </div>
+
+    <!-- 6. Platform Pembayaran -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">6</span>Platform untuk pembayaran
+        </label>
+        <select name="platform_pembayaran" class="form-select" required>
+            <option value="" selected disabled>-- Pilih platform --</option>
+            <optgroup label="Dompet Digital">
+                <option value="GoPay">GoPay</option>
+                <option value="OVO">OVO</option>
+                <option value="Dana">Dana</option>
+                <option value="ShopeePay">ShopeePay</option>
+                <option value="LinkAja">LinkAja</option>
+            </optgroup>
+            <optgroup label="Transfer Bank">
+                <option value="BNI">Bank BNI</option>
+                <option value="Mandiri">Bank Mandiri</option>
+                <option value="CIMB Niaga">Bank CIMB Niaga</option>
+            </optgroup>
+        </select>
+        {{ formfield_errors 'platform_pembayaran' }}
+    </div>
+
+    <!-- 7. Nomor Pembayaran -->
+    <div class="sp-form-card">
+        <label class="sp-label">
+            <span class="sp-number">7</span>Nomor HP/Rekening/Online Payment untuk pembayaran
+        </label>
+        <input type="text" name="nomor_pembayaran" class="form-control"
+               placeholder="Sesuaikan dengan pilihan platform yang telah dipilih" required>
+        <div class="sp-hint">
+            Pastikan nomor yang Anda masukkan sesuai dengan platform pembayaran yang dipilih.
+        </div>
+        {{ formfield_errors 'nomor_pembayaran' }}
+    </div>
+
+    <!-- CTA Button -->
+    <div class="text-center mt-4">
+        <button type="submit" class="otree-btn btn btn-success btn-lg ct-cta-btn">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            Kirim Data
+        </button>
+    </div>
+{% endblock %}

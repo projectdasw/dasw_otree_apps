@@ -1,0 +1,242 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Sesi Latihan - Company Task</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Practice Banner -->
+    <div class="alert alert-info text-center mb-3">
+        <i class="fa-solid fa-graduation-cap me-1"></i>
+        <strong>Sesi Latihan</strong>: Hasil tidak memengaruhi pembayaran Anda
+    </div>
+
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Company Task</h3>
+        <div>
+            <span class="badge text-bg-secondary fs-6">Latihan 3 dari 3</span>
+            <span class="badge text-bg-info fs-6">Risk</span>
+        </div>
+    </div>
+
+    <!-- 1. Konteks Narasi + Metric Cards -->
+    <div class="ct-context-box mb-3">
+        <p class="mb-2">
+            <i class="fa-solid fa-building me-1"></i>
+            Perusahaan Anda berfokus pada usaha <strong>perkebunan sawit</strong> dan akan melakukan
+            <strong>ekspansi usaha</strong>. Anda harus memilih prospek investasi untuk perusahaan yang Anda kelola.
+        </p>
+        <div class="row g-2">
+            <div class="col-4">
+                <div class="ct-metric-card">
+                    <div class="ct-metric-label">Kapitalisasi</div>
+                    <div class="ct-metric-value">{{ capital }}</div>
+                    <div class="ct-metric-unit">token</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ct-metric-card ct-metric-highlight">
+                    <div class="ct-metric-label">Investasi</div>
+                    <div class="ct-metric-value">{{ investasi }}</div>
+                    <div class="ct-metric-unit">token</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="ct-metric-card">
+                    <div class="ct-metric-label">Sisa Modal</div>
+                    <div class="ct-metric-value">{{ cc_inv }}</div>
+                    <div class="ct-metric-unit">token <span class="text-muted small">({{ range_type }})</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Kerusakan Lingkungan (konteks) -->
+    <div class="ct-damage-banner mb-3">
+        <div class="d-flex align-items-center">
+            <div class="ct-damage-icon me-3">
+                <i class="fa-solid fa-triangle-exclamation fa-lg"></i>
+            </div>
+            <div class="flex-grow-1">
+                <strong>Potensi Kerusakan Lingkungan:</strong>
+                Sebesar {{ damage_multiplier }}x investasi
+                (<strong>{{ damage_value }} token</strong>)
+                dengan probabilitas <strong>{{ display_prob_damage }}</strong>.
+                Jika terjadi, Anda <strong>tidak mendapat return</strong>.
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Instruksi Pilihan -->
+    <div class="text-center mb-3">
+        <h5 class="text-success fw-bold m-0">
+            <i class="fa-solid fa-hand-pointer me-1"></i>
+            Pilih salah satu prospek investasi
+        </h5>
+    </div>
+
+    <!-- 4. Prospek Cards (2 kolom) -->
+    <div class="row g-4 mb-4">
+        <!-- Prospek A -->
+        <div class="col-md-6">
+            <label class="ct-prospect-card w-100 h-100" id="cardA">
+                <input class="visually-hidden" type="radio"
+                       name="comp_prospek_terpilih" value="prospek-A" required>
+                <div class="ct-prospect-header">
+                    <span class="ct-prospect-radio"></span>
+                    <span class="ct-prospect-title">Prospek A</span>
+                </div>
+                <div class="ct-prospect-body">
+                    <div class="ct-chart-wrap"><canvas id="chart-a"></canvas></div>
+                    <div class="ct-outcomes">
+                        <div class="ct-outcome-row">
+                            <span class="ct-outcome-dot ct-dot-green"></span>
+                            Return <strong>{{ ret_a1 }}x lipat</strong>,
+                            prob. <strong>{{ display_prob_a1 }}</strong>
+                        </div>
+                        <div class="ct-outcome-row">
+                            <span class="ct-outcome-dot ct-dot-red"></span>
+                            Return <strong>{{ ret_a2 }}</strong>,
+                            prob. <strong>{{ display_prob_a2 }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <!-- Prospek B -->
+        <div class="col-md-6">
+            <label class="ct-prospect-card w-100 h-100" id="cardB">
+                <input class="visually-hidden" type="radio"
+                       name="comp_prospek_terpilih" value="prospek-B" required>
+                <div class="ct-prospect-header">
+                    <span class="ct-prospect-radio"></span>
+                    <span class="ct-prospect-title">Prospek B</span>
+                </div>
+                <div class="ct-prospect-body">
+                    <div class="ct-chart-wrap"><canvas id="chart-b"></canvas></div>
+                    <div class="ct-outcomes">
+                        <div class="ct-outcome-row">
+                            <span class="ct-outcome-dot ct-dot-green"></span>
+                            Return <strong>{{ ret_b1 }}x lipat</strong>,
+                            prob. <strong>{{ display_prob_b1 }}</strong>
+                        </div>
+                        <div class="ct-outcome-row">
+                            <span class="ct-outcome-dot ct-dot-red"></span>
+                            Return <strong>{{ ret_b2 }}</strong>,
+                            prob. <strong>{{ display_prob_b2 }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- 5. Kontribusi Lingkungan -->
+    <div class="ct-contribution-card mb-4">
+        <div class="ct-contribution-header">
+            <i class="fa-solid fa-hand-holding-heart me-1"></i>
+            Kontribusi Lingkungan
+        </div>
+        <div class="ct-contribution-body">
+            <p class="mb-3">
+                Berapa persen kontribusi yang perusahaan Anda akan berikan
+                <strong>{{ kontribusi_text }}</strong>?
+            </p>
+            {% if kontribusi_cap_note %}
+                <div class="alert alert-warning py-2 mb-3">
+                    <i class="fa-solid fa-circle-info me-1"></i>{{ kontribusi_cap_note }}
+                </div>
+            {% endif %}
+            <div class="ct-slider-group">
+                <input type="range" class="form-range ct-slider" min="0" max="{{ kontribusi_max_persen }}" value="0"
+                       id="kontribusiSlider">
+                <div class="ct-slider-input-wrap">
+                    <input type="number" name="comp_kontribusi_persen"
+                           class="form-control ct-slider-input" min="0" max="{{ kontribusi_max_persen }}"
+                           placeholder="0" value="0" required id="kontribusiInput">
+                    <span class="ct-slider-pct">%</span>
+                </div>
+            </div>
+            <div class="ct-slider-ticks">
+                <span>0%</span><span>{{ kontribusi_max_persen }}%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. CTA Button -->
+    <div class="text-center">
+        <button type="submit" class="otree-btn btn btn-success btn-lg ct-cta-btn">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            Konfirmasi Pilihan
+        </button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const slider = document.getElementById('kontribusiSlider');
+        const input = document.getElementById('kontribusiInput');
+        slider.addEventListener('input', () => { input.value = slider.value; });
+        const kontribusiMax = {{ kontribusi_max_persen }};
+        input.addEventListener('input', () => {
+            let v = Math.min(kontribusiMax, Math.max(0, parseInt(input.value) || 0));
+            slider.value = v;
+        });
+
+        document.querySelectorAll('.ct-prospect-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.ct-prospect-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            });
+        });
+
+        const aChartData = {{ a_chart_json|safe }};
+        const bChartData = {{ b_chart_json|safe }};
+        const chartColors = ['#28a745', '#dc3545'];
+
+        function createChart(canvasId, chartData) {
+            if (!chartData) return;
+            const el = document.getElementById(canvasId);
+            if (!el) return;
+            new Chart(el, {
+                type: 'pie',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        data: chartData.data,
+                        backgroundColor: chartColors.slice(0, chartData.data.length),
+                        borderWidth: 2, borderColor: '#fff'
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } } },
+                plugins: [{
+                    id: 'datalabels',
+                    afterDraw(chart) {
+                        const ctx = chart.ctx;
+                        chart.data.datasets.forEach((ds, di) => {
+                            chart.getDatasetMeta(di).data.forEach((arc, i) => {
+                                const val = ds.data[i];
+                                if (val < 5) return;
+                                const pos = arc.tooltipPosition();
+                                ctx.save();
+                                ctx.fillStyle = '#fff';
+                                ctx.font = 'bold 14px sans-serif';
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText(val + '%', pos.x, pos.y);
+                                ctx.restore();
+                            });
+                        });
+                    }
+                }]
+            });
+        }
+        createChart('chart-a', aChartData);
+        createChart('chart-b', bChartData);
+    </script>
+{% endblock %}

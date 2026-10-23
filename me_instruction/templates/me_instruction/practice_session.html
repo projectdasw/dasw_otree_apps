@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Sesi Latihan - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Sesi Latihan</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                Anda akan masuk ke Sesi Latihan untuk membuat Anda familiar dengan eksperimen ini.
+                Sesi Latihan ini tidak akan terhitung sebagai bagian dari pembayaran Anda.
+                Silakan klik <strong>'Lanjutkan'</strong> jika Anda sudah memahaminya.
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <span>Lanjutkan</span>
+                <i class="fa-solid fa-forward ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

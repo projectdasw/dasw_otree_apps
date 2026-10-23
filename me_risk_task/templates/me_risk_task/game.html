@@ -1,0 +1,162 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block style %}
+    <style>
+        .ct-outcome-row { font-size: 1.05rem; }
+        .ct-prospect-title { font-size: 1.15rem; }
+        .ct-prospect-body p, .ct-prospect-body div { font-size: 1rem; }
+        .ct-header h3 { font-size: 1.6rem; }
+        .text-success.fw-bold { font-size: 1.1rem; }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Risk Task - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="ct-header d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Risk Task</h3>
+        <span class="badge text-bg-primary fs-6">Ronde {{ player.round_number }} dari 5</span>
+    </div>
+
+    <!-- Instruksi -->
+    <div class="text-center mb-3">
+        <h5 class="text-success fw-bold m-0">
+            <i class="fa-solid fa-hand-pointer me-1"></i>
+            Pilih salah satu dari 2 prospek berisiko
+        </h5>
+    </div>
+
+    <!-- Prospek Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Prospek A -->
+        <div class="col-md-6">
+            <label class="ct-prospect-card w-100 h-100" id="cardA">
+                <input class="visually-hidden" type="radio"
+                       name="prospek_terpilih" value="prospek-A" required>
+                <div class="ct-prospect-header">
+                    <span class="ct-prospect-radio"></span>
+                    <span class="ct-prospect-title">Prospek A</span>
+                </div>
+                <div class="ct-prospect-body">
+                    <div class="ct-chart-wrap"><canvas id="risk-a"></canvas></div>
+                    <div class="ct-outcomes">
+                        {% for o in a_outcomes %}
+                            <div class="ct-outcome-row">
+                                {% if forloop.counter == 1 %}
+                                    <span class="ct-outcome-dot ct-dot-green"></span>
+                                {% elif forloop.counter == 2 %}
+                                    <span class="ct-outcome-dot ct-dot-red"></span>
+                                {% else %}
+                                    <span class="ct-outcome-dot ct-dot-yellow"></span>
+                                {% endif %}
+                                Payoff <strong>{{ o.payoff }} token</strong>,
+                                prob. <strong>{{ o.prob_pct }}%</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <!-- Prospek B -->
+        <div class="col-md-6">
+            <label class="ct-prospect-card w-100 h-100" id="cardB">
+                <input class="visually-hidden" type="radio"
+                       name="prospek_terpilih" value="prospek-B" required>
+                <div class="ct-prospect-header">
+                    <span class="ct-prospect-radio"></span>
+                    <span class="ct-prospect-title">Prospek B</span>
+                </div>
+                <div class="ct-prospect-body">
+                    <div class="ct-chart-wrap"><canvas id="risk-b"></canvas></div>
+                    <div class="ct-outcomes">
+                        {% for o in b_outcomes %}
+                            <div class="ct-outcome-row">
+                                {% if forloop.counter == 1 %}
+                                    <span class="ct-outcome-dot ct-dot-green"></span>
+                                {% elif forloop.counter == 2 %}
+                                    <span class="ct-outcome-dot ct-dot-red"></span>
+                                {% else %}
+                                    <span class="ct-outcome-dot ct-dot-yellow"></span>
+                                {% endif %}
+                                Payoff <strong>{{ o.payoff }} token</strong>,
+                                prob. <strong>{{ o.prob_pct }}%</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="text-center">
+        <button type="submit" class="otree-btn btn btn-success btn-lg ct-cta-btn">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            Konfirmasi Pilihan
+        </button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Clickable cards
+        document.querySelectorAll('.ct-prospect-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.ct-prospect-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            });
+        });
+
+        // Charts with datalabels
+        const aChart = {{ a_chart_json|safe }};
+        const bChart = {{ b_chart_json|safe }};
+
+        const datalabelsPlugin = {
+            id: 'datalabels',
+            afterDraw(chart) {
+                const ctx = chart.ctx;
+                chart.data.datasets.forEach((ds, di) => {
+                    chart.getDatasetMeta(di).data.forEach((arc, i) => {
+                        const val = ds.data[i];
+                        if (val < 5) return;
+                        const pos = arc.tooltipPosition();
+                        ctx.save();
+                        ctx.fillStyle = '#fff';
+                        ctx.font = 'bold 14px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(val + '%', pos.x, pos.y);
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+
+        new Chart(document.getElementById('risk-a'), {
+            type: 'pie',
+            data: {
+                labels: aChart.labels,
+                datasets: [{ data: aChart.data, backgroundColor: aChart.colors, borderWidth: 2, borderColor: '#fff' }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } } },
+            plugins: [datalabelsPlugin]
+        });
+
+        new Chart(document.getElementById('risk-b'), {
+            type: 'pie',
+            data: {
+                labels: bChart.labels,
+                datasets: [{ data: bChart.data, backgroundColor: bChart.colors, borderWidth: 2, borderColor: '#fff' }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } } },
+            plugins: [datalabelsPlugin]
+        });
+    </script>
+{% endblock %}

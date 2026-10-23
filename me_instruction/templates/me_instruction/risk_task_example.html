@@ -1,0 +1,152 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Contoh Halaman Risk Task</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Contoh Halaman Risk Task</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                Berikut adalah contoh untuk sebuah ronde di dalam <i>Risk Task</i> dimana Anda harus memilih salah satu
+                dari 2 prospek berisiko berikut.
+            </p>
+
+            <!-- Ilustrasi Prospek Cards (read-only, seperti main task) -->
+            <div class="row g-4 mb-4">
+                <!-- Prospek A -->
+                <div class="col-md-6">
+                    <div class="ct-prospect-card w-100 h-100" style="cursor: default;">
+                        <div class="ct-prospect-header">
+                            <span class="ct-prospect-title">Prospek A</span>
+                        </div>
+                        <div class="ct-prospect-body">
+                            <div class="ct-chart-wrap"><canvas id="chart-example-a"></canvas></div>
+                            <div class="ct-outcomes">
+                                <div class="ct-outcome-row">
+                                    <span class="ct-outcome-dot ct-dot-green"></span>
+                                    Payoff <strong>200 token</strong> &mdash; prob. <strong>5%</strong>
+                                </div>
+                                <div class="ct-outcome-row">
+                                    <span class="ct-outcome-dot ct-dot-red"></span>
+                                    Payoff <strong>150 token</strong> &mdash; prob. <strong>90%</strong>
+                                </div>
+                                <div class="ct-outcome-row">
+                                    <span class="ct-outcome-dot ct-dot-yellow"></span>
+                                    Payoff <strong>0 token</strong> &mdash; prob. <strong>5%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prospek B -->
+                <div class="col-md-6">
+                    <div class="ct-prospect-card w-100 h-100" style="cursor: default;">
+                        <div class="ct-prospect-header">
+                            <span class="ct-prospect-title">Prospek B</span>
+                        </div>
+                        <div class="ct-prospect-body">
+                            <div class="ct-chart-wrap"><canvas id="chart-example-b"></canvas></div>
+                            <div class="ct-outcomes">
+                                <div class="ct-outcome-row">
+                                    <span class="ct-outcome-dot ct-dot-green"></span>
+                                    Payoff <strong>180 token</strong> &mdash; prob. <strong>5%</strong>
+                                </div>
+                                <div class="ct-outcome-row">
+                                    <span class="ct-outcome-dot ct-dot-red"></span>
+                                    Payoff <strong>150 token</strong> &mdash; prob. <strong>90%</strong>
+                                </div>
+                                <div class="ct-outcome-row">
+                                    <span class="ct-outcome-dot ct-dot-yellow"></span>
+                                    Payoff <strong>20 token</strong> &mdash; prob. <strong>5%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Implementasi dari probabilitas di atas adalah:
+            </p>
+            <ol class="list-group list-group-numbered mb-3">
+                <li class="list-group-item">
+                    Jika Anda mengundi angka 1-100 dan keluar angka 1-5, maka Anda akan mendapatkan payoff 200
+                    (jika memilih Prospek A) atau payoff 180 (jika memilih Prospek B)
+                </li>
+                <li class="list-group-item">
+                    Jika Anda mengundi angka 1-100 dan keluar angka 6-95, maka Anda akan mendapatkan payoff 150
+                    (jika memilih Prospek A) atau payoff 150 (jika memilih Prospek B)
+                </li>
+                <li class="list-group-item">
+                    Jika Anda mengundi angka 1-100 dan keluar angka 96-100, maka Anda akan mendapatkan payoff 0
+                    (jika memilih Prospek A) atau payoff 20 (jika memilih Prospek B)
+                </li>
+            </ol>
+            <p class="m-0">
+                Klik <strong>'Lanjutkan'</strong> untuk menuju ke contoh selanjutnya jika Anda sudah memahami contoh
+                <i>Risk Task</i> ini.
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-primary">
+                <span>Lanjutkan</span>
+                <i class="fa-solid fa-forward ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Warna urutan: hijau, merah, kuning
+        const colorsA = ['#28a745', '#dc3545', '#ffc107'];
+        const colorsB = ['#28a745', '#dc3545', '#ffc107'];
+
+        const datalabelsPlugin = {
+            id: 'datalabels',
+            afterDraw(chart) {
+                const ctx = chart.ctx;
+                chart.data.datasets.forEach((ds, di) => {
+                    chart.getDatasetMeta(di).data.forEach((arc, i) => {
+                        const val = ds.data[i];
+                        if (val < 5) return;
+                        const pos = arc.tooltipPosition();
+                        ctx.save();
+                        ctx.fillStyle = '#fff';
+                        ctx.font = 'bold 14px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(val + '%', pos.x, pos.y);
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+
+        new Chart(document.getElementById('chart-example-a'), {
+            type: 'pie',
+            data: {
+                labels: ['200 token (5%)', '150 token (90%)', '0 token (5%)'],
+                datasets: [{ data: [5, 90, 5], backgroundColor: colorsA, borderWidth: 2, borderColor: '#fff' }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } } },
+            plugins: [datalabelsPlugin]
+        });
+
+        new Chart(document.getElementById('chart-example-b'), {
+            type: 'pie',
+            data: {
+                labels: ['180 token (5%)', '150 token (90%)', '20 token (5%)'],
+                datasets: [{ data: [5, 90, 5], backgroundColor: colorsB, borderWidth: 2, borderColor: '#fff' }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } } },
+            plugins: [datalabelsPlugin]
+        });
+    </script>
+{% endblock %}

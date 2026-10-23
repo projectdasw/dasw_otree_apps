@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Page Jeda - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Sesi Eksperimen Utama</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                Anda akan masuk ke Sesi Eksperimen Utama dimana hasil yang Anda peroleh di sini akan menjadi
+                basis dari pembayaran Anda. Mohon kerjakan dengan serius!
+                Klik <strong>'Lanjutkan'</strong> jika Anda sudah siap untuk menuju Sesi Eksperimen Utama!
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-success">
+                <span>Lanjutkan</span>
+                <i class="fa-solid fa-forward ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Hasil Pembayaran Anda - Moral Environment</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="m-0">Hasil Pembayaran Anda</h3>
+        </div>
+        <div class="card-body">
+            <p class="text-center text-muted mb-4">
+                Berikut adalah rincian pembayaran berdasarkan ronde yang terpilih secara acak.
+            </p>
+
+            <div class="card border-success mx-auto" style="max-width: 560px;">
+                <div class="card-body">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="badge bg-primary me-1">Risk Task</span>
+                                    Ronde {{ chosen_risk_round }}
+                                </td>
+                                <td class="text-end fw-bold">{{ risk_payoff }} Token</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="badge bg-warning text-dark me-1">Ambiguity Task</span>
+                                    Ronde {{ chosen_ambiguity_round }}
+                                </td>
+                                <td class="text-end fw-bold">{{ ambiguity_payoff }} Token</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="badge bg-info me-1">Company Task</span>
+                                    Ronde {{ chosen_company_return_round }}
+                                </td>
+                                <td class="text-end fw-bold">{{ company_return_payoff }} Token</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td class="fw-bold">Total Token</td>
+                                <td class="text-end fw-bold text-success fs-5">{{ total_token }} Token</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted small" colspan="2">
+                                    <i class="fa-solid fa-circle-info me-1"></i>
+                                    Exchange Rate: 1 Token = Rp 1
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Total (dalam Rupiah)</td>
+                                <td class="text-end fw-bold text-success fs-5">Rp {{ total_token }}</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Participation Fee</td>
+                                <td class="text-end fw-bold fs-5">Rp {{ participation_fee }}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td class="fw-bold">Total Pembayaran</td>
+                                <td class="text-end fw-bold text-success fs-5">Rp {{ total_payment }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <div class="alert alert-info d-inline-block">
+                    Pembayaran Anda: <strong>Rp {{ total_token }}</strong> (token) + <strong>Rp {{ participation_fee }}</strong> (participation fee)
+                    = <strong>Rp {{ total_payment }}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn btn btn-success">
+                <i class="fa-solid fa-check me-1"></i>
+                <span>Selesai</span>
+            </button>
+        </div>
+    </div>
+{% endblock %}
