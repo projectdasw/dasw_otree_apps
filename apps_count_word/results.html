@@ -1,0 +1,58 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Results of RET Count Word</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between align-items-center">
+            <h5 class="m-0">Results - RET Count Word</h5>
+            <h4 class="m-0">
+                <span class="badge text-bg-primary">Round {% player.round_number %}</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="alert p-0 m-0" role="alert">
+                <h4 class="alert-heading">Task Completed</h4>
+                <p class="m-0">Results of RET Count Word are shown below</p>
+            </div>
+            <hr>
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="col">
+                    <div class="card h-100 bg-primary text-light border-0">
+                        <div class="card-body text-center">
+                            <div class="fs-4 mb-2">Final Score</div>
+                            <div class="display-3 fw-bold">{{ total_score }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 bg-info border-0">
+                        <div class="card-body text-center">
+                            <div class="fs-4 mb-2">Completed</div>
+                            <div class="display-3 fw-bold">{{ total_attempts }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 bg-success text-light border-0">
+                        <div class="card-body text-center">
+                            <div class="fs-4 mb-2">Correct</div>
+                            <div class="display-3 fw-bold">{{ correct_answers }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 bg-danger text-light border-0">
+                        <div class="card-body text-center">
+                            <div class="fs-4 mb-2">Incorrect</div>
+                            <div class="display-3 fw-bold">{{ wrong_answers }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
