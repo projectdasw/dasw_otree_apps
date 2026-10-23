@@ -1,0 +1,105 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Game - RET Aljebraic - Basic Aljebraic</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container" id="aljebraic-game" data-question-id="{{ question_id }}"
+         data-remaining-seconds="{{ remaining_seconds }}">
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center bg-white">
+                <h5 class="m-0">RET Aljebraic</h5>
+                <span class="text-muted">Basic Aritmethic</span>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex flex-column">
+                        <h3 class="m-0">Arithmethic Challenge</h3>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-group list-group-numbered mt-2">
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 p-0">
+                                <div class="ms-2 me-auto">
+                                    Hitung hasil operasi aritmatika
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 p-0">
+                                <div class="ms-2 me-auto">
+                                    Poin per jawaban benar bernilai 1 poin
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="card text-bg-primary border-0 me-2">
+                            <div class="card-body">
+                                <span class="fw-bold text-center">Round</span>
+                                <h2 class="m-0 text-center">{% player.round_number %}</h2>
+                            </div>
+                        </div>
+                        <div class="card text-bg-warning border-0">
+                            <div class="card-body">
+                                <span class="fw-bold text-center">Time Remaining</span>
+                                <h2 id="timer" class="m-0 text-center">00:00</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row row-cols-1 row-cols-md-3 g-3 text-center">
+                    <div class="col">
+                        <div class="card h-100 text-bg-success bg-gradient border-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Jawaban Benar</h6>
+                                <div class="display-5 fw-bold" id="correct-count">{{ correct_count }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 text-bg-danger bg-gradient border-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Jawaban Salah</h6>
+                                <div class="display-5 fw-bold" id="wrong-count">{{ wrong_count }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 text-bg-primary bg-gradient border-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Skor</h6>
+                                <div class="display-5 fw-bold" id="score">{{ total_score }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card d-flex flex-column justify-content-center align-items-center mt-3">
+                    <div class="card-body"></div>
+                        <h4>Soal Aljebraic ke</h4>
+                        <div id="question" class="display-3 fw-bold border border-primary
+                            border-2 p-4 rounded-4 mb-3 mt-2">
+                            {{ question }}
+                        </div>
+                        <form id="answer-form" onsubmit="return false;">
+                            <div class="input-group">
+                                <input type="text" id="answer-input" class="form-control"
+                                       placeholder="Masukkan jawaban" autocomplete="off" inputmode="numeric" step="1"
+                                       required>
+                                <button type="button" id="submit-answer" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                        <div id="message" class="text-center small mt-3" role="status"></div>
+                    </div>
+            </div>
+            <div class="card-footer bg-white">
+                <span class="float-end text-muted text-center">Developed by DASW Project</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'global/aljebraic/js/basic_aljebraic/main_script.js' %}"></script>
+{% endblock %}
