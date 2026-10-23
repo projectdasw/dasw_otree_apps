@@ -1,15 +1,35 @@
 from os import environ
 SESSION_CONFIGS = [
+    # Development Apps
+    # Aktifkan ketika sedang dalam pembuatan/pengembangan aplikasi
+    # Matikan ketika sedang dalam upload ke GitHub pembuatan/pengembangan aplikasi
+    # ------------------------------------------------------------
     # dict(
-    #     display_name='donation_with_rank - Donation with rank',
-    #     name='donation_with_rank',
-    #     app_sequence=['donation_with_rank'],
+    #     display_name='Development Apps',
+    #     name='development_apps',
+    #     app_sequence=[
+    #         'me_instruction',
+    #         'me_practice',
+    #         'me_risk_task',
+    #         'me_ambiguity_task',
+    #         'me_company_task',
+    #         'me_moral_survey',
+    #         'me_survey_player',
+    #         'me_payment_page'
+    #     ],
+    #     num_demo_participants=1,
+    # ),
+
+    # dict(
+    #     display_name='apps_donation_with_rank - Donation with rank',
+    #     name='apps_donation_with_rank',
+    #     app_sequence=['apps_donation_with_rank'],
     #     num_demo_participants=1,
     # ),
     # dict(
-    #     display_name='investment - Investment Apps',
-    #     name='investment',
-    #     app_sequence=['investment'],
+    #     display_name='apps_investment - Investment Apps',
+    #     name='apps_investment',
+    #     app_sequence=['apps_investment'],
     #     num_demo_participants=1,
     # ),
 
@@ -17,38 +37,38 @@ SESSION_CONFIGS = [
     # ------------------------------------------------------------
     dict(
         display_name='RET Basic Algebraic',
-        name='algebraic',
-        app_sequence=['algebraic'],
+        name='apps_algebraic',
+        app_sequence=['apps_algebraic'],
         num_demo_participants=1,
     ),
     # dict(
     #     display_name='real_effort_task_decoding - RET Decoding',
-    #     name='decoding',
-    #     app_sequence=['decoding'],
+    #     name='apps_decoding',
+    #     app_sequence=['apps_decoding'],
     #     num_demo_participants=1,
     # ),
     dict(
         display_name='RET Continuous Transcription',
-        name='transcription_continuous',
-        app_sequence=['transcription_continuous'],
+        name='apps_transcription_continuous',
+        app_sequence=['apps_transcription_continuous'],
         num_demo_participants=1,
     ),
     dict(
         display_name='RET Count Word',
-        name='count_word',
-        app_sequence=['count_word'],
+        name='apps_count_word',
+        app_sequence=['apps_count_word'],
         num_demo_participants=1,
     ),
     dict(
         display_name='RET Exact Transcription',
-        name='transcription_exact',
-        app_sequence=['transcription_exact'],
+        name='apps_transcription_exact',
+        app_sequence=['apps_transcription_exact'],
         num_demo_participants=1,
     ),
     # dict(
     #     display_name='real_effort_task_slot_machine - RET Slot Machine',
-    #     name='slot_machine',
-    #     app_sequence=['slot_machine'],
+    #     name='apps_slot_machine',
+    #     app_sequence=['apps_slot_machine'],
     #     num_demo_participants=1,
     # ),
     # ------------------------------------------------------------
@@ -57,8 +77,8 @@ SESSION_CONFIGS = [
     # ------------------------------------------------------------
     dict(
         display_name='Shopping Apps',
-        name='shop_apps',
-        app_sequence=['shop_apps'],
+        name='apps_shop_apps',
+        app_sequence=['apps_shop_apps'],
         num_demo_participants=1,
     ),
     # ------------------------------------------------------------
@@ -68,37 +88,58 @@ SESSION_CONFIGS = [
     dict(
         display_name='Poor Assistance',
         name='poor_assistance',
-        app_sequence=['poor_assistance'],
+        app_sequence=[
+            'pa_welcome',
+            'pa_risky_investment_purchase_practice',
+            'pa_risky_investment_purchase',
+            'pa_risky_investment_allocation_practice',
+            'pa_risky_investment_allocation',
+            'pa_decoding_practice',
+            'pa_decoding',
+            'pa_investment_panel_allocation_practice',
+            'pa_investment_panel_allocation',
+            'pa_survey',
+            'pa_payment',
+        ],
         num_demo_participants=1,
     ),
     dict(
         display_name='Moral Environments',
         name='moral_environments',
-        app_sequence=['moral_environments'],
+        app_sequence=[
+            'me_instruction',
+            'me_practice',
+            'me_risk_task',
+            'me_ambiguity_task',
+            'me_company_task',
+            'me_moral_survey',
+            'me_survey_player',
+            'me_payment_page'
+        ],
         num_demo_participants=1,
     ),
     dict(
         display_name='Donation',
         name='donation',
-        app_sequence=['donation'],
+        app_sequence=['maintenance_page'],
         num_demo_participants=1,
     ),
     dict(
         display_name='Digital Payment',
         name='digital_payment',
-        app_sequence=['digital_payment'],
+        app_sequence=['maintenance_page'],
         num_demo_participants=1,
     ),
     dict(
         display_name='Tax Evasion',
         name='tax_evasion',
-        app_sequence=['tax_evasion'],
+        app_sequence=['maintenance_page'],
         num_demo_participants=1,
     ),
     dict(
         display_name='Alabama Project',
         name='alabama_project',
-        app_sequence=['alabama_project'],
+        app_sequence=['maintenance_page'],
         num_demo_participants=1,
     ),
     # ------------------------------------------------------------
@@ -111,6 +152,12 @@ SESSION_CONFIGS = [
         app_sequence=['templates_style'],
         num_demo_participants=1,
     ),
+    # dict(
+    #     display_name='Maintenance Page',
+    #     name='maintenance_page',
+    #     app_sequence=['maintenance_page'],
+    #     num_demo_participants=1,
+    # ),
     # ------------------------------------------------------------
 ]
 
