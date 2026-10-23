@@ -3,18 +3,20 @@
 
 {% block global_styles  %}
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{% static 'global/node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'global/vendor/bootstrap/css/bootstrap.min.css' %}">
     <!-- Fontawesome Icon -->
-    <link rel="stylesheet" href="{% static 'global/node_modules/@fortawesome/fontawesome-free/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'global/vendor/fontawesome/css/all.min.css' %}">
+    <!-- SweetAlert2 Message Alert -->
+    <link rel="stylesheet" href="{% static 'global/vendor/sweetalert2/sweetalert2.min.css' %}">
     {# oTree Custom CSS #}
     <link rel="stylesheet" href="{% static 'global/otree_custom.css' %}">
 {% endblock %}
 
 {% block global_scripts  %}
-    <!-- Bootstrap Popper -->
-    <script src="{% static 'global/node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
     <!-- Bootstrap Bundle -->
-    <script src="{% static 'global/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'global/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- SweetAlert2 Message Alert -->
-    <script src="{% static 'global/node_modules/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'global/vendor/sweetalert2/sweetalert2.min.js' %}"></script>
+    <!-- Chart.js -->
+    <script src="{% static 'global/vendor/chart.js/chart.umd.min.js' %}"></script>
 {% endblock %}

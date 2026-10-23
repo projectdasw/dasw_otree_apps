@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                             <div class="modal-body">
-                                {% if s.name == 'algebraic' %}
+                                {% if s.name == 'apps_algebraic' %}
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-start">
                                             <div class="d-flex flex-column ms-2 me-auto">
@@ -172,10 +172,6 @@
                                                     Features and functionality may change during development.
                                                 </p>
                                             </div>
-{#                                            <span class="badge text-bg-warning rounded-pill">#}
-{#                                                <i class="fa-regular fa-clock"></i>#}
-{#                                                <span>In-Process</span>#}
-{#                                            </span>#}
                                             <span class="badge text-bg-success bg-gradient ms-2">
                                                 <i class="fa-regular fa-circle-check"></i>
                                                 <span>Completed (Development)</span>
@@ -210,9 +206,40 @@
                                                     Integration process in-queue.
                                                 </p>
                                             </div>
-                                            <span class="badge text-bg-danger rounded-pill">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span>In-Process (Integration)</span>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Integration)</span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 23, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Poor Assistance.
+                                                    Features and functionality may change during integration.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Integration)</span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 23, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration completed</div>
+                                                <p class="m-0">
+                                                    Poor Assistance experiment have been completed integration.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Integration)</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -229,9 +256,40 @@
                                                     Integration process in-queue.
                                                 </p>
                                             </div>
-                                            <span class="badge text-bg-danger rounded-pill">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span>In-Process (Integration)</span>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Integration)</span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 23, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration started</div>
+                                                <p class="m-0">
+                                                    Initial real experiment integration of the Moral Environments.
+                                                    Features and functionality may change during integration.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Integration)</span>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="d-flex flex-column ms-2 me-auto">
+                                                <span class="text-muted" style="font-size: 14px;">
+                                                    October 23, 2026
+                                                </span>
+                                                <div class="fw-bold mb-2">Integration completed</div>
+                                                <p class="m-0">
+                                                    Moral Environments experiment have been completed integration.
+                                                </p>
+                                            </div>
+                                            <span class="badge text-bg-success bg-gradient ms-2">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                                <span>Completed (Integration)</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -382,7 +440,7 @@
                                 </div>
                             </div>
                             <div class="modal-body">
-                                {% if s.name == 'algebraic' %}
+                                {% if s.name == 'apps_algebraic' %}
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-start">
                                             <div class="d-flex flex-column ms-2 me-auto">
@@ -427,30 +485,30 @@
                             <code>Demo Apps</code>
                             <span class="badge text-bg-info bg-gradient"
                                 data-category="
-                                    {% if s.name == 'investment' or s.name == 'donation_with_rank' %}
+                                    {% if s.name == 'apps_investment' or s.name == 'apps_donation_with_rank' %}
                                         decision-making
-                                    {% elif s.name == 'transcription_continuous' or s.name == 'transcription_exact'
-                                    or s.name == 'count_word' or s.name == 'slot_machine' or s.name == 'algebraic'
-                                    or s.name == 'decoding' %}
+                                    {% elif s.name == 'apps_transcription_continuous' or s.name == 'apps_transcription_exact'
+                                    or s.name == 'apps_count_word' or s.name == 'apps_slot_machine' or s.name == 'apps_algebraic'
+                                    or s.name == 'apps_decoding' %}
                                         real-effort-task
-                                    {% elif s.name == 'shop_apps' %}
+                                    {% elif s.name == 'apps_shop_apps' %}
                                         shopping-simulation
                                     {% elif s.name == 'templates_style' %}
                                         style-templates
-                                    {#{% elif s.name == 'algebraic' or s.name == 'decoding' %}#}
+                                    {#{% elif s.name == 'apps_algebraic' or s.name == 'apps_decoding' %}#}
                                     {#puzzle-problem-solving#}
                                     {% else %}
                                         research-experiment
                                     {% endif %}">
-                                {% if s.name == 'investment' or s.name == 'donation_with_rank'%}
+                                {% if s.name == 'apps_investment' or s.name == 'apps_donation_with_rank'%}
                                     Decision-Making
-                                {% elif s.name == 'transcription_continuous' or s.name == 'transcription_exact'
-                                    or s.name == 'count_word' or s.name == 'slot_machine' or s.name == 'algebraic'
-                                    or s.name == 'decoding'%}
+                                {% elif s.name == 'apps_transcription_continuous' or s.name == 'apps_transcription_exact'
+                                    or s.name == 'apps_count_word' or s.name == 'apps_slot_machine' or s.name == 'apps_algebraic'
+                                    or s.name == 'apps_decoding'%}
                                     Real Effort Task
-                                {% elif s.name == 'shop_apps' %}
+                                {% elif s.name == 'apps_shop_apps' %}
                                     Shopping Simulation
-                                {#{% elif s.name == 'algebraic' or s.name == 'decoding' %}#}
+                                {#{% elif s.name == 'apps_algebraic' or s.name == 'apps_decoding' %}#}
                                 {#Puzzle &amp; Problem Solving#}
                                 {% elif s.name == 'templates_style' %}
                                     Custom Templates
@@ -464,7 +522,7 @@
                                 <h4 class="card-title">{{ s.display_name }}</h4>
 
                                 <!-- In-Process (Development) -->
-{#                                {% if s.name == 'algebraic' %}#}
+{#                                {% if s.name == 'apps_algebraic' %}#}
 {#                                    <span class="badge text-bg-warning bg-gradient ms-2"#}
 {#                                          data-status="development-process">#}
 {#                                        <i class="fa-regular fa-clock"></i>#}
@@ -473,9 +531,11 @@
 {#                                {% endif %}#}
 
                                 <!-- In Process (Integration) -->
-                                {% if s.name == 'poor_assistance' or s.name == 'moral_environments'
-                                or s.name == 'donation' or s.name == 'digital_payment' or s.name == 'tax_evasion'
-                                or s.name == 'alabama_project' %}
+                                {% if s.name == 'donation'
+                                    or s.name == 'digital_payment'
+                                    or s.name == 'tax_evasion'
+                                    or s.name == 'alabama_project'
+                                        %}
                                     <span class="badge text-bg-danger bg-gradient ms-2"
                                           data-status="integration-process">
                                         <i class="fa-solid fa-code-merge"></i>
@@ -484,7 +544,7 @@
                                 {% endif %}
 
                                 <!-- In Process (Patch) -->
-{#                                {% if s.name == 'shop_apps' %}#}
+{#                                {% if s.name == 'apps_shop_apps' %}#}
 {#                                    <span class="badge text-bg-dark bg-gradient ms-2"#}
 {#                                          data-status="patch-process">#}
 {#                                        <i class="fa-solid fa-code-merge"></i>#}
@@ -493,7 +553,7 @@
 {#                                {% endif %}#}
 
                                 <!-- Completed (Development) -->
-                                {% if s.name == 'templates_style' or s.name == 'algebraic' %}
+                                {% if s.name == 'templates_style' or s.name == 'apps_algebraic' %}
                                     <span class="badge text-bg-success bg-gradient ms-2"
                                           data-status="development-complete">
                                         <i class="fa-regular fa-circle-check"></i>
@@ -502,18 +562,16 @@
                                 {% endif %}
 
                                 <!-- Completed (Integration) -->
-{#                                {% if s.name == 'poor_assistance' or s.name == 'moral_environments'#}
-{#                                or s.name == 'donation' or s.name == 'digital_payment' or s.name == 'tax_evasion'#}
-{#                                or s.name == 'alabama_project' %}#}
-{#                                    <span class="badge text-bg-danger bg-gradient ms-2"#}
-{#                                          data-status="integration-complete">#}
-{#                                        <i class="fa-solid fa-code-merge"></i>#}
-{#                                        <span>Complete (Integration)</span>#}
-{#                                    </span>#}
-{#                                {% endif %}#}
+                                {% if s.name == 'poor_assistance' or s.name == 'moral_environments' %}
+                                    <span class="badge text-bg-success bg-gradient ms-2"
+                                          data-status="integration-complete">
+                                        <i class="fa-solid fa-code-merge"></i>
+                                        <span>Complete (Integration)</span>
+                                    </span>
+                                {% endif %}
 
                                 <!-- Completed (Patch) -->
-{#                                {% if s.name == 'algebraic' %}#}
+{#                                {% if s.name == 'apps_algebraic' %}#}
 {#                                    <span class="badge text-bg-success bg-gradient ms-2"#}
 {#                                          data-status="patch-complete">#}
 {#                                        <i class="fa-regular fa-circle-check"></i>#}
@@ -522,31 +580,31 @@
 {#                                {% endif %}#}
                             </div>
                             <p class="card-text" style="font-size: 14px;">
-                                {% if s.name == 'transcription_continuous' %}
+                                {% if s.name == 'apps_transcription_continuous' %}
                                     A continuous transcription task designed to explore text
                                     processing and real-effort performance.
-                                {% elif s.name == 'count_word' %}
+                                {% elif s.name == 'apps_count_word' %}
                                     A word-counting task for exploring participant effort,
                                     accuracy, and performance in a text-based activity.
-                                {% elif s.name == 'transcription_exact' %}
+                                {% elif s.name == 'apps_transcription_exact' %}
                                     An exact transcription task focused on accurately
                                     reproducing the provided text.
-                                {% elif s.name == 'shop_apps' %}
+                                {% elif s.name == 'apps_shop_apps' %}
                                     An interactive shopping simulation involving item
                                     selection and purchase-related decisions.
-                                {% elif s.name == 'investment' %}
+                                {% elif s.name == 'apps_investment' %}
                                     An investment decision experiment for exploring
                                     choices under risk and uncertainty.
-                                {% elif s.name == 'donation_with_rank' %}
+                                {% elif s.name == 'apps_donation_with_rank' %}
                                     A donation experiment that incorporates a ranking
                                     mechanism into the decision-making process.
-                                {% elif s.name == 'algebraic' %}
+                                {% elif s.name == 'apps_algebraic' %}
                                     An algebraic problem-solving task for exploring
                                     performance in mathematical activities.
-                                {% elif s.name == 'decoding' %}
+                                {% elif s.name == 'apps_decoding' %}
                                     A decoding task involving the interpretation of
                                     symbols or codes according to given rules.
-                                {% elif s.name == 'slot_machine' %}
+                                {% elif s.name == 'apps_slot_machine' %}
                                     A slot-machine-style experiment for exploring
                                     choices and responses to uncertain outcomes.
                                 {% else %}
@@ -586,7 +644,7 @@
                                         </button>
                                     </div>
                                 </li>
-                                {% if s.name == 'transcription_continuous' %}
+                                {% if s.name == 'apps_transcription_continuous' %}
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
                                         <div class="ms-2 me-auto">
@@ -614,7 +672,7 @@
                                             </span>
                                         </div>
                                     </li>
-                                {% elif s.name == 'transcription_exact' %}
+                                {% elif s.name == 'apps_transcription_exact' %}
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
                                         <div class="ms-2 me-auto">
@@ -643,7 +701,7 @@
                                             </span>
                                         </div>
                                     </li>
-                                {% elif s.name == 'count_word' %}
+                                {% elif s.name == 'apps_count_word' %}
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
                                         <div class="ms-2 me-auto">
@@ -671,7 +729,7 @@
                                             </span>
                                         </div>
                                     </li>
-                                {% elif s.name == 'shop_apps' %}
+                                {% elif s.name == 'apps_shop_apps' %}
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
                                         <div class="ms-2 me-auto">
@@ -699,11 +757,11 @@
                                             </span>
                                         </div>
                                     </li>
-                                {# {% elif s.name == 'investment' %} #}
-                                {# {% elif s.name == 'donation_with_rank' %} #}
-                                {# {% elif s.name == 'algebraic' %} #}
-                                {# {% elif s.name == 'decoding' %} #}
-                                {# {% elif s.name == 'slot_machine' %} #}
+                                {# {% elif s.name == 'apps_investment' %} #}
+                                {# {% elif s.name == 'apps_donation_with_rank' %} #}
+                                {# {% elif s.name == 'apps_algebraic' %} #}
+                                {# {% elif s.name == 'apps_decoding' %} #}
+                                {# {% elif s.name == 'apps_slot_machine' %} #}
                                 {% else %}
                                     <li class="list-group-item d-flex justify-content-between align-items-start
                                         p-0 py-2">
