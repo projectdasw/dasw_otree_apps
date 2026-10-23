@@ -1,0 +1,284 @@
+{% extends 'global/Page.html' %}
+{% load otree static %}
+
+{% block title %}
+    <title>RET Decoding - About</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex flex-row justify-content-between align-items-center
+                bg-light sticky-top">
+                <h5 class="m-0">about Real Effort - Decoding</h5>
+                <button type="submit" class="otree-btn btn btn-sm btn-primary">
+                    <i class="fa-solid fa-forward"></i>
+                    <span>Next - Decoding Task</span>
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group">
+                    <li class="list-group-item border-0 border-bottom">
+                        <h3>
+                            <i class="fa-solid fa-book text-primary me-1"></i>
+                            <span>Overview</span>
+                        </h3>
+                        <p>
+                            <strong>Decoding Task</strong> is an interactive experimental application developed using
+                            the <strong>oTree framework</strong>, designed to measure participants’ information
+                            processing speed, accuracy, and decision-making performance under time constraints.
+                        </p>
+                        <p>
+                            In this task, participants are presented with randomized patterns — such as letters,
+                            numbers, or symbols — and must identify or decode them correctly before the timer runs out.
+                            The task aims to evaluate <strong>cognitive processing efficiency</strong>,
+                            <strong>attention to detail</strong>, and <strong>behavioral consistency</strong> across
+                            multiple rounds.
+                        </p>
+                        <p class="m-0">This application can be used for:</p>
+                        <ul>
+                            <li>
+                                <strong>Academic research</strong> in behavioral or experimental economics, psychology,
+                                or decision science.
+                            </li>
+                            <li>
+                                <strong>Corporate behavioral testing</strong> such as assessing employee cognitive
+                                agility or focus.
+                            </li>
+                            <li>
+                                <strong>Customized large-scale experiments</strong> including hybrid online–lab setups.
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item border-0 border-bottom">
+                        <h3>
+                            <i class="fa-solid fa-star text-primary me-1"></i>
+                            <span>Key Features</span>
+                        </h3>
+                        <table class="table">
+                            <thead>
+                                <th>Category</th>
+                                <th>Feature</th>
+                                <th>Description</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th rowspan="3">Gameplay</th>
+                                    <td>Randomized Decoding Rounds</td>
+                                    <td>Each round generates a unique sequence of letters or symbols to decode.</td>
+                                </tr>
+                                <tr>
+                                    <td>Time-limited Response</td>
+                                    <td>
+                                        Each round includes a countdown timer; answers are auto-submitted upon timeout.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Adaptive Difficulty</td>
+                                    <td>Optionally adjusts difficulty based on prior performance accuracy.</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3">Data Logging</th>
+                                    <td>Accuracy Tracking</td>
+                                    <td>Records correct, incorrect, and skipped responses per player.</td>
+                                </tr>
+                                <tr>
+                                    <td>Reaction Time</td>
+                                    <td>Captures the exact time taken for each response.</td>
+                                </tr>
+                                <tr>
+                                    <td>Round Summary</td>
+                                    <td>Compiles per-round and cumulative statistics for analysis.</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Interface</th>
+                                    <td>Responsive UI</td>
+                                    <td>Optimized for desktop, laptop, and tablet interfaces.</td>
+                                </tr>
+                                <tr>
+                                    <td>Minimal Design</td>
+                                    <td>Clean, distraction-free layout suitable for cognitive testing.</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Integration</th>
+                                    <td>oTree Session Linkage</td>
+                                    <td>Can be connected with other apps in the same oTree project.</td>
+                                </tr>
+                                <tr>
+                                    <td>Data Export</td>
+                                    <td>
+                                        Allows exporting participant data to
+                                        <span class="badge text-bg-secondary">.csv</span> and
+                                        <span class="badge text-bg-secondary">.xlsx</span> formats.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Customization</th>
+                                    <td>Adjustable Timer</td>
+                                    <td>Researchers can set the time limit per round or overall session.</td>
+                                </tr>
+                                <tr>
+                                    <td>Variable Symbols</td>
+                                    <td>
+                                        Supports text, number, or icon-based decoding patterns.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                    <li class="list-group-item border-0 border-bottom">
+                        <h3>
+                            <i class="fa-solid fa-gears text-primary me-1"></i>
+                            <span>Technical Implementation</span>
+                        </h3>
+                        <ul class="list-group">
+                            <li class="list-group-item border-0 mb-3">
+                                <div class="d-flex flex-row border-0 border-bottom mb-2">
+                                    <h4 class="m-0">Framework & Language</h4>
+                                </div>
+                                <table class="table m-0">
+                                    <thead>
+                                        <th>Framework</th>
+                                        <th>Language</th>
+                                        <th>Front End</th>
+                                        <th>Database</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>oTree 5.x or newer</td>
+                                            <td>Python 3.9 or newer</td>
+                                            <td>HTML5, Bootstrap (CSS & JS), Fontawesome, SweetAlert2</td>
+                                            <td>SQLite (default) or PostgreSQL</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li class="list-group-item border-0 mb-3">
+                                <div class="d-flex flex-row border-0 border-bottom mb-2">
+                                    <h4 class="m-0">Core Components</h4>
+                                </div>
+                                <table class="table m-0">
+                                    <thead>
+                                        <th>Component</th>
+                                        <th>Description</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="badge text-bg-secondary">models.py</span></td>
+                                            <td>
+                                                Defines <span class="badge text-bg-secondary">Player</span>,
+                                                <span class="badge text-bg-secondary">Group</span>, and
+                                                <span class="badge text-bg-secondary">Subsession</span> with decoding
+                                                performance variables.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge text-bg-secondary">pages.py</span></td>
+                                            <td>
+                                                Handles page flow, timing, and live updates between client and server.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge text-bg-secondary">templates/</span></td>
+                                            <td>
+                                                Contains task interfaces and result pages (HTML + JS).
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge text-bg-secondary">static/</span></td>
+                                            <td>
+                                                Stores optional JS/CSS assets for animations or feedback visuals.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li class="list-group-item border-0 mb-3">
+                                <div class="d-flex flex-row border-0 border-bottom mb-2">
+                                    <h4 class="m-0">Data Flow</h4>
+                                </div>
+                                <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item border-0 p-0">Participant loads a decoding round.</li>
+                                    <li class="list-group-item border-0 p-0">
+                                        oTree backend generates a randomized pattern (letters/symbols).
+                                    </li>
+                                    <li class="list-group-item border-0 p-0">
+                                        Player responds before the timer runs out.
+                                    </li>
+                                    <li class="list-group-item border-0 p-0">
+                                        Response time and accuracy are logged into the
+                                        <span class="badge text-bg-secondary">Player</span> model.
+                                    </li>
+                                    <li class="list-group-item border-0 p-0">
+                                        After all rounds, results are displayed and stored for export.
+                                    </li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item border-0 border-bottom">
+                        <h3>
+                            <i class="fa-solid fa-puzzle-piece text-primary me-1"></i>
+                            <span>Example Use Case</span>
+                        </h3>
+                        <p class="m-0">
+                            A researcher can integrate <strong>Decoding Task</strong> between two experimental phases,
+                            e.g.:
+                        </p>
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item border-0 py-0"><strong>Phase 1</strong>: Donation or Risk task.</li>
+                            <li class="list-group-item border-0 py-0">
+                                <strong>Phase 2</strong>: Decoding Task (to measure attention or effort).
+                            </li>
+                            <li class="list-group-item border-0 py-0">
+                                <strong>Phase 3</strong>: Payment Page combining results from previous rounds.
+                            </li>
+                        </ol>
+                        <p>
+                            This allows linking <strong>cognitive performance</strong> with
+                            <strong>behavioral outcomes</strong>, creating a multi-layered experimental structure.
+                        </p>
+                    </li>
+                    <li class="list-group-item border-0 border-bottom">
+                        <h3>
+                            <i class="fa-solid fa-toolbox text-primary me-1"></i>
+                            <span>Future Enchancements</span>
+                        </h3>
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item border-0 py-0">Optional “Practice Round” before main task.</li>
+                            <li class="list-group-item border-0 py-0">
+                                Real-time leaderboard for group competition mode.
+                            </li>
+                            <li class="list-group-item border-0 py-0">
+                                Advanced export format for data visualization.
+                            </li>
+                            <li class="list-group-item border-0 py-0">
+                                Optional integration with external APIs (e.g., for eye-tracking data).
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="list-group-item border-0 border-bottom">
+                        <h3>
+                            <i class="fa-regular fa-file-lines text-primary me-1"></i>
+                            <span>License & Attribution</span>
+                        </h3>
+                        <p>
+                            This project is licensed under the <strong>MIT License</strong>, allowing free use and
+                            modification for educational and research purposes.
+                        </p>
+                        <p>
+                            If you use this Decoding Task in a publication or presentation, please include the
+                            following citation:
+                        </p>
+                        <p class="m-0">
+                            <h6 class="fst-italic">Developed by DASW Project, 2025.</h6>
+                            <h6 class="fst-italic">
+                                DASW Decoding Task - An oTree-based cognitive experiment framework.
+                            </h6>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
