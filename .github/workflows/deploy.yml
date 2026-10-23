@@ -1,0 +1,34 @@
+name: Deploy DASW oTree Apps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dasw-otree-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to DASW Startup Server
+    runs-on: self-hosted
+    steps:
+      - name: Update application
+        shell: bash
+        run: |
+          set -e
+          cd /opt/dasw_otree_apps
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          .venv/bin/pip install -r requirements.txt
+
+          sudo /usr/bin/systemctl restart dasw-otree
+
+          echo "DASW oTree Apps deployment completed."
