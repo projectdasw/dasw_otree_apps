@@ -94,7 +94,7 @@ function liveRecv(data) {
     document.querySelector(".badge-solved").textContent = "Solved: " + data.correct_answers;
     document.querySelector(".badge-failed").textContent = "Failed: " + data.incorrect_answers;
 
-    const table = document.querySelector("#decoding-table");
+    const table = document.querySelector("#apps_decoding-table");
     const letterCells = table.querySelectorAll(".letter-cell");
     const numberCells = table.querySelectorAll(".number-cell");
 

@@ -1,0 +1,19 @@
+.otree-body {
+    max-width: 100%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.form-control-errors,
+.otree-form-errors {
+    display: none !important;
+}
+
+#custom-error-container {
+    position: relative;
+    z-index: 1050;
+}
+
+#custom-error-container .alert {
+    transition: opacity 0.5s ease;
+}
