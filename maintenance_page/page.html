@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Sorry, this apps are under construction</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card rounded-4">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <img class="img-fluid w-75" src="{% static 'global/maintenance_page/assets/image/maintenance.png' %}"
+                     alt="image/png">
+                <h1 class="my-4">Ooppss!</h1>
+                <p class="fs-5 m-0 text-center">
+                    This apps is currently under development and is not yet available for participation.<br>
+                    We are working to ensure that everything is ready for your research experience.<br>
+                    Please check back soon.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
