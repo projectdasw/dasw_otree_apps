@@ -498,9 +498,9 @@ For example:
 ```python
 SESSION_CONFIGS = [
     dict(
-        name='count_word',
+        name='apps_count_word',
         display_name='RET Count Word',
-        app_sequence=['count_word'],
+        app_sequence=['apps_count_word'],
         num_demo_participants=1,
     ),
 ]
@@ -521,9 +521,9 @@ dict(
     name='combined_experiment',
     display_name='Combined Experiment',
     app_sequence=[
-        'investment',
-        'shop_apps',
-        'transcription_continuous',
+        'apps_investment',
+        'apps_shop_apps',
+        'apps_transcription_continuous',
     ],
     num_demo_participants=1,
 ),
