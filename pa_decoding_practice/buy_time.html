@@ -1,0 +1,163 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Durasi Waktu - Real Effort Decoding - Ronde Latihan {% player.round_number %}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning" role="alert">
+        <h4 class="m-0 text-center">Anda sedang berada pada sesi latihan</h4>
+        <h3 class="m-0 text-center">Real Effort - Decoding</h3>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4 class="m-0">Informasi Pendapatan</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Uang + Bantuan</th>
+                        <th scope="col">Total Uang Anda</th>
+                        <th scope="col">Beban Konsumsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">
+                            {% if player.uang_sebelum_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                            {% elif player.uang_sebelum_tambah_bansos >= 0 %}
+                                {% player.uang_sebelum_tambah_bansos %}
+                            {% endif %} + <span class="text-success">{% player.bantuan_sosial %}</span>
+                        </td>
+                        <td class="fw-bold">
+                            {% if player.uang_sesudah_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sesudah_tambah_bansos %}</span>
+                            {% elif player.uang_sesudah_tambah_bansos >= 0 %}
+                                {% player.uang_sesudah_tambah_bansos %}
+                            {% endif %}
+                        </td>
+                        <td class="fw-bold">
+                            <span class="text-danger">{% player.beban_konsumsi %} (dikenakan setiap akhir ronde)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <span class="badge bg-warning text-dark fs-6 me-2">
+                Ronde Latihan: {% player.round_number %}
+            </span>
+            <span class="badge bg-danger fs-6 me-2">
+                Uang Anda saat ini: {% player.uang_sesudah_tambah_bansos %}
+            </span>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="p-0">
+                    <h4>Durasi Waktu - Real Effort Decoding</h4>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Masukkan Alokasi yang ingin Anda gunakan untuk membeli waktu
+                        </label>
+                        <input type="number" id="beli_waktu" class="form-control" name="beli_waktu" value="0" required>
+                    </div>
+                    <hr>
+                    <div class="alert alert-success m-0" role="alert">
+                        <h5 class="alert-heading">
+                            Informasi Ketentuan:
+                        </h5>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-success border-0 p-0">
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Harga per 20 Detik adalah 5 poin.
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-success border-0 p-0">
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Belaku kelipatan per 5 poin. Anda tidak dapat mengalokasi dana selain
+                                    kelipatan yang telah ditentukan.
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-success border-0 p-0">
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Jika Anda mengalokasi dana 10 poin, maka waktu yang Anda dapatkan adalah
+                                    40 Detik dan seterusnya.
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-success border-0 p-0">
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Input Form tidak boleh kosong.
+                                </span>
+                            </li>
+                            <li class="list-group-item list-group-item-success border-0 p-0">
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    Jika Anda tidak tertarik berinvestasi pada ronde ini, Anda
+                                    dapat mengisi alokasi 0.
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="otree-btn-next btn btn-outline-success">
+                <i class="fa-regular fa-hourglass-half"></i>
+                <span>Mulai</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('input[name^="beli_waktu"]');
+
+            inputs.forEach(function (input) {
+                input.addEventListener("keydown", function (event) {
+                    const allowedKeys = [
+                        "Backspace",
+                        "Delete",
+                        "Tab",
+                        "Escape",
+                        "Enter",
+                        "ArrowLeft",
+                        "ArrowRight",
+                        "ArrowUp",
+                        "ArrowDown",
+                        "Home",
+                        "End"
+                    ];
+
+                    if (allowedKeys.includes(event.key)) {
+                        return;
+                    }
+
+                    // Izinkan shortcut Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                    if (event.ctrlKey || event.metaKey) {
+                        return;
+                    }
+
+                    // Hanya izinkan angka 0-9
+                    if (!/^[0-9]$/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                });
+
+                // Membersihkan karakter yang masuk melalui paste
+                input.addEventListener("input", function () {
+                    this.value = this.value.replace(/[^0-9]/g, "");
+                });
+            });
+        });
+    </script>
+{% endblock %}

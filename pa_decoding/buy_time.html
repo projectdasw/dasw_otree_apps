@@ -1,0 +1,358 @@
+{% extends "global/experiment_page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Durasi Waktu - Real Effort Decoding - Ronde {% player.round_number %}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mb-3">
+        <div class="alert alert-success" role="alert">
+            <h4 class="m-0 text-center">Anda sedang berada pada sesi eksperimen</h4>
+            <h3 class="m-0 text-center">Real Effort - Decoding</h3>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="m-0">Informasi Pendapatan</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    {% if player.uang_sebelum_tambah_bansos < 0 %}
+                        <thead>
+                            <tr>
+                                <th scope="col">Uang Anda</th>
+                                <th scope="col">Bantuan</th>
+                                <th scope="col">Beban Konsumsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">
+                                    <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                                </td>
+                                <td class="fw-bold">
+                                    <span class="text-success">{% player.bantuan_sosial %}</span>
+                                </td>
+                                <td class="fw-bold">
+                                    <span class="text-danger">
+                                        {% player.beban_konsumsi %} (dikenakan setiap akhir ronde)
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    {% else %}
+                        <thead>
+                            <tr>
+                                <th scope="col">Uang + Bantuan</th>
+                                <th scope="col">Total Uang Anda</th>
+                                <th scope="col">Beban Konsumsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">
+                                    {% player.uang_sebelum_tambah_bansos %} +
+                                    <span class="text-success">{% player.bantuan_sosial %}</span>
+                                </td>
+                                <td class="fw-bold">{% player.uang_sesudah_tambah_bansos %}</td>
+                                <td class="fw-bold">
+                                    <span class="text-danger">
+                                        {% player.beban_konsumsi %} (dikenakan setiap akhir ronde)
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    {% endif %}
+                </table>
+                {% if player.uang_sebelum_tambah_bansos < 0 %}
+                    <div class="alert p-0 m-0" role="alert">
+                        <h4>
+                            <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+                            <span>Peringatan</span>
+                        </h4>
+                        <p class="text-danger m-0">
+                            Uang Anda saat ini adalah <strong>{% player.uang_sebelum_tambah_bansos %}</strong>, maka
+                            Uang Anda saat ini berubah status menjadi <strong>Hutang</strong>.
+                        </p>
+                        <p class="mb-0">
+                            Namun Anda tetap dapat berinvestasi dengan menggunakan uang <strong>Bantuan</strong>
+                            sebesar <strong class="text-success">{% player.bantuan_sosial %}</strong>.
+                        </p>
+                        <hr>
+                        <p class="mb-0">
+                            Gunakan uang <strong>Bantuan</strong> untuk berinvestasi agar dapat membayar
+                            <strong class="text-danger">Hutang & Beban Konsumsi</strong>.
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge bg-success fs-6 me-2">
+                        Ronde: {% player.round_number %}
+                    </span>
+                    <span class="badge bg-danger fs-6 me-2">
+                        Uang Anda saat ini: {% player.uang_sesudah_tambah_bansos %}
+                    </span>
+                    <span class="badge bg-primary fs-6">
+                        Anda adalah Peserta {% my_id %}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="p-0">
+                            <h4>Durasi Waktu - Real Effort Decoding</h4>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Masukkan Alokasi yang ingin Anda gunakan untuk membeli waktu
+                                </label>
+                                <input type="number" id="beli_waktu" class="form-control" name="beli_waktu" value="0" required>
+                            </div>
+                            <hr>
+                            <div id="custom-error-container"></div>
+                            <div class="alert alert-success m-0" role="alert">
+                                <h5 class="alert-heading">
+                                    Informasi Ketentuan:
+                                </h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-success border-0 p-0">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span>
+                                            Harga per 20 Detik adalah 5 poin.
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item list-group-item-success border-0 p-0">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span>
+                                            Belaku kelipatan per 5 poin. Anda tidak dapat mengalokasi dana selain
+                                            kelipatan yang telah ditentukan.
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item list-group-item-success border-0 p-0">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span>
+                                            Jika Anda mengalokasi dana 10 poin, maka waktu yang Anda dapatkan adalah
+                                            40 Detik dan seterusnya.
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item list-group-item-success border-0 p-0">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span>
+                                            Input Form tidak boleh kosong.
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item list-group-item-success border-0 p-0">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span>
+                                            Jika Anda tidak tertarik berinvestasi pada ronde ini, Anda
+                                            dapat mengisi alokasi 0.
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-outline-success">
+                        <i class="fa-regular fa-hourglass-half"></i>
+                        <span>Mulai</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Informasi Realtime Peserta</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th>List Peserta</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="realtime-table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const myPlayerId = {% my_id %};
+        const form = document.querySelector("form");
+
+        function getBadge(status){
+            switch(status){
+                case "Sudah Masuk Halaman":
+                    return '<span class="badge bg-primary">Sudah Masuk Halaman</span>';
+                case "Sedang Mengalokasikan Dana":
+                    return '<span class="badge bg-info">Sedang Membeli Waktu</span>';
+                case "Player membeli waktu bermain":
+                    return '<span class="badge bg-success">Telah membeli waktu dan sedang proses berinvestasi</span>';
+                case "Player tidak membeli waktu bermain":
+                    return '<span class="badge bg-warning text-dark">Tidak membeli waktu dan tidak berinvestasi</span>';
+                default:
+                    return '<span class="badge bg-secondary">Belum Masuk Halaman</span>';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function(){
+            liveSend({
+                action:"page_loaded"
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('input[name^="beli_waktu"]');
+
+            inputs.forEach(function (input) {
+                input.addEventListener("keydown", function (event) {
+                    const allowedKeys = [
+                        "Backspace",
+                        "Delete",
+                        "Tab",
+                        "Escape",
+                        "Enter",
+                        "ArrowLeft",
+                        "ArrowRight",
+                        "ArrowUp",
+                        "ArrowDown",
+                        "Home",
+                        "End"
+                    ];
+
+                    if (allowedKeys.includes(event.key)) {
+                        return;
+                    }
+
+                    // Izinkan shortcut Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                    if (event.ctrlKey || event.metaKey) {
+                        return;
+                    }
+
+                    // Hanya izinkan angka 0-9
+                    if (!/^[0-9]$/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                });
+
+                // Membersihkan karakter yang masuk melalui paste
+                input.addEventListener("input", function () {
+                    this.value = this.value.replace(/[^0-9]/g, "");
+                });
+            });
+        });
+
+        document.getElementById("beli_waktu").addEventListener("input", function(){
+            liveSend({
+                action:"allocation_changed",
+                allocation:Number(this.value || 0)
+            });
+        });
+
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
+
+            liveSend({
+                action:"submit_buy_time",
+                allocation:Number(document.getElementById("beli_waktu").value || 0)
+            });
+
+            setTimeout(function(){
+                form.submit();
+            },100);
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const errorElements = document.querySelectorAll(".form-control-errors, .otree-form-errors");
+
+            if (errorElements.length === 0) {
+                return;
+            }
+
+            let messages = [];
+            errorElements.forEach(function (element) {
+                const message = element.innerText.trim();
+
+                if (message && !messages.includes(message)) {
+                    messages.push(message);
+                }
+            });
+
+            if (messages.length === 0) {
+                return;
+            }
+
+            const container = document.getElementById("custom-error-container");
+            const alert = document.createElement("div");
+
+            alert.className = "alert alert-danger alert-dismissible fade show";
+            alert.setAttribute("role", "alert");
+
+            alert.innerHTML = `
+                <div class="mt-1">${messages.join("<br>")}</div>
+                <button type="button" class="btn-close" aria-label="Close"></button>
+            `;
+
+            container.appendChild(alert);
+
+            // Tombol close manual
+            const closeButton = alert.querySelector(".btn-close");
+
+            closeButton.addEventListener("click", function () {
+                closeAlert(alert);
+            });
+
+            // Hilang otomatis setelah 3 detik
+            setTimeout(function () {
+                closeAlert(alert);
+            }, 5000);
+
+
+            function closeAlert(alertElement) {
+                if (!alertElement) {
+                    return;
+                }
+
+                alertElement.classList.remove("show");
+
+                setTimeout(function () {
+                    alertElement.remove();
+                }, 500);
+            }
+        });
+
+        liveRecv = function(data){
+            if(!data.players){
+                return;
+            }
+
+            let html="";
+            data.players.forEach(function(p){
+                html += `
+                    <tr>
+                        <td>
+                            Peserta ${p.id}
+                            ${
+                                p.id===myPlayerId
+                                ? '<span class="badge bg-primary ms-2">Anda</span>'
+                                : ''
+                            }
+                        </td>
+                        <td>${getBadge(p.status)}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById("realtime-table").innerHTML = html;
+        }
+    </script>
+{% endblock %}

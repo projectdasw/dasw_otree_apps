@@ -1,0 +1,60 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Sesi Latihan Risky Investment Allocation</title>
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning" role="alert">
+        <h4 class="m-0 text-center">Anda memasuki Sesi Latihan</h4>
+        <h3 class="m-0 text-center">Risky Investment Allocation</h3>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title m-0">Informasi Pendapatan</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <table class="table">
+                    <thead>
+                        <th scope="col">Uang Anda</th>
+                        <th scope="col" class="text-success">Bantuan</th>
+                        <th scope="col" class="text-danger">Beban Konsumsi</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">
+                                {% if player.uang_sebelum_tambah_bansos < 0 %}
+                                    <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                                {% elif player.uang_sebelum_tambah_bansos >= 0 %}
+                                    {% player.uang_sebelum_tambah_bansos %}
+                                {% endif %}
+                            </td>
+                            <td class="fw-bold">
+                                <span class="text-success">+{% player.bantuan_sosial %}</span>
+                            </td>
+                            <td class="fw-bold">
+                                <span class="text-danger">{% player.beban_konsumsi %}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert bg-success text-white" role="alert">
+                    <i class="fa-solid fa-check-to-slot me-1"></i>
+                    <span>Bantuan akan diberikan setiap ronde</span>
+                </div>
+                <div class="alert bg-danger text-white mb-0" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                    <span>Beban Konsumsi akan dikenakan setiap akhir ronde</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="otree-btn-next btn btn-outline-primary">
+                <span>Lanjut</span>
+                <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

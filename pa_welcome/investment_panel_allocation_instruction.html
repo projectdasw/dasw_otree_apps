@@ -1,0 +1,224 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Penjelasan Investment Panel Allocation</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title m-0">Penjelasan mengenai Investment Panel Allocation</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Konsep Dasar</div>
+                            <p class="m-0 fs-6">
+                                Investment Panel Allocation merupakan
+                                <strong>opsi investasi dengan konsep skema</strong>. Anda akan dihadapkan
+                                <strong>17 skema opsi investasi dengan berbagai macam Return & Probabilitas</strong>.
+                                Bentuk skema opsi investasi pilihan adalah berikut gambar dibawah ini:
+                            </p>
+                            <img src="{{ static 'global/experiment/poor_assistance/assets/image/investment_panel.png' }}" class="mb-3 w-75 mx-auto d-block"
+                                 alt="image/png">
+                            <p class="m-0 fs-6">
+                                Dalam hal ini, Investment Panel Allocation memiliki ketentuan yaitu:
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        Anda dapat mengalokasikan Uang (Poin) yang Anda miliki pada opsi-opsi yang
+                                        tersedia secara bebas sesuai dengan kemampuan Uang (Poin) Yang Anda miliki.
+                                        <strong>Setiap opsi tidak memiliki biaya tetap</strong> sehingga Anda dapat
+                                        secara bebas mengalokasikan Uang (Poin) Anda. Jika Uang Anda melebihi
+                                        biaya opsi yang dipilih, maka Anda tidak dapat melakukan investasi tersebut dan
+                                        Anda harus kembali memilih dan mengalokasikan opsi sesuai dengan kemampuan
+                                        Uang yang Anda miliki.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        Anda mendapatkan profit/keuntungan berdasarkan opsi skema yang Anda pilih,
+                                        dengan contoh: dari gambar diatas jika Anda memilih mengalokasikan Uang
+                                        (Poin) pada Opsi Skema 1 dengan Return sebesar 1.15 yang memiliki Probabilitas
+                                        keuntungan sebesar 90%, maka Sistem akan membaca dan menentukan
+                                        profit/keuntungan dari Opsi Skema 1. Sistem akan menentukan keputusan jika Anda
+                                        sukses maka Alokasi Anda akan dikalikan dengan Return yang tertera pada Opsi
+                                        Skema 1, sedangkan jika Anda gagal maka Anda tidak mendapatkan Return pada Opsi
+                                        Skema 1.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        Jika Anda memilih lebih dari 1 opsi skema, dengan contoh: dari gambar diatas
+                                        jika Anda memilih Opsi Skema 6, Opsi Skema 9 dan Opsi Skema 15, maka Sistem akan
+                                        membaca dan menentukan dari 3 opsi skema yang telah Anda pilih. Jika
+                                        pada Opsi Skema 6 Sistem telah menentukan keputusan <strong>"Anda sukses dan
+                                        Anda melakukan Alokasi sebesar 20 poin"</strong>, kalkulasi profit/keuntungan
+                                        yang Anda dapatkan adalah <strong>Return yang tertera (1.55) dikalikan dengan
+                                        Alokasi yang Anda berikan (20 poin)</strong>, maka profit/keuntungan yang Anda
+                                        dapatkan sebesar 31 poin pada Opsi Skema 6, pada Opsi Skema 9 jika Sistem telah
+                                        menentukan <strong>"Anda gagal dan Anda melakukan Alokasi sebesar 12 poin"
+                                        </strong>, kalkulasi profit/keuntungan yang Anda dapatkan adalah <strong>
+                                        Return menjadi (0) dikalikan dengan Alokasi yang Anda berikan (12 poin)
+                                        </strong>, maka profit/keuntungan yang Anda dapatkan sebesar 0 poin pada Opsi
+                                        Skema 9, pada Opsi Skema 15 jika Sistem telah menentukan <strong>"Anda sukses
+                                        dan Anda melakukan Alokasi sebesar 20 poin"</strong>, kalkulasi
+                                        profit/keuntungan yang Anda dapatkan adalah <strong>Return yang tertera (5.0)
+                                        dikalikan dengan Alokasi yang Anda berikan (20 poin)</strong>, maka
+                                        profit/keuntungan yang Anda dapatkan sebesar 100 poin pada Opsi Skema 15.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        Semua profit/keuntungan akan dijumlah dan dijadikan sebagai Total Keuntungan
+                                        berdasarkan opsi yang Anda pilih. Jika Anda memilih lebih dari 1 opsi skema,
+                                        maka semua profit/keuntungan akan dijumlahkan dari opsi skema yang telah Anda
+                                        pilih. Dengan contoh: dari poin nomor 1.3 diatas <strong>Opsi Skema 6 Anda
+                                        mendapatkan 31 poin, Opsi Skema 9 Anda mendapatkan 0 poin & Opsi Skema 15 Anda
+                                        mendapatkan 100 poin, maka jumlah profit/keuntungan yang Anda dapatkan adalah
+                                        31+0+100 = 131 poin</strong>.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                                    <div class="ms-2 me-auto">
+                                        <strong>Jika Anda tidak melakukan investasi pada ronde tertentu, maka
+                                        <span class="text-danger">Anda tidak mendapatkan profit/keuntungan</span>
+                                        </strong>.
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Bantuan & Beban Konsumsi</div>
+                            <p class="fs-6 m-0">
+                                Setiap ronde Anda akan mendapatkan
+                                <strong class="text-success">Bantuan sebesar 30 poin</strong> dan juga Anda akan
+                                dikenakan <strong class="text-danger">Beban Konsumsi sebesar 35 poin</strong> setelah
+                                Anda menyelesaikan ronde. Bantuan & Beban Konsumsi memiliki ketentuan sebagai berikut:
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        Bantuan akan diberikan setiap ronde dan Beban Konsumsi akan dikenakan setelah
+                                        Anda menyelesaikan setiap ronde.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                                    <div class="ms-2 me-auto">
+                                        Setiap aplikasi pada eksperimen ini memiliki sistem yang kompleks. Jika <strong>
+                                        Anda terdeteksi tidak melakukan investasi pada ronde tertentu</strong>,
+                                        <strong>Beban Konsumsi akan tetap <span class="text-danger">BERLAKU
+                                        </span></strong>. Harap lebih teliti pada saat melakukan investasi.
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Informasi Pendapatan</div>
+                            <p class="fs-6 m-0">
+                                Pada bagian <strong>Informasi Pendapatan</strong>, Anda dapat melihat <strong>kondisi
+                                keuangan</strong> Anda saat ini,
+                                jumlah <strong class="text-success">Bantuan</strong> yang diterima, serta
+                                <strong class="text-danger">Beban Konsumsi</strong> yang harus dibayarkan pada setiap
+                                akhir ronde.
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        Uang Anda menunjukkan jumlah uang yang Anda miliki saat ini. Jika jumlahnya
+                                        bernilai <strong class="text-danger">negatif</strong>, berarti
+                                        <strong class="text-danger">Anda sedang memiliki Hutang</strong>.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        <strong class="text-success">Bantuan</strong> menunjukkan tambahan uang yang
+                                        diberikan kepada Anda dan dapat digunakan untuk melakukan
+                                        <strong class="text-success">investasi</strong>.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        <strong class="text-danger">Beban Konsumsi</strong> merupakan jumlah uang yang
+                                        akan dikenakan pada setiap akhir ronde.
+                                    </div>
+                                </li>
+                            </ol>
+                            <p class="fs-6">
+                                Jika Uang Anda bernilai <strong class="text-danger">NEGATIF</strong>, Anda tetap dapat
+                                melanjutkan kegiatan <strong class="text-success">investasi</strong> dengan menggunakan
+                                uang <strong class="text-success">Bantuan</strong> yang tersedia. Namun, Anda perlu
+                                memperhatikan bahwa uang tersebut <strong>sebaiknya digunakan untuk membantu membayar
+                                <span class="text-danger">Hutang</span> dan
+                                <span class="text-danger">Beban Konsumsi</span></strong>.
+                            </p>
+                            <img src="{{ static 'global/experiment/poor_assistance/assets/image/endowment_rules.png' }}" class="mb-3 w-100 d-block"
+                                 alt="image/png">
+
+                            <p class="fs-6">
+                                Sebagai contoh, pada tampilan di atas, Uang Anda sebesar
+                                <strong class="text-danger">-84,00</strong> menunjukkan bahwa
+                                <strong class="text-danger">Anda memiliki hutang sebesar 84,00</strong>. Anda menerima
+                                <strong class="text-success">Bantuan sebesar 30,00</strong>, sehingga bantuan tersebut
+                                dapat digunakan untuk melakukan <strong class="text-success">investasi</strong>. Pada
+                                saat yang sama, terdapat <strong class="text-danger">Beban Konsumsi sebesar
+                                35,00</strong> yang akan dikenakan pada setiap akhir ronde.
+                            </p>
+                            <p class="fs-6">
+                                Jika Anda menggunakan sebagian <strong class="text-success">Bantuan</strong> untuk
+                                berinvestasi, maka <strong>sisa Bantuan yang tidak digunakan untuk investasi akan
+                                <span class="text-danger">TETAP DIGUNAKAN</span> untuk membantu membayar
+                                <span class="text-danger">Hutang</span> dan
+                                <span class="text-danger">Beban Konsumsi</span> pada akhir ronde</strong>. Dengan
+                                demikian, <strong>semakin besar jumlah <span class="text-success">Bantuan</span> yang
+                                digunakan untuk investasi, semakin kecil pula jumlah
+                                <span class="text-success">Bantuan</span> yang tersisa untuk membantu membayar
+                                <span class="text-danger">Hutang</span> dan
+                                <span class="text-danger">Beban Konsumsi</span></strong>.
+                            </p>
+                            <p class="text-danger text-center fw-bold">
+                                Perhatikan kondisi keuangan Anda sebelum melakukan investasi. Pastikan Anda
+                                mempertimbangkan kebutuhan untuk membayar Hutang dan Beban Konsumsi.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Hasil Ronde & Hasil Akhir Investment Panel Allocation</div>
+                            <p class="m-0 fs-6">
+                                Setiap ronde akan merekap hasil investasi yang Anda lakukan. <i>Hasil Ronde</i>
+                                menyajikan informasi rekapan hasil investasi Anda meliputi profit/keuntungan, alokasi
+                                yang Anda berikan, Bantuan & Beban Konsumsi serta Uang Akhir Ronde. <i>Hasil Akhir</i>
+                                menyajikan informasi rekapan keseluruhan ronde yang telah Anda lakukan terlepas dari
+                                Anda melakukan investasi maupun tidak melakukan investasi serta total keseluruhan
+                                profit/keuntungan setiap ronde. <strong>Uang Akhir Ronde pada Investment Panel
+                                Allocation akan digunakan pada ronde berikutnya</strong>.
+                            </p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="otree-btn-next btn btn-outline-primary">
+                <span>Lanjut</span>
+                <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

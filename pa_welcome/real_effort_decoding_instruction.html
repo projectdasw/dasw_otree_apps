@@ -1,0 +1,186 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Penjelasan Real Effort - Decoding</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title m-0">Penjelasan mengenai Real Effort - Decoding</h3>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Konsep Dasar</div>
+                            <p class="m-0 fs-6">
+                                Real Effort - Decoding merupakan sesi investasi yang bersifat kognitif. Anda akan
+                                diberikan sebuah situasi dimana
+                                <strong>setiap jawaban benar memiliki nilai 3 poin</strong>. Bentuk situasi ini
+                                digambarkan sebagai berikut:
+                            </p>
+                            <img src="{{ static 'global/experiment/poor_assistance/assets/image/apps_decoding.png' }}" class="mb-3 w-75 mx-auto d-block"
+                                 alt="image/png">
+                            <p class="m-0 fs-6">
+                                Dalam hal ini, Real Effort - Decoding memiliki ketentuan yaitu:
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        Sebelum Anda melakukan aktivitas ini, Anda akan diarahkan untuk <strong>membeli
+                                        durasi waktu (berinvestasi) terlebih dahulu </strong>. Bentuk halaman beli
+                                        durasi waktu seperti berikut:
+                                        <img src="{{ static 'global/experiment/poor_assistance/assets/image/beli_waktu_decoding.png' }}"
+                                             class="mb-3 w-75 mx-auto d-block" alt="image/png">
+                                        Anda harus mengalokasikan Uang (Poin) yang Anda miliki untuk menentukan
+                                        durasi waktu. Biaya yang ditentukan untuk membeli durasi waktu sebesar
+                                        <strong>5 poin per 20 Detik</strong> dan juga memiliki ketentuan lain yaitu
+                                        <strong>biaya beli durasi waktu harus dalam kelipatan 5 poin</strong>. Jika
+                                        Anda mengalokasikan Uang (Poin) Anda sebesar <strong>15 poin</strong>,
+                                        maka Anda mendapatkan waktu sebanyak <strong>60 Detik</strong>, sedangkan jika
+                                        Anda mengalokasikan Uang (Poin) Anda sebesar <strong>12 poin</strong>,
+                                        maka <strong class="text-danger">sistem akan mendeteksi bahwa alokasi yang Anda
+                                        masukkan bukan kelipatan 5</strong>.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                                    <div class="ms-2 me-auto">
+                                        Anda mendapatkan profit/keuntungan berdasarkan jawaban benar pada aktivitas ini.
+                                        Setiap jawaban benar bernilai <strong>3 poin
+                                        </strong>.
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Bantuan & Beban Konsumsi</div>
+                            <p class="fs-6 m-0">
+                                Setiap ronde Anda akan mendapatkan
+                                <strong class="text-success">Bantuan sebesar 30 poin</strong> dan juga Anda akan
+                                dikenakan <strong class="text-danger">Beban Konsumsi sebesar 35 poin</strong> setelah
+                                Anda menyelesaikan ronde. Bantuan & Beban Konsumsi memiliki ketentuan sebagai berikut:
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        Bantuan akan diberikan setiap ronde dan Beban Konsumsi akan dikenakan setelah
+                                        Anda menyelesaikan setiap ronde.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                                    <div class="ms-2 me-auto">
+                                        Setiap sesi eksperimen ini memiliki sistem yang kompleks. Jika <strong>
+                                        Anda terdeteksi tidak melakukan investasi pada ronde tertentu</strong>,
+                                        <strong>Beban Konsumsi akan tetap <span class="text-danger">BERLAKU
+                                        </span></strong>. Harap lebih teliti pada saat melakukan investasi.
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Informasi Pendapatan</div>
+                            <p class="fs-6 m-0">
+                                Pada bagian <strong>Informasi Pendapatan</strong>, Anda dapat melihat <strong>kondisi
+                                keuangan</strong> Anda saat ini,
+                                jumlah <strong class="text-success">Bantuan</strong> yang diterima, serta
+                                <strong class="text-danger">Beban Konsumsi</strong> yang harus dibayarkan pada setiap
+                                akhir ronde.
+                            </p>
+                            <ol class="list-group list-group-numbered fs-6">
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        Uang Anda menunjukkan jumlah uang yang Anda miliki saat ini. Jika jumlahnya
+                                        bernilai <strong class="text-danger">negatif</strong>, berarti
+                                        <strong class="text-danger">Anda sedang memiliki Hutang</strong>.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        <strong class="text-success">Bantuan</strong> menunjukkan tambahan uang yang
+                                        diberikan kepada Anda dan dapat digunakan untuk melakukan
+                                        <strong class="text-success">investasi</strong>.
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start
+                                    border-0">
+                                    <div class="ms-2 me-auto">
+                                        <strong class="text-danger">Beban Konsumsi</strong> merupakan jumlah uang yang
+                                        akan dikenakan pada setiap akhir ronde.
+                                    </div>
+                                </li>
+                            </ol>
+                            <p class="fs-6">
+                                Jika Uang Anda bernilai <strong class="text-danger">NEGATIF</strong>, Anda tetap dapat
+                                melanjutkan kegiatan <strong class="text-success">investasi</strong> dengan menggunakan
+                                uang <strong class="text-success">Bantuan</strong> yang tersedia. Namun, Anda perlu
+                                memperhatikan bahwa uang tersebut <strong>sebaiknya digunakan untuk membantu membayar
+                                <span class="text-danger">Hutang</span> dan
+                                <span class="text-danger">Beban Konsumsi</span></strong>.
+                            </p>
+                            <img src="{{ static 'global/experiment/poor_assistance/assets/image/endowment_rules.png' }}" class="mb-3 w-100 d-block"
+                                 alt="image/png">
+
+                            <p class="fs-6">
+                                Sebagai contoh, pada tampilan di atas, Uang Anda sebesar
+                                <strong class="text-danger">-84,00</strong> menunjukkan bahwa
+                                <strong class="text-danger">Anda memiliki hutang sebesar 84,00</strong>. Anda menerima
+                                <strong class="text-success">Bantuan sebesar 30,00</strong>, sehingga bantuan tersebut
+                                dapat digunakan untuk melakukan <strong class="text-success">investasi</strong>. Pada
+                                saat yang sama, terdapat <strong class="text-danger">Beban Konsumsi sebesar
+                                35,00</strong> yang akan dikenakan pada setiap akhir ronde.
+                            </p>
+                            <p class="fs-6">
+                                Jika Anda menggunakan sebagian <strong class="text-success">Bantuan</strong> untuk
+                                berinvestasi, maka <strong>sisa Bantuan yang tidak digunakan untuk investasi akan
+                                <span class="text-danger">TETAP DIGUNAKAN</span> untuk membantu membayar
+                                <span class="text-danger">Hutang</span> dan
+                                <span class="text-danger">Beban Konsumsi</span> pada akhir ronde</strong>. Dengan
+                                demikian, <strong>semakin besar jumlah <span class="text-success">Bantuan</span> yang
+                                digunakan untuk investasi, semakin kecil pula jumlah
+                                <span class="text-success">Bantuan</span> yang tersisa untuk membantu membayar
+                                <span class="text-danger">Hutang</span> dan
+                                <span class="text-danger">Beban Konsumsi</span></strong>.
+                            </p>
+                            <p class="text-danger text-center fw-bold">
+                                Perhatikan kondisi keuangan Anda sebelum melakukan investasi. Pastikan Anda
+                                mempertimbangkan kebutuhan untuk membayar Hutang dan Beban Konsumsi.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start fs-4 border-0">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Hasil Ronde & Hasil Akhir Real Effort Decoding</div>
+                            <p class="m-0 fs-6">
+                                Setiap ronde akan merekap hasil permainan yang Anda lakukan. <i>Hasil Ronde</i>
+                                menyajikan informasi rekapan hasil permainan Anda meliputi total jawaban benar, durasi
+                                waktu yang Anda beli, Bantuan & Beban Konsumsi serta Uang Akhir Ronde.
+                                <i>Hasil Akhir</i> menyajikan informasi rekapan keseluruhan ronde yang telah Anda
+                                lakukan terlepas dari Anda melakukan permainan maupun tidak melakukan permainan serta
+                                total keseluruhan profit/keuntungan setiap ronde. <strong>Uang Akhir Ronde pada
+                                Real Effort - Decoding akan digunakan pada ronde berikutnya</strong>.
+                            </p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="otree-btn-next btn btn-outline-primary">
+                <span>Lanjut</span>
+                <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

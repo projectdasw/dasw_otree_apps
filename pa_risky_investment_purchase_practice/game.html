@@ -1,0 +1,115 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Risky Investment Purchase - Ronde Latihan {% player.round_number %}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning" role="alert">
+        <h4 class="m-0 text-center">Anda sedang berada pada sesi latihan</h4>
+        <h3 class="m-0 text-center">Risky Investment Purchase</h3>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4 class="m-0">Informasi Pendapatan</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Uang + Bantuan</th>
+                        <th scope="col">Total Uang Anda</th>
+                        <th scope="col">Beban Konsumsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">
+                            {% if player.uang_sebelum_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                            {% elif player.uang_sebelum_tambah_bansos >= 0 %}
+                                {% player.uang_sebelum_tambah_bansos %}
+                            {% endif %} + <span class="text-success">{% player.bantuan_sosial %}</span>
+                        </td>
+                        <td class="fw-bold">
+                            {% if player.uang_sesudah_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sesudah_tambah_bansos %}</span>
+                            {% elif player.uang_sesudah_tambah_bansos >= 0 %}
+                                {% player.uang_sesudah_tambah_bansos %}
+                            {% endif %}
+                        </td>
+                        <td class="fw-bold">
+                            <span class="text-danger">{% player.beban_konsumsi %} (dikenakan setiap akhir ronde)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <span class="badge bg-warning text-dark fs-6 me-2">
+                Ronde Latihan: {% player.round_number %}
+            </span>
+            <span class="badge bg-danger fs-6 me-2">
+                Uang Anda saat ini: {% player.uang_sesudah_tambah_bansos %}
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <div class="p-0">
+                    <h2>Risky Investment Purchase</h2>
+                    <hr>
+                    <p class="m-0">
+                        <div class="alert alert-success" role="alert">
+                            Silahkan pilih opsi yang Anda inginkan, dan dapatkan keuntungannya.
+                            <br>
+                            <strong>Tidak tertarik berinvestasi pada ronde ini?</strong>
+                            Silahkan klik tombol <strong>"Submit"</strong> tanpa memilih opsi yang tersedia.
+                        </div>
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <form method="post">
+                        <div class="row row-cols-1 row-cols-md-3 g-2">
+                            {% for option in random_options %}
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <div class="card-header">
+                                            <div class="form-check fs-4">
+                                                <input class="form-check-input investment-option" type="checkbox"
+                                                   name="opsi_{% forloop.counter %}" value="{% option.name %}">
+                                                <label class="form-check-label" for="{% option.name %}">
+                                                    Opsi {% forloop.counter %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                {% for outcome in option.formatted_outcomes %}
+                                                    <li class="list-group-item">{% outcome %}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer">
+                                            <span class="badge bg-danger fs-6">
+                                                Harga Opsi : {% Constants.cost_per_option %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button id="submit-btn" type="submit" class="btn btn-outline-success">
+                <i class="fa-solid fa-money-bill-trend-up"></i>
+                <span>Submit</span>
+            </button>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Hasil Akhir Latihan Investment Panel Allocation</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert p-0 mb-0" role="alert">
+                    <h3 class="alert-heading">Hasil Akhir Latihan Investment Panel Allocation</h3>
+                    <p>
+                        Selamat Anda telah menyelesaikan sesi latihan <strong>Investment Panel Allocation</strong>.
+                        Selanjutnya Anda akan memasuki sesi eksperimen <strong>Investment Panel Allocation</strong>.
+                        Berikut di bawah ini hasil keseluruhan ronde sesi latihan Investment Panel Allocation:
+                    </p>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sesi Ronde Latihan</th>
+                                    <th scope="col">Uang Ronde</th>
+                                    <th scope="col">Profit</th>
+                                    <th scope="col">Alokasi Opsi</th>
+                                    <th scope="col">Bantuan</th>
+                                    <th scope="col">Beban Konsumsi</th>
+                                    <th scope="col">Sisa Uang Akhir Ronde</th>
+                                </tr>
+                            </thead>
+                        </thead>
+                        <tbody>
+                            {% for item in results_panel_allocation_practice %}
+                                <tr>
+                                    <td>Ronde Latihan {% item.round_number_panel_allocation %}</td>
+                                    <td class="fw-bold">{% item.endowment_round %}</td>
+                                    <td class="fw-bold">
+                                        {% if item.profit_panel_allocation != 0 %}
+                                            <span class="text-success">+{% item.profit_panel_allocation %}</span>
+                                        {% else %}
+                                            {% item.profit_panel_allocation %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if item.cost_panel_allocation != 0 %}
+                                            <span class="text-danger">-{% item.cost_panel_allocation %}</span>
+                                        {% else %}
+                                            {% item.cost_panel_allocation %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-success">+{% item.additional_panel_allocation %}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">-{% item.consumption_panel_allocation %}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if item.endowment_panel_allocation < 0 %}
+                                            <span class="text-danger">{% item.endowment_panel_allocation %}</span>
+                                        {% elif item.endowment_panel_allocation >= 0 %}
+                                            {% item.endowment_panel_allocation %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="alert bg-warning text-dark m-0" role="alert">
+                        <h4 class="alert-heading">Informasi Peserta</h4>
+                        <p>
+                            Pada sesi eksperimen, Anda akan mendapatkan Pembayaran dari salah satu sesi eksperimen.
+                            Pembayaran yang akan diambil sebagai acuan berdasarkan jumlah Sisa Uang Akhir Ronde yang
+                            Anda miliki pada ronde terakhir.
+                        </p>
+                        <hr>
+                        <h5 class="m-0">
+                            Maka Sisa Uang Akhir Ronde yang akan dihitung sebagai pembayaran pada sesi eksperimen adalah
+                            {% final_payment_practice %} (Ronde {% player.round_number %})
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="otree-btn-next btn btn-outline-primary">
+                    <span>Lanjut</span>
+                    <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

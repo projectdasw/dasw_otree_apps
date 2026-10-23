@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Eksperimen telah berakhir</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <span class="badge bg-success fs-6 me-2">
+                Akhir Eksperimen
+            </span>
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">Terima Kasih</h2>
+            <div class="card-text">
+                Anda telah menyelesaikan rangkaian eksperimen pada hari ini. Pembayaran akan diberikan setelah Anda
+                mengikuti keseluruhan rangkaian eksperimen. Kami ucapkan terima kasih atas partisipasi Anda dan sampai
+                jumpa pada eksperimen berikutnya.
+            </div>
+        </div>
+    </div>
+{% endblock %}

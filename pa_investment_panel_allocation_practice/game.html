@@ -1,0 +1,177 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Investment Panel Allocation - Ronde Latihan {% player.round_number %}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning" role="alert">
+        <h4 class="m-0 text-center">Anda sedang berada pada sesi latihan</h4>
+        <h3 class="m-0 text-center">Investment Panel Allocation</h3>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4 class="m-0">Informasi Pendapatan</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Uang + Bantuan</th>
+                        <th scope="col">Total Uang Anda</th>
+                        <th scope="col">Beban Konsumsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">
+                            {% if player.uang_sebelum_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                            {% elif player.uang_sebelum_tambah_bansos >= 0 %}
+                                {% player.uang_sebelum_tambah_bansos %}
+                            {% endif %} + <span class="text-success">{% player.bantuan_sosial %}</span>
+                        </td>
+                        <td class="fw-bold">
+                            {% if player.uang_sesudah_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sesudah_tambah_bansos %}</span>
+                            {% elif player.uang_sesudah_tambah_bansos >= 0 %}
+                                {% player.uang_sesudah_tambah_bansos %}
+                            {% endif %}
+                        </td>
+                        <td class="fw-bold">
+                            <span class="text-danger">{% player.beban_konsumsi %} (dikenakan setiap akhir ronde)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <span class="badge bg-warning text-dark fs-6 me-2">
+                Ronde Latihan: {% player.round_number %}
+            </span>
+            <span class="badge bg-danger fs-6 me-2">
+                Uang Anda saat ini: {% player.uang_sesudah_tambah_bansos %}
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <div class="p-0">
+                    <h2>Investment Panel Allocation</h2>
+                    <hr>
+                    <p class="m-0">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">
+                                Isikan Alokasi sesuai kalkulasi Anda sendiri
+                            </h4>
+                            <hr>
+                            <h5 class="alert-heading">
+                                Informasi Ketentuan:
+                            </h5>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success border-0 p-0">
+                                    <i class="fa-solid fa-check"></i>
+                                    <span>
+                                        Input Form tidak boleh kosong.
+                                    </span>
+                                </li>
+                                <li class="list-group-item list-group-item-success border-0 p-0">
+                                    <i class="fa-solid fa-check"></i>
+                                    <span>
+                                        Jika Anda memilih opsi tertentu, maka opsi yang tidak dipilih di isi dengan 0
+                                    </span>
+                                </li>
+                                <li class="list-group-item list-group-item-success border-0 p-0">
+                                    <i class="fa-solid fa-check"></i>
+                                    <span>
+                                        Jika Anda Sukses, maka alokasi Anda akan dikalikan return yang tertera
+                                    </span>
+                                </li>
+                                <li class="list-group-item list-group-item-success border-0 p-0">
+                                    <i class="fa-solid fa-check"></i>
+                                    <span>
+                                        Jika Anda Gagal, maka Anda mendapatkan 0 dari alokasi Anda
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </p>
+                </div>
+                <form method="post">
+                    <!-- Tabel untuk menampilkan semua opsi investasi -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <th class="col">Pilihan Opsi</th>
+                            <th class="col">Return</th>
+                            <th class="col">Probabilitas</th>
+                            <th class="col">Masukkan Alokasi Anda</th>
+                        </thead>
+                        <tbody>
+                            {% for scheme in investment_scheme %}
+                                <tr>
+                                    <td>Opsi {% forloop.counter %}</td>
+                                    <td>{% scheme.investment_return %}</td>
+                                    <td>{% scheme.probability %}%</td>
+                                    <td>
+                                        <input type="number" class="form-control allocation-input"
+                                               name="asian_ev_{{ forloop.counter }}" value="0" required>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button id="submit-btn" type="submit" class="otree-btn-next btn btn-outline-success">
+                <i class="fa-solid fa-money-bill-trend-up"></i>
+                <span>Submit</span>
+            </button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('input[name^="asian_ev_"]');
+
+            inputs.forEach(function (input) {
+                input.addEventListener("keydown", function (event) {
+                    const allowedKeys = [
+                        "Backspace",
+                        "Delete",
+                        "Tab",
+                        "Escape",
+                        "Enter",
+                        "ArrowLeft",
+                        "ArrowRight",
+                        "ArrowUp",
+                        "ArrowDown",
+                        "Home",
+                        "End"
+                    ];
+
+                    if (allowedKeys.includes(event.key)) {
+                        return;
+                    }
+
+                    // Izinkan shortcut Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                    if (event.ctrlKey || event.metaKey) {
+                        return;
+                    }
+
+                    // Hanya izinkan angka 0-9
+                    if (!/^[0-9]$/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                });
+
+                // Membersihkan karakter yang masuk melalui paste
+                input.addEventListener("input", function () {
+                    this.value = this.value.replace(/[^0-9]/g, "");
+                });
+            });
+        });
+    </script>
+{% endblock %}

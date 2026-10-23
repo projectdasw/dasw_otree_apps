@@ -1,0 +1,117 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Hasil Akhir Real Effort Decoding</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert p-0 mb-0" role="alert">
+                    <h3 class="alert-heading">Hasil Akhir Real Effort Decoding</h3>
+                    <p>
+                        Selamat Anda telah menyelesaikan sesi eksperimen <strong>Real Effort - Decoding</strong>.
+                        Selanjutnya Anda akan memasuki sesi eksperimen berikutnya yaitu
+                        <strong>Investment Panel Allocation</strong>. Berikut di bawah ini hasil keseluruhan ronde sesi
+                        eksperimen Real Effort - Decoding:
+                    </p>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sesi Ronde</th>
+                                <th scope="col">Uang Ronde</th>
+                                <th scope="col">Skor</th>
+                                <th scope="col">Total Biaya Waktu</th>
+                                <th scope="col">Bantuan</th>
+                                <th scope="col">Uang Sisa Bantuan</th>
+                                <th scope="col">Beban Konsumsi</th>
+                                <th scope="col">Sisa Uang Akhir Ronde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results_cognitive_task %}
+                                <tr>
+                                    <td>Ronde {% result.round_number_cognitive %}</td>
+                                    <td class="fw-bold">
+                                        {% if result.endowment_round < 0 %}
+                                            <span class="text-danger">{% result.endowment_round %}</span>
+                                        {% else %}
+                                            {% result.endowment_round %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if result.score_cognitive != 0 %}
+                                            <span class="text-success">+{% result.score_cognitive %}</span>
+                                        {% else %}
+                                            {% result.score_cognitive %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if result.time_cost_cognitive != 0 %}
+                                            <span class="text-danger">-{% result.time_cost_cognitive %}</span>
+                                        {% else %}
+                                            {% result.time_cost_cognitive %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-success">+{{ result.additional_cognitive }}</span>
+                                    </td>
+                                    <td class="fw-bold">{% result.charge_additional_cognitive %}</td>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">-{{ result.consumption_cognitive }}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if result.endowment_cognitive < 0 %}
+                                            <span class="text-danger">{% result.endowment_cognitive %}</span>
+                                        {% elif result.endowment_cognitive >= 0 %}
+                                            {% result.endowment_cognitive %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if final_payment < 0 %}
+                        <div class="alert bg-danger text-light m-0" role="alert">
+                            <h4 class="alert-heading">Informasi Pembayaran</h4>
+                            <p>
+                                Pembayaran akan dihitung berdasarkan jumlah Sisa Uang Akhir Ronde yang Anda miliki pada
+                                ronde terakhir.
+                            </p>
+                            <hr>
+                            <h5 class="m-0">
+                                Sisa Uang Akhir Anda pada ronde terakhir adalah {% final_payment %}
+                                (Ronde {% player.round_number %}).
+                            </h5>
+                            <h5 class="m-0">
+                                Maka yang akan dihitung sebagai pembayaran pada sesi ini adalah 0
+                            </h5>
+                        </div>
+                    {% else %}
+                        <div class="alert bg-success text-light m-0" role="alert">
+                            <h4 class="alert-heading">Informasi Pembayaran</h4>
+                            <p>
+                                Pembayaran akan dihitung berdasarkan jumlah Sisa Uang Akhir Ronde yang Anda miliki pada
+                                ronde terakhir.
+                            </p>
+                            <hr>
+                            <h5 class="m-0">
+                                Sisa Uang Akhir Ronde yang akan dihitung sebagai pembayaran adalah
+                                {% final_payment %} (Ronde {% player.round_number %})
+                            </h5>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="otree-btn-next btn btn-outline-primary">
+                    <span>Lanjut menuju sesi eksperimen selanjutnya</span>
+                    <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

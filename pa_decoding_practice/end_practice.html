@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Konfirmasi Eksperimen</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="m-0 text-center">Informasi Penting</h3>
+            </div>
+            <div class="card-body">
+                Anda telah melakukan <strong>Sesi Latihan Real Effort - Decoding</strong>. Selanjutnya, Anda akan
+                diarahkan menuju <strong class="text-danger">sesi eksperimen Real Effort - Decoding</strong>,
+                di mana penjelasan dari tiap sesi eksperimen akan ditayangkan kembali. Persiapkan diri Anda sebaik
+                mungkin agar dapat melaksanakan eksperimen ini dengan baik. Silahkan klik "Mulai Eksperimen" untuk
+                memulai eksperimen. Selamat Mengerjakan.
+            </div>
+            <div class="card-footer">
+                <button class="otree-btn-next btn btn-outline-success">
+                    <i class="fa-solid fa-play me-1"></i>
+                    <span>Mulai Eksperimen</span>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <style>
+        .logo{
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Eksperimen Bantuan Sosial dan Investasi</title>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="container d-flex justify-content-center align-items-center mb-3">
+                <img src="{% static 'global/experiment/poor_assistance/assets/image/ugm-logo.png' %}" class="img-fluid logo me-3" alt="ugm-logo">
+                <img src="{% static 'global/experiment/poor_assistance/assets/image/um-logo.png' %}" class="img-fluid logo" alt="um-logo">
+            </div>
+            <h4 class="text-center">Selamat Datang di eksperimen</h4>
+            <h2 class="text-center">Bantuan Sosial & Investasi</h2>
+            <p class="text-center">
+                Selamat datang di eksperimen mengenai bantuan sosial dan investasi. Eksperimen ini bertujuan untuk
+                mengetahui perilaku individu terhadap penggunaan bantuan sosial untuk tetap memenuhi konsumsi melalui
+                investasi. Anda akan berperan sebagai seorang yang menerima bantuan sosial dan berupaya untuk tetap
+                memenuhi konsumsi.
+            </p>
+            <ul class="list-group text-center w-25 mx-auto">
+                <li class="list-group-item list-group-item-primary">Tim Peneliti</li>
+                <li class="list-group-item">Yudistira Hendra Permana</li>
+                <li class="list-group-item">Muhammad Ryan Sanjaya</li>
+                <li class="list-group-item">Inayati Nuraini Dwiputri</li>
+            </ul>
+        </div>
+        <div class="card-footer">
+            <button class="otree-btn-next btn btn-outline-primary">
+                <span>Lanjut</span>
+                <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <style>
+        .otree-form-errors,
+        .otree-timer{
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    <title>Sesi Latihan Real Effort Decoding</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="m-0 text-center">Anda sedang berada pada sesi latihan</h4>
+            <h3 class="m-0 text-center">Real Effort - Decoding</h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h1 class="text-center mb-3">
+                        Real Effort Decoding -
+                        <span class="badge bg-warning text-dark me-2">Ronde Latihan: {% player.round_number %}</span>
+                    </h1>
+                    <div class="alert alert-primary" role="alert">
+                        <h4 class="alert-heading">Petunjuk Permainan</h4>
+                        <p class="m-0">
+                            <i class="fa-solid fa-check"></i>
+                            Hitung jumlah Huruf/Angka sesuai Target yang muncul pada tabel yang telah tersedia
+                        </p>
+                        <p class="m-0">
+                            <i class="fa-solid fa-check"></i>
+                            Jika Target tidak muncul pada tabel, input form jawaban diisi 0
+                        </p>
+                        <p class="m-0">
+                            <i class="fa-solid fa-check"></i>
+                            Setiap jawaban benar bernilai 3 poin
+                        </p>
+                    </div>
+                </div>
+                <div class="card-text">
+                    <div class="row align-items-center">
+                        <div class="col-7">
+                            <table id="boardContainer" class="table table-stripe border border-2 text-center">
+                                {% for row in board %}
+                                    <tbody>
+                                        {% for cell in row %}
+                                            <td class="board-cell border border-3 fs-4">
+                                                <strong>{% cell %}</strong>
+                                            </td>
+                                        {% endfor %}
+                                    </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div class="col-5">
+                            <div class="fs-5 mb-3">
+                                Berapa jumlah Huruf/Angka
+                                    <span id="targetCharacter" class="badge bg-danger fs-5">{% target_character %}</span>
+                                yang muncul pada tabel?
+                            </div>
+                            <div class="mb-3">
+                                <div>
+                                    <div class="input-group">
+                                        <input id="countGuess" type="number" class="form-control"
+                                               required>
+                                        <button class="btn btn-primary" onclick="submitGuess()">Kirim</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table fs-5">
+                                <thead>
+                                    <th scope="col">Skor Anda</th>
+                                    <th scope="col">Waktu Anda</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span id="playerScore" class="fw-bold text-success">
+                                                +{% player_score %}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="otree-timer__time-left fw-bold"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitGuess() {
+            const guess = document.getElementById("countGuess").value;
+            liveSend({ count_guess: guess }); // Kirim jawaban
+        }
+
+        liveRecv = function(data) {
+            // Update skor dan target karakter baru
+            if (data.new_score !== undefined) {
+                document.getElementById("playerScore").textContent = data.new_score;
+            }
+            if (data.new_target_character) {
+                document.getElementById("targetCharacter").textContent = data.new_target_character;
+            }
+
+            // Update papan baru
+            if (data.new_board) {
+                const boardContainer = document.getElementById("boardContainer");
+                boardContainer.innerHTML = ""; // Bersihkan papan lama
+
+                // Generate papan baru
+                data.new_board.forEach(row => {
+                    const rowDiv = document.createElement("div");
+                    row.forEach(char => {
+                        const cell = document.createElement("span");
+                        cell.textContent = char;
+                        cell.className = "board-cell";
+                        rowDiv.appendChild(cell);
+                    });
+                    boardContainer.appendChild(rowDiv);
+                });
+            }
+
+            document.getElementById("countGuess").value = ""; // Reset input setelah submit
+        };
+    </script>
+{% endblock %}

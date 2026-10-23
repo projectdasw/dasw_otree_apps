@@ -1,0 +1,117 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Hasil Akhir Risky Investment Purchase</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert p-0 mb-0" role="alert">
+                    <h3 class="alert-heading">Hasil Akhir Risky Investment Purchase</h3>
+                    <p>
+                        Selamat Anda telah menyelesaikan sesi eksperimen <strong>Risky Investment Purchase</strong>.
+                        Selanjutnya Anda akan memasuki sesi eksperimen berikutnya yaitu
+                        <strong>Risky Investment Allocation</strong>. Berikut di bawah ini hasil keseluruhan ronde sesi
+                        eksperimen Risky Investment Purchase:
+                    </p>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sesi Ronde</th>
+                                <th scope="col">Uang Ronde</th>
+                                <th scope="col">Profit</th>
+                                <th scope="col">Biaya Opsi</th>
+                                <th scope="col">Bantuan</th>
+                                <th scope="col">Uang Sisa Bantuan</th>
+                                <th scope="col">Beban Konsumsi</th>
+                                <th scope="col">Sisa Uang Akhir Ronde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in results_risky_purchase %}
+                                <tr>
+                                    <td>Ronde {% item.round_number_risky_purchase %}</td>
+                                    <td class="fw-bold">
+                                        {% if item.endowment_round < 0 %}
+                                            <span class="text-danger">{% item.endowment_round %}</span>
+                                        {% else %}
+                                            {% item.endowment_round %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if item.profit_risky_purchase != 0 %}
+                                            <span class="text-success">+{% item.profit_risky_purchase %}</span>
+                                        {% else %}
+                                            {% item.profit_risky_purchase %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if item.cost_risky_purchase != 0 %}
+                                            <span class="text-danger">-{% item.cost_risky_purchase %}</span>
+                                        {% else %}
+                                            {% item.cost_risky_purchase %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-success">+{% item.additional_risky_purchase %}</span>
+                                    </td>
+                                    <td class="fw-bold">{% item.charge_additional_risky_purchase %}</td>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">-{% item.consumption_risky_purchase %}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if item.endowment_risky_purchase < 0 %}
+                                            <span class="text-danger">{% item.endowment_risky_purchase %}</span>
+                                        {% elif item.endowment_risky_purchase >= 0 %}
+                                            {% item.endowment_risky_purchase %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if final_payment < 0 %}
+                        <div class="alert bg-danger text-light m-0" role="alert">
+                            <h4 class="alert-heading">Informasi Pembayaran</h4>
+                            <p>
+                                Pembayaran akan dihitung berdasarkan jumlah Sisa Uang Akhir Ronde yang Anda miliki pada
+                                ronde terakhir.
+                            </p>
+                            <hr>
+                            <h5 class="m-0">
+                                Sisa Uang Akhir Anda pada ronde terakhir adalah {% final_payment %}
+                                (Ronde {% player.round_number %}).
+                            </h5>
+                            <h5 class="m-0">
+                                Maka yang akan dihitung sebagai pembayaran pada sesi ini adalah 0
+                            </h5>
+                        </div>
+                    {% else %}
+                        <div class="alert bg-success text-light m-0" role="alert">
+                            <h4 class="alert-heading">Informasi Pembayaran</h4>
+                            <p>
+                                Pembayaran akan dihitung berdasarkan jumlah Sisa Uang Akhir Ronde yang Anda miliki pada
+                                ronde terakhir.
+                            </p>
+                            <hr>
+                            <h5 class="m-0">
+                                Sisa Uang Akhir Ronde yang akan dihitung sebagai pembayaran adalah
+                                {% final_payment %} (Ronde {% player.round_number %})
+                            </h5>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="otree-btn-next btn btn-outline-primary">
+                    <span>Lanjut menuju sesi eksperimen selanjutnya</span>
+                    <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

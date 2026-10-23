@@ -1,0 +1,164 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Risky Investment Allocation - Ronde Latihan {% player.round_number %}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning" role="alert">
+        <h4 class="m-0 text-center">Anda sedang berada pada sesi eksperimen</h4>
+        <h3 class="m-0 text-center">Risky Investment Allocation</h3>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4 class="m-0">Informasi Pendapatan</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Uang + Bantuan</th>
+                        <th scope="col">Total Uang Anda</th>
+                        <th scope="col">Beban Konsumsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">
+                            {% if player.uang_sebelum_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                            {% elif player.uang_sebelum_tambah_bansos >= 0 %}
+                                {% player.uang_sebelum_tambah_bansos %}
+                            {% endif %} + <span class="text-success">{% player.bantuan_sosial %}</span>
+                        </td>
+                        <td class="fw-bold">
+                            {% if player.uang_sesudah_tambah_bansos < 0 %}
+                                <span class="text-danger">{% player.uang_sesudah_tambah_bansos %}</span>
+                            {% elif player.uang_sesudah_tambah_bansos >= 0 %}
+                                {% player.uang_sesudah_tambah_bansos %}
+                            {% endif %}
+                        </td>
+                        <td class="fw-bold">
+                            <span class="text-danger">{% player.beban_konsumsi %} (dikenakan setiap akhir ronde)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <span class="badge bg-warning text-dark fs-6 me-2">
+                Ronde Latihan: {% player.round_number %}
+            </span>
+            <span class="badge bg-danger fs-6 me-2">
+                Uang Anda saat ini: {% player.uang_sesudah_tambah_bansos %}
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <div class="p-0">
+                    <h2>Risky Investment Allocation</h2>
+                    <hr>
+                    <p class="m-0">
+                        <div class="alert alert-success" role="alert">
+                            Silahkan alokasikan Uang yang Anda inginkan pada opsi-opsi yang tersedia,
+                            dan dapatkan keuntungannya.
+                            <br>
+                            <strong>
+                                Jika Anda hanya mengisi pada opsi tertentu, maka opsi lain di isi dengan angka 0.
+                            </strong>
+                            <br>
+                            <strong>Tidak tertarik berinvestasi pada ronde ini?</strong>
+                            Silahkan klik tombol <strong>"Submit"</strong> tanpa mengalokasi opsi yang tersedia.
+                        </div>
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <form method="post">
+                        <div class="row row-cols-1 row-cols-md-2 g-2">
+                            {% for option in random_options %}
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <div class="card-header">
+                                            <h3>
+                                                Opsi {% forloop.counter %}
+                                            </h3>
+                                            <input class="form-check-input" type="checkbox"
+                                               name="opsi_{% forloop.counter %}"
+                                               value="{% option.name %}" checked hidden>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                {% for outcome in option.formatted_outcomes %}
+                                                    <li class="list-group-item">{% outcome %}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            <div class="mt-3">
+                                                <label for="alokasi_opsi_{% forloop.counter %}" class="form-label">
+                                                    Berapa Alokasi yang ingin di investasikan pada opsi ini?
+                                                </label>
+                                                <input type="number" class="form-control allocation-input"
+                                                   name="alokasi_opsi_{% forloop.counter %}" value="0" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button id="submit-btn" type="submit" class="btn btn-outline-success">
+                <i class="fa-solid fa-money-bill-trend-up"></i>
+                <span>Submit</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('input[name^="alokasi_opsi_"]');
+
+            inputs.forEach(function (input) {
+                input.addEventListener("keydown", function (event) {
+                    const allowedKeys = [
+                        "Backspace",
+                        "Delete",
+                        "Tab",
+                        "Escape",
+                        "Enter",
+                        "ArrowLeft",
+                        "ArrowRight",
+                        "ArrowUp",
+                        "ArrowDown",
+                        "Home",
+                        "End"
+                    ];
+
+                    if (allowedKeys.includes(event.key)) {
+                        return;
+                    }
+
+                    // Izinkan shortcut Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                    if (event.ctrlKey || event.metaKey) {
+                        return;
+                    }
+
+                    // Hanya izinkan angka 0-9
+                    if (!/^[0-9]$/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                });
+
+                // Membersihkan karakter yang masuk melalui paste
+                input.addEventListener("input", function () {
+                    this.value = this.value.replace(/[^0-9]/g, "");
+                });
+            });
+        });
+    </script>
+{% endblock %}

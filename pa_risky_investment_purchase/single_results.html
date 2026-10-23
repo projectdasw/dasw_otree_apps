@@ -1,0 +1,186 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    <title>Hasil Ronde {% player.round_number %} - Risky Investment Purchase</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            <h4 class="m-0 text-center">Anda sedang berada pada sesi eksperimen</h4>
+            <h3 class="m-0 text-center">Risky Investment Purchase</h3>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title text-center m-0">
+                    Hasil Ronde {% player.round_number %} - Risky Investment Purchase
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">List Opsi Investasi</th>
+                                <th scope="col">Profit/Keuntungan</th>
+                                <th scope="col">Biaya Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in options %}
+                                <tr>
+                                    <td>Opsi {% item.no %}</td>
+                                    <td class="fw-bold">
+                                        {% if item.result != 0 %}
+                                            <span class="text-success">+{% item.result %}</span>
+                                        {% else %}
+                                            {% item.result %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">-{% Constants.cost_per_option %}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        {% if player.uang_sebelum_tambah_bansos < 0 %}
+                            <thead>
+                                <th scope="col">Uang Anda</th>
+                                <th scope="col">Uang Sisa Bantuan</th>
+                                <th scope="col">Total Profit/Keuntungan</th>
+                                <th scope="col">Biaya Beli Opsi</th>
+                                <th scope="col">Beban Konsumsi</th>
+                                <th scope="col">Sisa Uang Anda</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">{% player.uang_sebelum_tambah_bansos %}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% player.uang_sisa_tidak_untuk_investasi %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if player.total_profit != 0 %}
+                                            <span class="text-success">+{% player.total_profit %}</span>
+                                        {% else %}
+                                            {% player.total_profit %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if player.total_biaya_beli_opsi != 0 %}
+                                            <span class="text-danger">-{% player.total_biaya_beli_opsi %}</span>
+                                        {% else %}
+                                            {% player.total_biaya_beli_opsi %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">-{% player.beban_konsumsi %}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if player.payoff < 0 %}
+                                            <span class="text-danger">{% player.payoff %}</span>
+                                        {% elif player.payoff >= 0 %}
+                                            {% player.payoff %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        {% else %}
+                            <thead>
+                                <th scope="col">Uang Anda</th>
+                                <th scope="col">Total Profit/Keuntungan</th>
+                                <th scope="col">Biaya Beli Opsi</th>
+                                <th scope="col">Beban Konsumsi</th>
+                                <th scope="col">Sisa Uang Anda</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold">
+                                        {% if player.uang_sesudah_tambah_bansos < 0 %}
+                                            <span class="text-danger">{% player.uang_sesudah_tambah_bansos %}</span>
+                                        {% elif player.uang_sesudah_tambah_bansos >= 0 %}
+                                            {% player.uang_sesudah_tambah_bansos %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if player.total_profit != 0 %}
+                                            <span class="text-success">+{% player.total_profit %}</span>
+                                        {% else %}
+                                            {% player.total_profit %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if player.total_biaya_beli_opsi != 0 %}
+                                            <span class="text-danger">-{% player.total_biaya_beli_opsi %}</span>
+                                        {% else %}
+                                            {% player.total_biaya_beli_opsi %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">
+                                        <span class="text-danger">-{% player.beban_konsumsi %}</span>
+                                    </td>
+                                    <td class="fw-bold">
+                                        {% if player.payoff < 0 %}
+                                            <span class="text-danger">{% player.payoff %}</span>
+                                        {% elif player.payoff >= 0 %}
+                                            {% player.payoff %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        {% endif %}
+                    </table>
+                    {% if player.total_biaya_beli_opsi == 0 %}
+                        <div class="alert alert-primary" role="alert">
+                            <strong>
+                                Anda tidak melakukan investasi pada ronde ini.
+                            </strong>
+                        </div>
+                    {% endif %}
+                    {% if player.payoff < 0 %}
+                        <div class="alert p-0 m-0" role="alert">
+                            <h4>
+                                <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+                                <span>Peringatan</span>
+                            </h4>
+                            <p class="text-danger fs-5">
+                                Sisa Uang Anda pada ronde ini adalah <strong>{% player.payoff %}</strong>.
+                                maka dari itu, Sistem akan mencatat sisa uang Anda sebagai <strong>Hutang</strong>.
+                                Uang Sisa Bantuan Anda pada ronde ini akan digunakan untuk membayar <strong>Hutang &
+                                Beban Konsumsi</strong>.
+                            </p>
+                            {% if player.round_number != Constants.num_rounds %}
+                                <p class="mb-0">
+                                    Pada ronde selanjutnya, <strong class="text-danger">Sisa Uang Anda tidak dapat digunakan
+                                    untuk berinvestasi</strong>. Maka dari itu, <strong class="text-success">Uang Bantuan
+                                    yang akan digunakan untuk berinvestasi</strong>.
+                                </p>
+                                <hr>
+                                <p class="mb-0">
+                                    Gunakan uang <strong>Bantuan</strong> untuk berinvestasi agar dapat membayar
+                                    <strong class="text-danger">Hutang & Beban Konsumsi</strong>.
+                                </p>
+                            {% endif %}
+                        </div>
+                    {% elif player.payoff >= 0 %}
+                        <div class="alert alert-success m-0" role="alert">
+                            <strong>
+                                Sisa uang Anda pada ronde ini akan digunakan pada ronde selanjutnya.
+                            </strong>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="otree-btn-next btn btn-outline-primary">
+                    <span>Lanjut</span>
+                    <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
