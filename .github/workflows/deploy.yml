@@ -14,21 +14,71 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  test:
+    name: Test Application
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare Python environment
+        shell: bash
+        run: |
+          set -e
+          python3.12 -m venv .venv-ci
+          .venv-ci/bin/python -m pip install --upgrade pip
+          .venv-ci/bin/pip install -r requirements.txt
+
+      - name: Check Python syntax
+        shell: bash
+        run: |
+          set -e
+          .venv-ci/bin/python -m compileall -q \
+            -x '(^|/)(\.git|\.venv-ci)(/|$)' .
+
+          echo "Python syntax check passed."
+
+      - name: Validate oTree settings
+        shell: bash
+        run: |
+          set -e
+          .venv-ci/bin/python - <<'PY'
+          import settings
+          configs = settings.SESSION_CONFIGS
+          assert isinstance(configs, list), \
+              "SESSION_CONFIGS must be a list"
+          names = set()
+
+          for config in configs:
+              name = config.get("name")
+              assert name, \
+                  f"Session configuration has no name: {config}"
+              assert name not in names, \
+                  f"Duplicate session configuration: {name}"
+              names.add(name)
+              assert config.get("app_sequence"), \
+                  f"Session configuration '{name}' has no app_sequence"
+
+          print(
+              f"Validated {len(configs)} oTree session configurations."
+          )
+          PY
+
   deploy:
     name: Deploy to DASW Startup Server
     runs-on: self-hosted
+    needs: test
+
     steps:
       - name: Update application
         shell: bash
         run: |
           set -e
           cd /opt/dasw_otree_apps
-
           git fetch origin main
           git reset --hard origin/main
-
           .venv/bin/pip install -r requirements.txt
-
           sudo /usr/bin/systemctl restart dasw-otree
 
           echo "DASW oTree Apps deployment completed."
